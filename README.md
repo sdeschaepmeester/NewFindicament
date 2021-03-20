@@ -46,3 +46,9 @@ Then do the following depending on where you test your app:
 | | ![download.png](https://zupimages.net/up/21/11/zbbx.png) |
 | Simulator  |  Open a simulator on Android studio. On the web page, click on Open in simulator |
 | | ![download.png](https://zupimages.net/up/21/11/kvs5.png) |
+
+## Commit your changes
+
+Do NOT commit : 
+- .expo folder
+- node modules
