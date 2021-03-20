@@ -1,21 +1,16 @@
 import React, {Component} from 'react';
-import { StyleSheet,Text,View,Dimensions } from 'react-native';
+import { Image, StyleSheet, Text, View, Dimensions, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { Constants } from 'expo';
+import {Ionicons} from '@expo/vector-icons';
+import {MainStackNavigator} from '../navigation/MainStackNavigator'
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-
-/* function Scanner() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>scanner Screen</Text>
-    </View>
-  )
-} */
-
+const { width } = Dimensions.get('window')
+const qrSize = width * 0.7
 export default class App extends Component{
-
     state = {
       CameraPermissionGranted: null,  
     }
@@ -59,15 +54,20 @@ export default class App extends Component{
           }}>
        <BarCodeScanner
           onBarCodeScanned = {this.barCodeScanned }
-          style={[StyleSheet.absoluteFill, styles.container]}
-        >
-          <View style={styles.layerTop} />
-          <View style={styles.layerCenter}>
-            <View style={styles.layerLeft} />
-            <View style={styles.focused} />
-            <View style={styles.layerRight} />
-          </View>
-          <View style={styles.layerBottom} />
+          style={[StyleSheet.absoluteFill, styles.container]}>
+          <Text style={styles.description}>Scanner votre code</Text>
+          <Image
+            style={styles.qr}
+            source={require('../assets/qr_render.png')}
+          />
+        {           
+          <Text
+            onPress={() => this.props.navigation.pop()}
+            style={styles.cancel}>
+            X
+          </Text> 
+        }
+
         </BarCodeScanner>
           </View>
         );
@@ -76,34 +76,31 @@ export default class App extends Component{
     }
   }
 
-
 const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column'
+    alignItems: 'center',
   },
-  layerTop: {
-    flex: 2,
-    backgroundColor: opacity
+  qr: {
+    marginTop: '20%',
+    marginBottom: '20%',
+    width: qrSize,
+    height: qrSize,
   },
-  layerCenter: {
-    flex: 1,
-    flexDirection: 'row'
+  description: {
+    fontSize: width * 0.09,
+    marginTop: '10%',
+    textAlign: 'center',
+    width: '70%',
+    color: 'white',
   },
-  layerLeft: {
-    flex: 1,
-    backgroundColor: opacity
-  },
-  focused: {
-    flex: 10
-  },
-  layerRight: {
-    flex: 1,
-    backgroundColor: opacity
-  },
-  layerBottom: {
-    flex: 2,
-    backgroundColor: opacity
+  cancel: {
+    fontSize: width * 0.07,
+    textAlign: 'center',
+    width: '70%',
+    color: 'white',
   },
 });
+
+
