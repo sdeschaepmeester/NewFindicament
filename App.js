@@ -1,6 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import * as Permissions from 'expo-permissions'
+import { BarCodeScanner } from 'expo-barcode-scanner';
+
+const DEVICE_WIDTH = Dimensions.get('window').width
+const DEVICE_HEIGHT = Dimensions.get('window').height
 
 export default function App() {
   return (
