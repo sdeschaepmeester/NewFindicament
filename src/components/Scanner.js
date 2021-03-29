@@ -20,11 +20,23 @@ export default class App extends Component{
       this.setState({ CameraPermissionGranted: status === "granted" ? true : false });
     }
   
-  
+        //Access the Data
+          //alert(data);
     barCodeScanned = ({ data }) => {
-      //Access the Data
+        //Access the Data
           alert(data);
     }
+
+
+
+
+
+
+
+    handleBarCodeScanned = ({ data }) => {
+        //Calling the function 
+        new ResultScan().getResult(data);
+    };
   
     render(){
       const { CameraPermissionGranted } = this.state;
@@ -53,7 +65,8 @@ export default class App extends Component{
               alignItems: 'center',
           }}>
        <BarCodeScanner
-          onBarCodeScanned = {this.barCodeScanned }
+          //onBarCodeScanned = {this.barCodeScanned }
+          onBarCodeScanned = {this.handleBarCodeScanned}
           style={[StyleSheet.absoluteFill, styles.container]}>
           <Text style={styles.description}>Scanner votre code</Text>
           <Image
@@ -74,6 +87,18 @@ export default class App extends Component{
         
       }
     }
+  }
+
+  class ResultScan extends Component {
+    getResult = Value => {
+      let string = JSON.stringify(Value)
+      let firstNumbers = string.substring(3)
+      alert(firstNumbers)
+      // le but : recupérer seulement le cip 
+	  // If includes 034 => il y a un cip donc on continue sinon on renvoie texte "Medicament non trouvé"
+      //il faut tester le string pour savoir ou commence les 034... et couper ce qu'il y a avant
+      //A partir de cela, il faut que la chaine ne fasse que 13 caracteres de long
+    };
   }
 
 const opacity = 'rgba(0, 0, 0, .6)';

@@ -19,7 +19,6 @@ function MainStackNavigator() {
         <Stack.Screen
           name='Scanner'
           component={Scanner}
-          options={{ title: 'Scanner Screen' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
