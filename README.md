@@ -67,7 +67,7 @@ Do NOT commit :
 
 If you have any of the following errors, here are some tips that works for some of us :
 
-**Problem : I can't install expo with npm command. Expo is not recognized as a command.
+**Problem : I can't install expo with npm command. Expo is not recognized as a command.**
 
 Possible answer: Modify the environment variable.
 Search for environment variable, then click on the "Variables d'environnement"
@@ -83,7 +83,7 @@ Add the link to the path variable.
 
 ![download.png](https://zupimages.net/up/21/16/n5t5.png)
 
-**Problem : I can't debug on Expo. Failed to install expo (after launching expo start)
+**Problem : I can't debug on Expo. Failed to install expo (after launching expo start)**
 
 Possible answer: You may be using a version of expo that is buggy. Open a command prompt and type expo --version. If it is 4.4.3, it is buggy and you must downgrade.
 Then follow these steps:
