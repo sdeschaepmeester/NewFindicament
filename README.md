@@ -66,15 +66,39 @@ Do NOT commit :
 ## Troubleshooting 
 
 If you have any of the following errors, here are some tips that works for some of us :
+
 **Problem : I can't install expo with npm command. Expo is not recognized as a command.
 
-Possible answer : Modify the environment variable.
-Search for environment variable, then click on the "Variables d'environnement" button.
+Possible answer: Modify the environment variable.
+Search for environment variable, then click on the "Variables d'environnement"
+
 ![download.png](https://zupimages.net/up/21/16/orol.png)
 
 Search for the Path variable in your SYSTEM variables and clic on modify.
+
 ![download.png](https://zupimages.net/up/21/16/wkou.png)
 
 Look for the correct variable link. In order to do that, open the search bar and type %appdata%, then clic on the npm folder and copy the link.
 Add the link to the path variable.
+
 ![download.png](https://zupimages.net/up/21/16/n5t5.png)
+
+**Problem : I can't debug on Expo. Failed to install expo (after launching expo start)
+
+Possible answer: You may be using a version of expo that is buggy. Open a command prompt and type expo --version. If it is 4.4.3, it is buggy and you must downgrade.
+Then follow these steps:
+
+- In your project, delete *nodes_modules* and *.expo*. 
+- Type the following commands:
+```git
+cd src
+```
+Install an ancient version:
+```javascript
+npm i -g expo-cli@4.1.0
+```
+Recreate the nodes_modules folder with this command (still in the src folder):
+```javascript
+npm install
+```
+You can then type expo start and start debugging without bugs.
