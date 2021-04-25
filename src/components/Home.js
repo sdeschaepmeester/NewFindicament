@@ -6,11 +6,6 @@ function Home(props) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Home Screen</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Scanner')}>
-        <Text style={styles.buttonText}>Scanner</Text>
-      </TouchableOpacity>
     </View>
   )
 }
