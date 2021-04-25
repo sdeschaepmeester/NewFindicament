@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import Planning from '../components/Planning'
 
 import Home from '../components/Home'
 
@@ -15,6 +16,11 @@ function MainStackNavigator() {
           component={Home}
           options={{ title: 'Home Screen' }}
         />
+        <Stack.Screen
+          name='Planning'
+          component={Planning}
+          options={{ title: 'Planning Screen' }}
+/>
       </Stack.Navigator>
     </NavigationContainer>
   )
