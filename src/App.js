@@ -1,26 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import React, {Component} from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import * as Permissions from 'expo-permissions'
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import React from 'react'
 
-const DEVICE_WIDTH = Dimensions.get('window').width
-const DEVICE_HEIGHT = Dimensions.get('window').height
+import MainStackNavigator from './navigation/MainStackNavigator'
+
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
+setTimeout(SplashScreen.hideAsync, 750);
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <MainStackNavigator />
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
