@@ -1,105 +1,92 @@
-import React, {Component} from 'react';
-import { Image, StyleSheet, Text, View, Dimensions, StatusBar, TouchableOpacity, Alert } from 'react-native';
+import React, { Component } from 'react';
+import { Image, StyleSheet, Button, Text, View, Dimensions, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Constants } from 'expo';
-import {Ionicons} from '@expo/vector-icons';
-import {MainStackNavigator} from '../navigation/MainStackNavigator'
+import { Ionicons } from '@expo/vector-icons';
+import { MainStackNavigator } from '../navigation/MainStackNavigator';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const { width } = Dimensions.get('window')
 const qrSize = width * 0.7
-export default class App extends Component{
-    state = {
-      CameraPermissionGranted: null,  
-    }
-    async componentDidMount() {
-      // Ask for camera permission
-      const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      this.setState({ CameraPermissionGranted: status === "granted" ? true : false });
-    }
-  
-        //Access the Data
-          //alert(data);
-    barCodeScanned = ({ data }) => {
-        //Access the Data
-          alert(data);
-    }
+//ATTENTION
+const onClose = () => {
+  window.opener = null;
+  window.open("", "_self");
+  window.close();
+};
 
-
-
-
-
-
-
-    handleBarCodeScanned = ({ data }) => {
-        //Calling the function 
-        new ResultScan().getResult(data);
-    };
-  
-    render(){
-      const { CameraPermissionGranted } = this.state;
-      if(CameraPermissionGranted === null){
-        // Request Permission
-        return(
-          <View style={styles.container}>
-              <Text>Please grant Camera permission</Text>
-          </View> 
-        );
-      }
-      if(CameraPermissionGranted === false){
-          // Permission denied
-        return ( 
-          <View style={styles.container}>
-           <Text>Camera Permission Denied.</Text>
-          </View> 
-        );
-      }
-      if(CameraPermissionGranted === true){
-        // Got the permission, time to scan
-        return (
-          <View style = {{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-          }}>
-       <BarCodeScanner
-          //onBarCodeScanned = {this.barCodeScanned }
-          onBarCodeScanned = {this.handleBarCodeScanned}
-          style={[StyleSheet.absoluteFill, styles.container]}>
-          <Text style={styles.description}>Scanner votre code</Text>
-          <Image
-            style={styles.qr}
-            source={require('../assets/qr_render.png')}
-          />
-        {           
-          <Text
-            onPress={() => this.props.navigation.pop()}
-            style={styles.cancel}>
-            X
-          </Text> 
-        }
-
-        </BarCodeScanner>
-          </View>
-        );
-        
-      }
-    }
+export default class App extends Component {
+  state = {
+    CameraPermissionGranted: null,
+  }
+  async componentDidMount() {
+    // Ask for camera permission
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ CameraPermissionGranted: status === "granted" ? true : false });
   }
 
-  class ResultScan extends Component {
-    getResult = Value => {
-      let string = JSON.stringify(Value)
-      let firstNumbers = string.substring(3)
-      alert(firstNumbers)
-      // le but : recupérer seulement le cip 
-	  // If includes 034 => il y a un cip donc on continue sinon on renvoie texte "Medicament non trouvé"
-      //il faut tester le string pour savoir ou commence les 034... et couper ce qu'il y a avant
-      //A partir de cela, il faut que la chaine ne fasse que 13 caracteres de long
-    };
+  // Called when barcode is scanned
+  barCodeScanned = ({ data }) => {
+    alert(data);
   }
+  handleBarCodeScanned = ({ data }) => {
+    new ResultScan().getResult(data);
+  };
+
+  render() {
+    const { CameraPermissionGranted } = this.state;
+    if (CameraPermissionGranted === null) {
+      return (
+        <View style={styles.container}>
+          <Text>Please grant Camera permission</Text>
+        </View>
+      );
+    }
+    if (CameraPermissionGranted === false) {
+      // Permission denied
+      return (
+        <View style={styles.container}>
+          <Text>Camera Permission Denied.</Text>
+        </View>
+      );
+    }
+    if (CameraPermissionGranted === true) {
+      // Permission granted
+      return (
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <BarCodeScanner
+            //onBarCodeScanned = {this.barCodeScanned }
+            onBarCodeScanned={this.handleBarCodeScanned}
+            style={[StyleSheet.absoluteFill, styles.container]}>
+            <Text style={styles.description}>Scanner votre code</Text>
+            <Image
+              style={styles.qr}
+              source={require('../assets/qr_render.png')}
+            />
+          </BarCodeScanner>
+        </View>
+      );
+    }
+  }
+}
+
+class ResultScan extends Component {
+  getResult = Value => {
+    let string = JSON.stringify(Value)
+    let firstNumbers = string.substring(3)
+    alert(firstNumbers)
+    // le but : recupérer seulement le cip 
+    // If includes 034 => il y a un cip donc on continue sinon on renvoie texte "Medicament non trouvé"
+    //il faut tester le string pour savoir ou commence les 034... et couper ce qu'il y a avant
+    //A partir de cela, il faut que la chaine ne fasse que 13 caracteres de long
+  };
+}
 
 const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({
