@@ -99,7 +99,7 @@ const Tabs = () => {
                                     style={{
                                         width: 35,
                                         height: 35,
-                                        tintColor: '#fff'
+                                        tintColor: '#fff' 
                                     }}   />
                             ),
                             tabBarButton: (props) => (
