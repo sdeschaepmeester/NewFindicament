@@ -1,18 +1,30 @@
 import { ListItem } from 'react-native-vector-icons';
 import * as React from 'react';
-import { ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
 import { List, Button, Avatar } from 'react-native-paper';
 import { Ionicons as Icon } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
 
-const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
+var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 const HistoryController = ({ navigation }) => {
     return (
         <View style={{ flex: 1, paddingTop: 30 }}>
+            <StatusBar
+                backgroundColor="lightblue"
+            />
             <View style={styles.container}>
                 <ImageBackground source={image} style={styles.image}>
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
             </View>
+            <View>
+                <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
+                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
+                />
+            </View>
+            <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
             <FlatList
                 data={data}
                 renderItem={(item) =>
@@ -24,7 +36,7 @@ const HistoryController = ({ navigation }) => {
                                 <View style={{
                                     justifyContent: 'center',
                                     alignItems: 'center'
-                                    }}>
+                                }}>
                                     <Avatar.Image size={64} source=
                                         {{
                                             uri: ('https://zupimages.net/up/21/17/3jev.jpg')
@@ -33,12 +45,11 @@ const HistoryController = ({ navigation }) => {
                             }
                             right={props =>
                                 <View>
-                                    <Button style={{ marginbottom: 5 }}
-                                        color="#1d4b86"
-                                        icon="delete"
+                                    <Button style={styles.roundButton}
+                                        color="#000080"
                                         mode="contained"
                                         onPress={() => alert()}>
-                                        Supprimer
+                                        <AntDesign name="closecircleo" size={20} color="white" />
                                     </Button>
                                 </View>
                             }
@@ -46,41 +57,53 @@ const HistoryController = ({ navigation }) => {
                     </View>
                 }
             />
+            </ScrollView>
+            </SafeAreaView>
         </View>
     );
 };
 
 export default HistoryController;
 
-const data = [1, 2, 3];
+const data = [1, 2, 3, 4, 5, 6];
 const alert = (s) => {
     Alert.alert(
         s,
-        'Are you sure you would like to exit',
+        'Cette action est irréversible',
         [
-            { text: 'Stay', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-            { text: 'Exit', onPress: () => console.log('Cancel Pressed') },
+            { text: 'Supprimer', onPress: () => console.log('Suppression de lhistorique'), style: 'cancel' },
+            { text: 'Annuler', onPress: () => console.log('Annulation') },
         ],
         { cancelable: false }
     )
 }
 
 const styles = StyleSheet.create({
+    roundButton: {
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 2,
+        borderRadius: 100,
+        backgroundColor: '#000080',
+    },
     container: {
         flex: 1,
-        flexDirection: "column"
-      },
-      image: {
+        flexDirection: "column",
+        height: 30
+    },
+    image: {
         flex: 1,
         resizeMode: "cover",
         justifyContent: "center"
-      },
-      text: {
+    },
+    text: {
         color: "white",
         fontSize: 42,
         fontWeight: "bold",
         textAlign: "center"
-      },
+    },
     quizAttrContent: {
         flexDirection: 'row',
         justifyContent: 'center',
