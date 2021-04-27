@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Planning from '../components/Planning'
 
-import Home from '../components/Home'
+import Scanner from '../components/Scanner'
+//import Home from '../components/Home'
 
 const Stack = createStackNavigator()
 
@@ -26,4 +27,4 @@ function MainStackNavigator() {
   )
 }
 
-export default MainStackNavigator
+//export default MainStackNavigator

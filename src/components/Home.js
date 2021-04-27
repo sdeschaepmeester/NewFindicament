@@ -1,8 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
 
-function Home(props) {
-  const { navigation } = props
+function Home({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Home Screen</Text>
@@ -14,6 +13,8 @@ function Home(props) {
     </View>
   )
 }
+
+export default Home
 
 const styles = StyleSheet.create({
   container: {
@@ -39,4 +40,3 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home

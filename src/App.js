@@ -1,12 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-import MainStackNavigator from './navigation/MainStackNavigator'
+import {NavigationContainer} from '@react-navigation/native';
+import Tabs from "./navigation/tabs";
 
-import * as SplashScreen from 'expo-splash-screen';
 
-SplashScreen.preventAutoHideAsync();
-setTimeout(SplashScreen.hideAsync, 750);
-
-export default function App() {
-  return <MainStackNavigator />
+const App = () => {
+  return(
+    <NavigationContainer>
+      <Tabs />
+    </NavigationContainer>
+  );
 }
+
+export  default  App;
