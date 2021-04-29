@@ -1,21 +1,15 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import PlanningController from "../components/PlanningController";
 
-const PlanningScreen = ({navigation}) => {
-    return (
-        <View style={styles.container}>
-            <Text>Planning Screen</Text>
-
-        </View>
-    );
+const PlanningScreen = ({ navigation }) => {
+  return (
+    <View style={{ flex: 1, paddingTop: 30 }}>
+      <PlanningController/>
+    </View>
+  );
 };
 
-export default PlanningScreen;
+export default PlanningScreen;   
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-});
+

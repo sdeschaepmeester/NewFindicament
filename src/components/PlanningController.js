@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
+
 import {
     SafeAreaView,
     StyleSheet,
@@ -9,6 +10,7 @@ import {
     ScrollView
 } from 'react-native';
 import {LocaleConfig} from 'react-native-calendars';
+import { enableExpoCliLogging } from 'expo/build/logs/Logs';
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
@@ -38,7 +40,14 @@ export default function TabFourScreen(){
                 // Enable or disable vertical scroll indicator. Default = false
                 showScrollIndicator={true}
                 //...calendarParams
-
+                onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
+                onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}
+                onDayPress={(day) => {console.log('selected day', day)}}
+                
+                //onDayPress={()=>navigation.navigate('Details')}
+                // Callback that gets called when day changes while scrolling agenda list
+                
+               
                 style={{
                     borderWidth: 1,
                     borderColor: 'gray',
@@ -49,8 +58,8 @@ export default function TabFourScreen(){
                     backgroundColor: '#ffffff',
                     calendarBackground: '#ffffff',
                     textSectionTitleColor: '#b6c1cd',
-                    //textSectionTitleDisabledColor: '#d9e1e8',
-                    selectedDayBackgroundColor: '#00adf5',
+                    textSectionTitleDisabledColor: '#d9e1e8',
+                    selectedDayBackgroundColor: '#60d2e4',
                     selectedDayTextColor: '#ffffff',
                     todayTextColor: '#00adf5',
                     dayTextColor: '#2d4150',
@@ -58,12 +67,9 @@ export default function TabFourScreen(){
                     dotColor: '#00adf5',
                     selectedDotColor: '#ffffff',
                     arrowColor: 'orange',
-                    //disabledArrowColor: '#d9e1e8',
-                    monthTextColor: 'blue',
+                    disabledArrowColor: '#d9e1e8',
+                    monthTextColor: '#60d2e4',
                     indicatorColor: 'blue',
-                    textDayFontFamily: 'monospace',
-                    textMonthFontFamily: 'monospace',
-                    textDayHeaderFontFamily: 'monospace',
                     textDayFontWeight: '300',
                     textMonthFontWeight: 'bold',
                     textDayHeaderFontWeight: '300',
@@ -72,8 +78,8 @@ export default function TabFourScreen(){
                     textDayHeaderFontSize: 16
                   }}
         />
+        </View>
         
-        </View> 
         
     )    
 }
