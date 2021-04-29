@@ -24,7 +24,7 @@ class SearchBarByDrugName extends React.Component {
     return (
       <SearchBar
         lightTheme
-        placeholder="Type Here..."
+        placeholder="Chercher un médicament"
         onChangeText={this.updateSearch}
         value={search}
       />
@@ -47,7 +47,7 @@ class SearchBarByFilter extends React.Component {
     return (
       <SearchBar
         lightTheme
-        placeholder="Type Here..."
+        placeholder="Chercher un symptome"
         onChangeText={this.updateSearch}
         value={search}
       />
@@ -57,7 +57,7 @@ class SearchBarByFilter extends React.Component {
 
 // Functions
 const goToDetails = () => {
-  alert("goToDetails"); c
+  alert("goToDetails");
 }
 
 findDrugsList = () => {
@@ -66,7 +66,23 @@ findDrugsList = () => {
       <List.Item
         onPress={() => goToDetails()}
         title={"Doliprane 1000"}
-        description="Parfait pour les devs react"
+        description="Parfait pour les maux de gorge"
+        left={props =>
+          <View style={{
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <Avatar.Image size={64} source=
+              {{
+                uri: ('https://zupimages.net/up/21/17/3jev.jpg')
+              }} />
+          </View>
+        }
+      />
+      <List.Item
+        onPress={() => goToDetails()}
+        title={"Doliprane 1000"}
+        description="Parfait pour les maux de tête"
         left={props =>
           <View style={{
             justifyContent: 'center',
@@ -90,7 +106,7 @@ const DrugsController = () => {
   return (
     <View style={{ paddingTop: 30 }}>
       {/* View contenant l'image et le titre de la page  */}
-      <View style={styles.container}>
+      <View style={styles.container2}>
         <ImageBackground source={image} style={styles.image}>
           <Text style={styles.text}>Médicaments</Text>
         </ImageBackground>
@@ -100,12 +116,12 @@ const DrugsController = () => {
       <List.Section title="Accordions">
         <List.Accordion
           title="Recherche par symptome"
-          left={props => <List.Icon {...props} icon="folder" />}
+          left={props => <List.Icon {...props} icon="filter" />}
           expanded={expanded}
           onPress={handlePress}>
           <SearchBarByFilter />
-          <List.Item title="Ibuprofène" />
-          <List.Item title="Antalgique" />
+          <List.Item title="Mal de tête" />
+          <List.Item title="Mal de gorge" />
         </List.Accordion>
       </List.Section>
       {findDrugsList()}
@@ -136,6 +152,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    flexDirection: "column",
     resizeMode: "cover",
     justifyContent: "center",
     maxHeight: 200
@@ -184,5 +201,12 @@ const styles = StyleSheet.create({
   infoIcon: {
     color: "#676767",
     marginRight: 5
-  }
+  },
+  container2: {
+    flex: 1,
+    marginTop: 30,
+    marginBottom: 40,
+    flexDirection: "column",
+    backgroundColor: "#80CFFF"
+  },
 });
