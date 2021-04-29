@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-const DetailsScreen = ({navigation}) => {
+const DetailsScreen = ( {navigation}) => {
     return (
         <View style={styles.container}>
             <Text>Details Screen</Text>
-            <Button title="click here"
-            onPress={() => alert('yas')} />
+            <Text style={styles.textStyle}>
+                Vous voici sur la page description de médicament
+            </Text>
+          
         </View>
     );
 };

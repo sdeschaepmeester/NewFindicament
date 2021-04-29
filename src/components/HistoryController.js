@@ -14,8 +14,31 @@ var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const Stack = createStackNavigator();
 
-function goToDetails({ navigation }) {
-    navigation.navigate('Details')
+const drugs = [
+    {
+        codeCIP: 1,
+        title: 'Medoc1',
+        description: 'cest genial',
+      },
+      {
+        codeCIP: 2,
+        title: 'Medoc2',
+        description: 'cest trop cool',
+      },
+      {
+        codeCIP: 3,
+        title: 'Medoc3',
+        description: 'cest trop top',
+      },
+];
+const data = [1, 2, 3];
+
+function goToDetails({ navigation, drug }) {
+    navigation.navigate('Details', {
+        codeCIP: drug.codeCIP,
+        title: drug.title,
+        description: drug.description,
+      })
     // Va navigation vers la notice en fonction de id du medoc cliqué
     // Get id 
     // Insert to history -> call insertToHistory
@@ -35,29 +58,14 @@ const deleteHistoryById = () => {
 }
 
 findHistory = ({ navigation }) => {
-    var drugs = [
-        {
-            codeCIP: 1,
-            title: 'Medoc1',
-            description: 'cest genial',
-          },
-          {
-            codeCIP: 2,
-            title: 'Medoc2',
-            description: 'cest trop cool',
-          },
-          {
-            codeCIP: 3,
-            title: 'Medoc3',
-            description: 'cest trop top',
-          },
-    ];
+    
     
     return (
         <View>
             {drugs.map(drug => (
                 <List.Item
-                onPress={() => goToDetails({ navigation })}
+                key={drug.codeCIP}
+                onPress={() => goToDetails({ navigation, drug })}
                 title={drug.title}
                 description={drug.description}
                 left={props =>
@@ -130,7 +138,12 @@ function HistoryScreen({ navigation }) {
 // DetailsScreen
 function ShowDetailsScreen() {
     return (
-        <DetailsScreen />
+        <View>
+            <DetailsScreen />
+            <Text>
+                
+            </Text>
+        </View>
     )
 }
 
@@ -140,7 +153,7 @@ const DrugsScreen = ({ navigation }) => {
         <NavigationContainer independent={true}>
             <Stack.Navigator initialRouteName="History" >
                 <Stack.Screen name="History" component={HistoryScreen} />
-                <Stack.Screen name="Details" component={ShowDetailsScreen} />
+                <Stack.Screen name="Details" component={ShowDetailsScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
@@ -149,7 +162,6 @@ const DrugsScreen = ({ navigation }) => {
 export default DrugsScreen;
 //export default HistoryController;
 
-const data = [1, 2, 3, 4, 5, 6];
 const alert = (s) => {
     Alert.alert(
         s,
