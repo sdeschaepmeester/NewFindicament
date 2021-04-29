@@ -11,8 +11,18 @@ import DetailsScreen from '../screens/DetailsScreen';
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
-const goToDetails = () => {
-    alert("goToDetails");
+const Stack = createStackNavigator();
+
+function DetailScreen(){
+    return(
+        <View>
+            <Text>Detail </Text>
+        </View>
+    )
+}
+
+function goToDetails({navigation})  {
+    navigation.navigate('Details')
     // Va navigation vers la notice : 
     // Insert to history -> call insertToHistory
 }
@@ -29,24 +39,33 @@ const deleteHistory = () => {
 const deleteHistoryById = () => {
     alert("deleteHistoryById");
 }
-// Faire un array qui a title et description et boucler dessus dans findhistory
-/* const array : { 
-    [[
-        "codeCIP": 12321321321,
-        "title": "medoc1",
-        "descritption" : "trop cool"
-    ],
-    [
-        "codeCIP": 24242422,
-        "title": "medoc2",
-        "descritption" : "trop bien"
-    ]]
-} */
+const drugs = [
+    {
+      items: [
+        {
+            "codeCIP": 1,
+            "title": "medoc1",
+            "descritption" : "trop cool"
+        },
+        {
+            "codeCIP": 2,
+            "title": "medoc2",
+            "descritption" : "trop bien"
+        },
+        {
+            "codeCIP": 3,
+            "title": "medoc3",
+            "descritption" : "trop top"
+        }
+      ]
+    }
+  ];
 
-findHistory = () => {
+findHistory = ({navigation}) => {
     return (
+        <View>
         <List.Item
-            onPress={() => goToDetails()}
+            onPress={() => goToDetails({navigation})}
             title={"Doliprane 1000"}
             description="Parfait pour les devs react"
             left={props =>
@@ -71,6 +90,7 @@ findHistory = () => {
                 </View>
             }
         />
+        </View>
     )
 }
 
@@ -81,7 +101,8 @@ const printData = () => {
     alert("printData");
 }
 
-const HistoryController = () => {
+// Homescreen
+function HistoryScreen ({navigation}){
     return (
         <View style={{ flex: 1, paddingTop: 30 }}>
             <StatusBar
@@ -101,7 +122,7 @@ const HistoryController = () => {
                         data={data}
                         renderItem={(item) =>
                             <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                                {findHistory()}
+                                {findHistory({navigation})}
                             </View>
                         }
                     />
@@ -111,7 +132,29 @@ const HistoryController = () => {
     );
 };
 
-export default HistoryController;
+// DetailsScreen
+function ShowDetailsScreen (){
+    return(
+        <View>
+            <Text>Detail </Text>
+        </View>
+    )
+}
+
+// Drugscreen
+const DrugsScreen = ({navigation}) => {
+    return (
+        <NavigationContainer independent={true}>
+            <Stack.Navigator initialRouteName = "History" >
+                <Stack.Screen name="History" component={HistoryScreen} />
+                <Stack.Screen name="Details" component={ShowDetailsScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+};
+
+export default DrugsScreen;
+//export default HistoryController;
 
 const data = [1, 2, 3, 4, 5, 6];
 const alert = (s) => {
