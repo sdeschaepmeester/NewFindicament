@@ -1,20 +1,16 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import * as React from 'react';
+import { List } from 'react-native-paper';
+import { View, FlatList, Alert, StyleSheet, Text } from 'react-native';
+import DrugsController from '../components/FiltersController'
 
-const DrugsScreen = ({navigation}) => {
-    return (
-        <View style={styles.container}>
-            <Text>Drugs Screen</Text>
-        </View>
-    );
+
+const DrugsScreen = ({ navigation }) => {
+
+  return (
+    <View>
+      <DrugsController/>
+    </View>
+  );
 };
 
 export default DrugsScreen;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-});
