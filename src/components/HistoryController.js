@@ -5,31 +5,28 @@ import { List, Button, Avatar } from 'react-native-paper';
 import { Ionicons as Icon } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import DetailsScreen from '../screens/DetailsScreen';
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
-const HistoryController = ({ navigation }) => {
-    return (
-        <View style={{ flex: 1, paddingTop: 30 }}>
-            <StatusBar
-                backgroundColor="lightblue"
-            />
-            <View style={styles.container}>
-                <ImageBackground source={image} style={styles.image}>
-                    <Text style={styles.text}>Historique</Text>
-                </ImageBackground>
-            </View>
-            <View>
-                <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
-                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
-                />
-            </View>
-            <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-            <FlatList
-                data={data}
-                renderItem={(item) =>
-                    <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                        <List.Item
+
+const goToDetails = () => {
+    alert("goToDetails");c
+}
+
+const deleteHistory = () => {
+    alert("deleteHistory");
+}
+
+const deleteHistoryById = () => {
+    alert("deleteHistoryById");
+}
+
+findHistory = () => {
+    return(
+        <List.Item
+                        onPress={() => goToDetails()}
                             title={"Doliprane 1000"}
                             description="Parfait pour les devs react"
                             left={props =>
@@ -54,11 +51,42 @@ const HistoryController = ({ navigation }) => {
                                 </View>
                             }
                         />
+    )
+}
+
+const addToHistory = () => {
+    alert("addToHistory");
+}
+const printData = () => {
+    alert("printData");
+}
+
+const HistoryController = () => {
+    return (
+        <View style={{ flex: 1, paddingTop: 30 }}>
+            <StatusBar
+                backgroundColor="lightblue"
+            />
+            <View style={styles.container}>
+                <ImageBackground source={image} style={styles.image}>
+                    <Text style={styles.text}>Historique</Text>
+                </ImageBackground>
+                <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
+                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
+                />
+            </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+            <FlatList
+                data={data}
+                renderItem={(item) =>
+                    <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
+                        {findHistory()}
                     </View>
                 }
             />
             </ScrollView>
-            </SafeAreaView>
+        </SafeAreaView>
         </View>
     );
 };
@@ -90,13 +118,13 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        flexDirection: "column",
-        height: 30
+        flexDirection: "column"
     },
     image: {
         flex: 1,
         resizeMode: "cover",
-        justifyContent: "center"
+        justifyContent: "center",
+        maxHeight: 200
     },
     text: {
         color: "white",
