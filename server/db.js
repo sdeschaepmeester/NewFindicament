@@ -1,4 +1,7 @@
 const mysql = require("mysql")
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
 
 const pool = mysql.createPool({
     connectionLimit: 10,
@@ -8,6 +11,7 @@ const pool = mysql.createPool({
     host: "localhost",
     port : "3306"
 })
+
 
 
 let medicaDb = {}
@@ -52,6 +56,17 @@ medicaDb.insert = (email,password)=> {
             return resolve(result[0])
         })
     })
+}
+
+medicaDb.comparePassword = async (password, inputPassword) => {
+    console.log("hello"+password)
+    let compare = await bcrypt.compare(inputPassword,password)
+    return compare;
+}
+
+
+function comparePassword (passwordDB,passwordInput){
+    return bcrypt.compareSync(passwordInput, passwordDB);
 }
 
 module.exports = medicaDb
