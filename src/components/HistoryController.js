@@ -12,7 +12,14 @@ import DetailsScreen from '../screens/DetailsScreen';
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const goToDetails = () => {
-    alert("goToDetails");c
+    alert("goToDetails");
+    // Va navigation vers la notice : 
+    // Insert to history -> call insertToHistory
+}
+
+const insertToHistory = () =>{
+    // Print du name et description
+    // plus tard : récupérer idDrug
 }
 
 const deleteHistory = () => {
@@ -22,35 +29,48 @@ const deleteHistory = () => {
 const deleteHistoryById = () => {
     alert("deleteHistoryById");
 }
+// Faire un array qui a title et description et boucler dessus dans findhistory
+/* const array : { 
+    [[
+        "codeCIP": 12321321321,
+        "title": "medoc1",
+        "descritption" : "trop cool"
+    ],
+    [
+        "codeCIP": 24242422,
+        "title": "medoc2",
+        "descritption" : "trop bien"
+    ]]
+} */
 
 findHistory = () => {
-    return(
+    return (
         <List.Item
-                        onPress={() => goToDetails()}
-                            title={"Doliprane 1000"}
-                            description="Parfait pour les devs react"
-                            left={props =>
-                                <View style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                    <Avatar.Image size={64} source=
-                                        {{
-                                            uri: ('https://zupimages.net/up/21/17/3jev.jpg')
-                                        }} />
-                                </View>
-                            }
-                            right={props =>
-                                <View>
-                                    <Button style={styles.roundButton}
-                                        color="#000080"
-                                        mode="contained"
-                                        onPress={() => alert()}>
-                                        <AntDesign name="closecircleo" size={20} color="white" />
-                                    </Button>
-                                </View>
-                            }
-                        />
+            onPress={() => goToDetails()}
+            title={"Doliprane 1000"}
+            description="Parfait pour les devs react"
+            left={props =>
+                <View style={{
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    <Avatar.Image size={64} source=
+                        {{
+                            uri: ('https://zupimages.net/up/21/17/3jev.jpg')
+                        }} />
+                </View>
+            }
+            right={props =>
+                <View>
+                    <Button style={styles.roundButton}
+                        color="#000080"
+                        mode="contained"
+                        onPress={() => alert()}>
+                        <AntDesign name="closecircleo" size={20} color="white" />
+                    </Button>
+                </View>
+            }
+        />
     )
 }
 
@@ -75,18 +95,18 @@ const HistoryController = () => {
                     onPress={() => alert("Voulez-vous supprimer l'historique ?")}
                 />
             </View>
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-            <FlatList
-                data={data}
-                renderItem={(item) =>
-                    <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                        {findHistory()}
-                    </View>
-                }
-            />
-            </ScrollView>
-        </SafeAreaView>
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.scrollView}>
+                    <FlatList
+                        data={data}
+                        renderItem={(item) =>
+                            <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
+                                {findHistory()}
+                            </View>
+                        }
+                    />
+                </ScrollView>
+            </SafeAreaView>
         </View>
     );
 };
