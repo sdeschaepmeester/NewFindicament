@@ -12,6 +12,14 @@ import DetailsScreen from '../screens/DetailsScreen';
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const Stack = createStackNavigator();
+/* 
+ function DetailScreen(){
+    return(
+        <View>
+            <Text>Detail </Text>
+        </View>
+    )
+}  */
 
 function goToDetails({navigation})  {
     navigation.navigate('Details')
@@ -127,7 +135,9 @@ function HistoryScreen ({navigation}){
 // DetailsScreen
 function ShowDetailsScreen (){
     return(
-        <DetailsScreen/>
+        <View>
+            <Text>Detail </Text>
+        </View>
     )
 }
 
