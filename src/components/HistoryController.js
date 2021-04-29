@@ -8,18 +8,20 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsScreen from '../screens/DetailsScreen';
+import axios from 'axios';
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const Stack = createStackNavigator();
 
-function goToDetails({navigation})  {
+function goToDetails({ navigation }) {
     navigation.navigate('Details')
-    // Va navigation vers la notice : 
+    // Va navigation vers la notice en fonction de id du medoc cliqué
+    // Get id 
     // Insert to history -> call insertToHistory
 }
 
-const insertToHistory = () =>{
+const insertToHistory = () => {
     // Print du name et description
     // plus tard : récupérer idDrug
 }
@@ -31,57 +33,58 @@ const deleteHistory = () => {
 const deleteHistoryById = () => {
     alert("deleteHistoryById");
 }
-const drugs = [
-    {
-      items: [
-        {
-            "codeCIP": 1,
-            "title": "medoc1",
-            "descritption" : "trop cool"
-        },
-        {
-            "codeCIP": 2,
-            "title": "medoc2",
-            "descritption" : "trop bien"
-        },
-        {
-            "codeCIP": 3,
-            "title": "medoc3",
-            "descritption" : "trop top"
-        }
-      ]
-    }
-  ];
 
-findHistory = ({navigation}) => {
+findHistory = ({ navigation }) => {
+    var drugs = [
+        {
+            codeCIP: 1,
+            title: 'Medoc1',
+            description: 'cest genial',
+          },
+          {
+            codeCIP: 2,
+            title: 'Medoc2',
+            description: 'cest trop cool',
+          },
+          {
+            codeCIP: 3,
+            title: 'Medoc3',
+            description: 'cest trop top',
+          },
+    ];
+    
     return (
         <View>
-        <List.Item
-            onPress={() => goToDetails({navigation})}
-            title={"Doliprane 1000"}
-            description="Parfait pour les devs react"
-            left={props =>
-                <View style={{
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    <Avatar.Image size={64} source=
-                        {{
-                            uri: ('https://zupimages.net/up/21/17/3jev.jpg')
-                        }} />
-                </View>
-            }
-            right={props =>
-                <View>
-                    <Button style={styles.roundButton}
-                        color="#000080"
-                        mode="contained"
-                        onPress={() => alert()}>
-                        <AntDesign name="closecircleo" size={20} color="white" />
-                    </Button>
-                </View>
-            }
-        />
+            {drugs.map(drug => (
+                <List.Item
+                onPress={() => goToDetails({ navigation })}
+                title={drug.title}
+                description={drug.description}
+                left={props =>
+                    <View style={{
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Avatar.Image size={64} source=
+                            {{
+                                uri: ('https://zupimages.net/up/21/17/3jev.jpg')
+                            }} />
+                    </View>
+                }
+                right={props =>
+                    <View>
+                        <Button style={styles.roundButton}
+                            color="#000080"
+                            mode="contained"
+                            onPress={() => alert()}>
+                            <AntDesign name="closecircleo" size={20} color="white" />
+                        </Button>
+                    </View>
+                }
+            />
+            ))}
+            
+
         </View>
     )
 }
@@ -94,7 +97,7 @@ const printData = () => {
 }
 
 // Homescreen
-function HistoryScreen ({navigation}){
+function HistoryScreen({ navigation }) {
     return (
         <View style={{ flex: 1, paddingTop: 30 }}>
             <StatusBar
@@ -114,7 +117,7 @@ function HistoryScreen ({navigation}){
                         data={data}
                         renderItem={(item) =>
                             <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                                {findHistory({navigation})}
+                                {findHistory({ navigation })}
                             </View>
                         }
                     />
@@ -125,17 +128,17 @@ function HistoryScreen ({navigation}){
 };
 
 // DetailsScreen
-function ShowDetailsScreen (){
-    return(
-        <DetailsScreen/>
+function ShowDetailsScreen() {
+    return (
+        <DetailsScreen />
     )
 }
 
 // Drugscreen
-const DrugsScreen = ({navigation}) => {
+const DrugsScreen = ({ navigation }) => {
     return (
         <NavigationContainer independent={true}>
-            <Stack.Navigator initialRouteName = "History" >
+            <Stack.Navigator initialRouteName="History" >
                 <Stack.Screen name="History" component={HistoryScreen} />
                 <Stack.Screen name="Details" component={ShowDetailsScreen} />
             </Stack.Navigator>
