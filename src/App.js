@@ -11,33 +11,31 @@ import LoadingScreen from "./screens/LoadingScreen";
 import DrugsScreen from "./screens/DrugsScreen";
 const Stack = createStackNavigator()
 
-const App = () => {
+const App = ({navigation}) => {
     //<Tabs />
-    const [isLoggedIn,setLogged] = useState(null)
+    const [isloggedin,setLogged] = useState(null)
 
-    useEffect(async () =>{
+    const detectLogin= async ()=>{
         const token = await AsyncStorage.getItem('token')
         if(token){
             setLogged(true)
-            console.log("est log " +isLoggedIn);
         }else{
-            console.log("est logf " +isLoggedIn);
             setLogged(false)
         }
+    }
+    useEffect(()=>{
+        detectLogin()
     },[])
+
+
     return(
         <NavigationContainer  >
             <Stack.Navigator headerMode={"none"}>
-                {
-                    isLoggedIn == null ?
-                        ( <Stack.Screen name={"drugs"} component={DrugsScreen} />)
-                    : isLoggedIn == true ?
-                        (<Tabs/>) :
-                    (<>
-                        <Stack.Screen name={"signup"} component={SignupScreen} />
-                        <Stack.Screen name={"signin"} component={SigninScreen} />
-                    </>)
-                }
+
+                <Stack.Screen name="signin" component={SigninScreen} />
+                <Stack.Screen name="signup" component={SignupScreen} />
+                <Stack.Screen name="loading" component={LoadingScreen} />
+                <Stack.Screen name="drugs" component={DrugsScreen} />
 
             </Stack.Navigator>
         </NavigationContainer>

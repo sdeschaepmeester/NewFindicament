@@ -5,16 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignupScreen = (props) => {
 
-    const [email,setEmail]= useState('');
-    const [password,setPassword]= useState('');
+    const [email,setEmail] = useState('');
+    const [password,setPassword]=useState('')
 
-
-
-    let sendCred =  async () =>{
+    const sendCred= async (props)=>{
         fetch("http://10.0.2.2:3000/signup",{
             method:"POST",
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body:JSON.stringify({
@@ -23,18 +20,15 @@ const SignupScreen = (props) => {
             })
         })
             .then(res=>res.json())
-            .then( async data=>{
-                console.log(data)
+            .then(async (data)=>{
                 try {
-                    await AsyncStorage.setItem('token', data.token)
-                    props.navigation.replace("drugs")
+                    await AsyncStorage.setItem('token',data.token)
+                    props.navigation.replace("home")
                 } catch (e) {
-                    // saving error
-                    console.log("error e "+ e)
-
+                    console.log("error hai",e)
                 }
             })
-    };
+    }
 
     return (
         <View style={styles.container}>

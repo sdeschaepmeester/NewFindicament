@@ -42,8 +42,8 @@ router.post('/signin',async (req,res)=>{
         }
         console.log("pass"+isTheSamePassword)
         const token = jwt.sign({userId:user.id},jwtkey)
-        console.log("ready to insert");
-        res.send(token)
+        console.log("ready to insert"+token);
+        res.send({token})
     }catch (err){
         return res.status(422).send({error :"password does not match"})
     }
