@@ -79,22 +79,6 @@ findDrugsList = () => {
           </View>
         }
       />
-      <List.Item
-        onPress={() => goToDetails()}
-        title={"Doliprane 1000"}
-        description="Parfait pour les maux de tête"
-        left={props =>
-          <View style={{
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <Avatar.Image size={64} source=
-              {{
-                uri: ('https://zupimages.net/up/21/17/3jev.jpg')
-              }} />
-          </View>
-        }
-      />
     </View>
   )
 }
@@ -113,7 +97,7 @@ const DrugsController = () => {
       </View>{/* Fin titre  */}
       
       <SearchBarByDrugName />
-      <List.Section title="Accordions">
+      <List.Section>
         <List.Accordion
           title="Recherche par symptome"
           left={props => <List.Icon {...props} icon="filter" />}
@@ -158,7 +142,7 @@ const styles = StyleSheet.create({
     maxHeight: 200
   },
   text: {
-    color: "white",
+    color: "#80CFFF",
     fontSize: 42,
     fontWeight: "bold",
     textAlign: "center"
