@@ -8,8 +8,21 @@ const SignupScreen = (props) => {
     const [password,setPassword]= useState('');
 
     let sendCred = () =>{
-        fetch("")
-        console.log(email,password)
+        fetch("http://10.0.2.2:3000/signup",{
+            method:"POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({
+                "email":email,
+                "password":password
+            })
+        })
+            .then(res=>res.json())
+            .then(data=>{
+                console.log(data)
+            })
     };
 
     return (
@@ -20,6 +33,7 @@ const SignupScreen = (props) => {
                 <TextInput
                     label="Email"
                     value={email}
+
                     style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     mode={"outlined"}
                     onChangeText={(text)=>setEmail(text)}
@@ -27,6 +41,7 @@ const SignupScreen = (props) => {
                 <TextInput
                     label="Password"
                     value={password}
+                    secureTextEntry={true}
                     style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     mode={"outlined"}
                     onChangeText={(text)=>setPassword(text)}
