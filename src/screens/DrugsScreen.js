@@ -1,7 +1,13 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React,{useEffect,useState} from 'react';
+import { Button ,TextInput} from 'react-native-paper';
+import { ActivityIndicator,View, Text, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const DrugsScreen = ({navigation}) => {
+
+const DrugsScreen = (props) => {
+
+
+
     return (
         <View style={styles.container}>
             <Text>Drugs Screen</Text>

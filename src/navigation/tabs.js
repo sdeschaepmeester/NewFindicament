@@ -7,6 +7,9 @@ import DrugsScreen from "../screens/DrugsScreen";
 import PlanningScreen from "../screens/PlanningScreen";
 import HistoryScreen from "../screens/HistoryScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
+import SignupScreen from "../screens/SignupScreen"
+import SigninScreen from "../screens/SigninScreen"
+import LoadingScreen from "../screens/LoadingScreen";
 import Scanner from "../components/Scanner";
 
 const Tab = createBottomTabNavigator();
@@ -99,7 +102,7 @@ const Tabs = () => {
                                     style={{
                                         width: 35,
                                         height: 35,
-                                        tintColor: '#fff'
+                                        tintColor: '#fff' 
                                     }}   />
                             ),
                             tabBarButton: (props) => (
