@@ -17,29 +17,33 @@ const drugs = [
     {
         codeCIP: 1,
         title: 'Medoc1',
-        description: 'cest genial',
-      },
-      {
+        description: 'ceste genial',
+    },
+    {
         codeCIP: 2,
         title: 'Medoc2',
         description: 'cest trop cool',
-      },
-      {
+    },
+    {
         codeCIP: 3,
         title: 'Medoc3',
         description: 'cest trop top',
-      },
+    },
 ];
+
+
+
 const data = [1, 2, 3];
 
 function goToDetails({ navigation, drug }) {
+    console.log("code" + drug.codeCIP);
     navigation.navigate('Details', {
         codeCIP: drug.codeCIP,
         title: drug.title,
         description: drug.description,
-      })
+    })
     // Va navigation vers la notice en fonction de id du medoc cliqué
-    // Get id 
+    // Get id
     // Insert to history -> call insertToHistory
 }
 
@@ -48,76 +52,45 @@ const insertToHistory = () => {
     // plus tard : récupérer idDrug
 }
 
-const deleteHistory = () => {
-    alert("deleteHistory");
-}
 
-const deleteHistoryById = () => {
-    alert("deleteHistoryById");
-}
 
-findHistory = ({ navigation }) => {
-    
-    
+let findHistory = ({ navigation }) => {
+
+
     return (
         <View>
             {drugs.map(drug => (
                 <List.Item
-                key={drug.codeCIP}
-                onPress={() => goToDetails({ navigation, drug })}
-                title={drug.title}
-                description={drug.description}
-                left={props =>
-                    <View style={{
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Avatar.Image size={64} source=
-                            {{
-                                uri: ('https://zupimages.net/up/21/17/3jev.jpg')
-                            }} />
-                    </View>
-                }
-                right={props =>
-                    <View>
-                        <Button style={styles.roundButton}
-                            color="#000080"
-                            mode="contained"
-                            onPress={() => alert()}>
-                            <AntDesign name="closecircleo" size={20} color="white" />
-                        </Button>
-                    </View>
-                }
-            />
+                    key={drug.codeCIP}
+                    onPress={() => goToDetails({ navigation, drug })}
+                    title={drug.title}
+                    description={drug.description}
+                    left={props =>
+                        <View style={{
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Avatar.Image size={64} source=
+                                {{
+                                    uri: ('https://zupimages.net/up/21/17/3jev.jpg')
+                                }} />
+                        </View>
+                    }
+                />
             ))}
-            
+
 
         </View>
     )
 }
 
-const addToHistory = () => {
-    alert("addToHistory");
-}
-const printData = () => {
-    alert("printData");
-}
+
 
 // Homescreen
 function HistoryScreen({ navigation }) {
     return (
         <View style={{ flex: 1, paddingTop: 30 }}>
-            <StatusBar
-                backgroundColor="lightblue"
-            />
-            <View style={styles.container}>
-                <ImageBackground source={image} style={styles.image}>
-                    <Text style={styles.text}>Historique</Text>
-                </ImageBackground>
-                <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
-                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
-                />
-            </View>
+
             <SafeAreaView style={styles.container}>
                 <ScrollView style={styles.scrollView}>
                     <FlatList
@@ -135,19 +108,13 @@ function HistoryScreen({ navigation }) {
 };
 
 // DetailsScreen
-function ShowDetailsScreen({route}) {
+function ShowDetailsScreen(props) {
     return (
         <View>
             <DetailsScreen />
-            <View>
-                <Text>
-                    {route.params.title}
-                </Text>
-                <Text>
-                    {route.params.description}
-                </Text>
-            </View>
-
+            <Text>
+                code cip {props.codeCIP}
+            </Text>
         </View>
     )
 }
@@ -156,8 +123,8 @@ function ShowDetailsScreen({route}) {
 const DrugsScreen = ({ navigation }) => {
     return (
         <NavigationContainer independent={true}>
-            <Stack.Navigator initialRouteName="History" >
-                <Stack.Screen name="History" component={HistoryScreen} />
+            <Stack.Navigator initialRouteName="Home" >
+                <Stack.Screen name="Home" component={HistoryScreen} />
                 <Stack.Screen name="Details" component={ShowDetailsScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
@@ -167,17 +134,6 @@ const DrugsScreen = ({ navigation }) => {
 export default DrugsScreen;
 //export default HistoryController;
 
-const alert = (s) => {
-    Alert.alert(
-        s,
-        'Cette action est irréversible',
-        [
-            { text: 'Supprimer', onPress: () => console.log('Suppression de lhistorique'), style: 'cancel' },
-            { text: 'Annuler', onPress: () => console.log('Annulation') },
-        ],
-        { cancelable: false }
-    )
-}
 
 const styles = StyleSheet.create({
     roundButton: {
