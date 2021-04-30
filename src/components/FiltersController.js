@@ -7,6 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { SearchBar } from 'react-native-elements';
+import {createStackNavigator} from "@react-navigation/stack";
 
 // Search bar
 class SearchBarByDrugName extends React.Component {
@@ -31,6 +32,26 @@ class SearchBarByDrugName extends React.Component {
     );
   }
 }
+
+const Stack = createStackNavigator();
+
+const drugs = [
+  {
+    codeCIP: 1,
+    title: 'Medoc1',
+    description: 'ceste genial',
+  },
+  {
+    codeCIP: 2,
+    title: 'Medoc2',
+    description: 'cest trop cool',
+  },
+  {
+    codeCIP: 3,
+    title: 'Medoc3',
+    description: 'cest trop top',
+  }
+];
 
 class SearchBarByFilter extends React.Component {
   state = {
@@ -62,26 +83,50 @@ const goToDetails = () => {
 
 let findDrugsList = () => {
   return (
-    <View>
-      <List.Item
-        onPress={() => goToDetails()}
-        title={"Doliprane 1000"}
-        description="Parfait pour les devs react"
-        left={props =>
-          <View style={{
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            <Avatar.Image size={64} source=
-              {{
-                uri: ('https://zupimages.net/up/21/17/3jev.jpg')
-              }} />
-          </View>
-        }
-      />
-    </View>
+      <View>
+        {drugs.map(drug => (
+            <List.Item
+                key={drug.codeCIP}
+                title={drug.title}
+                description={drug.description}
+                left={props =>
+                    <View style={{
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}>
+                      <Avatar.Image size={64} source=
+                          {{
+                            uri: ('https://zupimages.net/up/21/17/3jev.jpg')
+                          }} />
+                    </View>
+                }
+            />
+        ))}
+
+
+      </View>
   )
 }
+
+function DrugsScreen({ navigation }) {
+  return (
+      <View style={{ flex: 1, paddingTop: 30 }}>
+
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollView}>
+            <FlatList
+                data={data}
+                renderItem={(item) =>
+                    <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
+                      {findDrugsList({ navigation })}
+                    </View>
+                }
+            />
+          </ScrollView>
+        </SafeAreaView>
+      </View>
+  );
+};
 
 const DrugsController = () => {
   const [expanded, setExpanded] = React.useState(false);
@@ -109,6 +154,11 @@ const DrugsController = () => {
         </List.Accordion>
       </List.Section>
       {findDrugsList()}
+      <NavigationContainer independent={true}>
+        <Stack.Navigator initialRouteName="Home" >
+          <Stack.Screen name="Home" component={DrugsScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </View>
   );
 };
