@@ -1,19 +1,17 @@
 import React from 'react';
-import {AppRegistry} from "react-native-web";
+
 import {NavigationContainer} from '@react-navigation/native';
 import Tabs from "./navigation/tabs";
-import app from './ServerExample';
-import {name as appName} from './app.json'
+import SignupScreen from "./screens/SignupScreen";
 
 
-/*const App = () => {
-  return(
-    <NavigationContainer>
-      <Tabs />
-    </NavigationContainer>
-  );
-}*/
+const App = () => {
+    return(
+        <NavigationContainer>
+            <SignupScreen />
+            <Tabs />
+        </NavigationContainer>
+    );
+}
 
-AppRegistry.registerComponent(appName, ()=> app)
-
-//export  default  App;
+export  default  App;
