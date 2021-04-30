@@ -135,13 +135,19 @@ function HistoryScreen({ navigation }) {
 };
 
 // DetailsScreen
-function ShowDetailsScreen() {
+function ShowDetailsScreen({route}) {
     return (
         <View>
             <DetailsScreen />
-            <Text>
-                
-            </Text>
+            <View>
+                <Text>
+                    {route.params.title}
+                </Text>
+                <Text>
+                    {route.params.description}
+                </Text>
+            </View>
+
         </View>
     )
 }

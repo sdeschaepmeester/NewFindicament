@@ -94,7 +94,7 @@ const Tabs = () => {
                             )
                         }}
             />
-            <Tab.Screen name="Detail" component={Scanner}
+            <Tab.Screen name="Scanner" component={Scanner}
                         options={{
                             tabBarIcon: ({focused})=>(
                                 <Image

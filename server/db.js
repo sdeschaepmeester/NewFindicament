@@ -50,7 +50,7 @@ medicaDb.getByEmail = (email)=> {
 
 medicaDb.getDrugs = ()=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From medicament  ',(err,result)=>{
+        pool.query('Select code_cip From medicament  ',(err,result)=>{
             if(err){
                 return reject(err)
             }

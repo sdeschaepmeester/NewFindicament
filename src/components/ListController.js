@@ -30,6 +30,9 @@ const drugs = [
         description: 'cest trop top',
     },
 ];
+
+
+
 const data = [1, 2, 3];
 
 function goToDetails({ navigation, drug }) {
