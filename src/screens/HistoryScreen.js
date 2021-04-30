@@ -1,21 +1,16 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { ListItem } from 'react-native-vector-icons';
+import * as React from 'react';
+import { View, FlatList, Alert, StyleSheet, Text } from 'react-native';
+import { List, Button, Avatar } from 'react-native-paper';
+import { Ionicons as Icon } from '@expo/vector-icons';
+import HistoryController from "../components/HistoryController";
 
-const HistoryScreen = ({navigation}) => {
-    return (
-        <View style={styles.container}>
-            <Text> History Screen</Text>
-
-        </View>
-    );
+const HistoryScreen = ({ navigation }) => {
+  return (
+    <View style={{ flex: 1, paddingTop: 30 }}>
+      <HistoryController/>
+    </View>
+  );
 };
 
 export default HistoryScreen;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-});
