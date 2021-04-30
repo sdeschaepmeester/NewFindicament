@@ -35,18 +35,37 @@ router.post('/signin',async (req,res)=>{
         return res.status(422).send({error :"email does not match"})
     }
     try{
+        // je verifie lsi les mots de passe sont les mêmes
         const isTheSamePassword = await db.comparePassword(user.password,password)
         console.log("pass"+isTheSamePassword)
         if(!isTheSamePassword){
             return res.status(422).send({error :"password does not match"+password})
         }
-        console.log("pass"+isTheSamePassword)
         const token = jwt.sign({userId:user.id},jwtkey)
         console.log("ready to insert"+token);
+        // renvoie le token de connexion unique
         res.send({token})
     }catch (err){
         return res.status(422).send({error :"password does not match"})
     }
+
+})
+
+
+router.get('/getDrugs', async (req,res)=>{
+
+    try{
+        let drugs = await db.getDrugs()
+        res.send(drugs)
+    }catch (err){
+        res.status(422).send(err.message)
+    }
+
+})
+
+router.get('/getDetails', async (req,res)=>{
+
+
 
 })
 

@@ -47,6 +47,18 @@ medicaDb.getByEmail = (email)=> {
         })
     })
 }
+
+medicaDb.getDrugs = ()=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select * From medicament  ',(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
+
 medicaDb.insert = (email,password)=> {
     return new Promise((resolve,reject)=>{
         pool.query('Insert INTO user (email, password) Values(?,?) ',[email,password],(err,result)=>{

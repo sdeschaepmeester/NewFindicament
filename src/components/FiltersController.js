@@ -60,7 +60,7 @@ const goToDetails = () => {
   alert("goToDetails"); c
 }
 
-findDrugsList = () => {
+let findDrugsList = () => {
   return (
     <View>
       <List.Item

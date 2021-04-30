@@ -11,6 +11,7 @@ import SignupScreen from "../screens/SignupScreen"
 import SigninScreen from "../screens/SigninScreen"
 import LoadingScreen from "../screens/LoadingScreen";
 import Scanner from "../components/Scanner";
+import HomeScreen from "../screens/HomeScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -55,7 +56,7 @@ const Tabs = () => {
                 }
             }}
         >
-            <Tab.Screen name="Drugs" component={DrugsScreen}
+            <Tab.Screen name="Drugs" component={HomeScreen}
             options={{
                 tabBarIcon: ({focused})=>(
                     <View style={{alignItems:'center',justifyContent:'center',top: 10}}>
