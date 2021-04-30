@@ -1,13 +1,16 @@
 import React,{useState} from 'react';
 import {View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Button,TextInput } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignupScreen = (props) => {
 
     const [email,setEmail]= useState('');
     const [password,setPassword]= useState('');
 
-    let sendCred = () =>{
+
+
+    let sendCred =  async () =>{
         fetch("http://10.0.2.2:3000/signup",{
             method:"POST",
             headers: {
@@ -20,8 +23,16 @@ const SignupScreen = (props) => {
             })
         })
             .then(res=>res.json())
-            .then(data=>{
+            .then( async data=>{
                 console.log(data)
+                try {
+                    await AsyncStorage.setItem('token', data.token)
+                    props.navigation.replace("drugs")
+                } catch (e) {
+                    // saving error
+                    console.log("error e "+ e)
+
+                }
             })
     };
 
