@@ -31,12 +31,12 @@ const App = ({navigation}) => {
     return(
         <NavigationContainer  >
             <Stack.Navigator headerMode={"none"}>
-
-                <Stack.Screen name="signin" component={SigninScreen} />
+                <Stack.Screen name="login" component={SigninScreen} />
                 <Stack.Screen name="signup" component={SignupScreen} />
                 <Stack.Screen name="loading" component={LoadingScreen} />
-                <Stack.Screen name="drugs" component={DrugsScreen} />
 
+                <Stack.Screen name="drugs" component={DrugsScreen} />
+                <Stack.Screen name={"tab"} children={()=> <Tabs/>}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

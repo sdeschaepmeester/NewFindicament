@@ -11,9 +11,12 @@ const LoadingScreen = () =>{
     const detectLogin= async ()=>{
         const token = await AsyncStorage.getItem('token')
         if(token){
-            props.navigation.replace("drugs")
+            console.log("nooo")
+
+            props.navigation.replace("tab")
         }else{
-            props.navigation.replace("sigin")
+            console.log("coucou")
+            props.navigation.replace("login")
         }
     }
     useEffect(()=>{

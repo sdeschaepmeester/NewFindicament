@@ -33,7 +33,7 @@ const SignupScreen = (props) => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"position"}>
-            <Text style={{fontSize:35,marginLeft:0}} >Create account</Text>
+            <Text style={{fontSize:30,marginLeft:-15}} >Création du compte</Text>
             <View>
                 <TextInput
                     label="Email"
@@ -53,11 +53,11 @@ const SignupScreen = (props) => {
                 />
                 <Button  mode="contained" style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     onPress={() =>sendCred()}>
-                    Sign up
+                    Creation
                 </Button>
             </View>
                 <TouchableOpacity>
-                    <Text onPress={()=>props.navigation.navigate("signin")}>Already have an account ?</Text>
+                    <Text onPress={()=>props.navigation.navigate("login")}>Tu as déjà un compte ?</Text>
 
                 </TouchableOpacity>
         </KeyboardAvoidingView>

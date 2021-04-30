@@ -35,7 +35,7 @@ const SigninScreen = (props) => {
                 try {
                     await AsyncStorage.setItem('token', data.token)
                     console.log('test')
-                    props.navigation.replace("drugs")
+                    props.navigation.replace("tab")
                 } catch (e) {
                     console.log("error hai", e)
                 }
@@ -46,7 +46,7 @@ const SigninScreen = (props) => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"position"}>
-            <Text style={{fontSize:35,marginLeft:75}} >Login</Text>
+            <Text style={{fontSize:35,marginLeft:15}} >Se Connecter</Text>
             <View>
                 <TextInput
                     label="Email"
@@ -64,11 +64,11 @@ const SigninScreen = (props) => {
                 />
                 <Button  mode="contained" style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     onPress={() => sendCred(props)}>
-                    Connection
+                    Connexion
                 </Button>
             </View>
                 <TouchableOpacity>
-                    <Text onPress={()=>props.navigation.navigate("signup")}>Don't have an account ?</Text>
+                    <Text onPress={()=>props.navigation.navigate("signup")}>Tu n'as pas de compte ?</Text>
                 </TouchableOpacity>
         </KeyboardAvoidingView>
 
