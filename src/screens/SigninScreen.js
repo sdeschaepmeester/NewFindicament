@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Button,TextInput } from 'react-native-paper';
 
-const SigninScreen = ({navigation}) => {
+const SigninScreen = (props) => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"position"}>
