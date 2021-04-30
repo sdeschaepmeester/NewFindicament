@@ -5,6 +5,11 @@ function Home({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Home Screen</Text>
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => navigation.navigate('Planning')}>
+        <Text style={styles.buttonText}>planning</Text>
+      </TouchableOpacity>
     </View>
   )
 }
