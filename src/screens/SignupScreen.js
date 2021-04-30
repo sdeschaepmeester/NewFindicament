@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Button,TextInput } from 'react-native-paper';
 
-const SignupScreen = ({navigation}) => {
+const SignupScreen = (props) => {
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"position"}>
@@ -24,7 +24,8 @@ const SignupScreen = ({navigation}) => {
                 </Button>
             </View>
                 <TouchableOpacity>
-                    <Text>Already have an account ?</Text>
+                    <Text onPress={()=>props.navigation.navigate("signin")}>Already have an account ?</Text>
+
                 </TouchableOpacity>
         </KeyboardAvoidingView>
 
