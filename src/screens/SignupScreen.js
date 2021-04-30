@@ -1,8 +1,17 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Button,TextInput } from 'react-native-paper';
 
 const SignupScreen = (props) => {
+
+    const [email,setEmail]= useState('');
+    const [password,setPassword]= useState('');
+
+    let sendCred = () =>{
+        fetch("")
+        console.log(email,password)
+    };
+
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"position"}>
@@ -10,16 +19,20 @@ const SignupScreen = (props) => {
             <View>
                 <TextInput
                     label="Email"
+                    value={email}
                     style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     mode={"outlined"}
+                    onChangeText={(text)=>setEmail(text)}
                 />
                 <TextInput
                     label="Password"
+                    value={password}
                     style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     mode={"outlined"}
+                    onChangeText={(text)=>setPassword(text)}
                 />
                 <Button  mode="contained" style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
-                    onPress={() => console.log('Pressed')}>
+                    onPress={() =>sendCred()}>
                     Sign up
                 </Button>
             </View>
