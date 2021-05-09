@@ -27,15 +27,15 @@ const App = ({navigation}) => {
         detectLogin()
     },[])
 
+   /* <Stack.Screen name="login" component={SigninScreen} />
+    <Stack.Screen name="signup" component={SignupScreen} />
+    <Stack.Screen name="loading" component={LoadingScreen} />*/
 
 
     return(
         <NavigationContainer  >
             <Stack.Navigator headerMode={"none"}>
-                <Stack.Screen name="login" component={SigninScreen} />
-                <Stack.Screen name="signup" component={SignupScreen} />
-                <Stack.Screen name="loading" component={LoadingScreen} />
-                <Stack.Screen name={"tab"} children={()=> <Tabs/>}/>
+               <Stack.Screen name={"tab"} children={()=> <Tabs/>}/>
                 <Stack.Screen name="drugs" component={DrugsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
