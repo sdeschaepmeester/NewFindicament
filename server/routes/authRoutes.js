@@ -63,8 +63,49 @@ router.get('/getDrugs', async (req,res)=>{
 
 })
 
-router.get('/getDetails', async (req,res)=>{
+router.post('/getDrugById', async (req,res)=>{
+    const {code_cip} = req.body;
 
+    try{
+        let drugs = await db.getDrugById(code_cip)
+        res.send(drugs)
+    }catch (err){
+        res.status(422).send(err.message)
+    }
+
+})
+
+
+router.post('/deleteHistory', async (req,res)=>{
+    const {cip} = req.body
+    console.log("ok"+cip)
+    //res.send(cip)
+
+    try{
+        // je verifie lsi les mots de passe sont les mêmes
+        await db.deleteHistory(cip)
+        return res.send("Deleted")
+
+    }catch (err){
+        return res.status(422).send({error :"password does not match"})
+    }
+
+
+})
+
+router.post('/insertHistory', async (req,res)=>{
+    const {cip,name} = req.body
+    console.log("ok"+cip)
+    //res.send(cip)
+
+    try{
+        // je verifie lsi les mots de passe sont les mêmes
+        await db.insertHistory(cip,name)
+        return res.send("Inserted")
+
+    }catch (err){
+        return res.status(422).send({error :"password does not match"})
+    }
 
 
 })

@@ -15,45 +15,118 @@ const Stack = createStackNavigator();
 
 const drugs = [
     {
-        codeCIP: 1,
+        codeCIP: "34009 360 256 7 7",
         title: 'Medoc1',
         description: 'cest genial',
       },
       {
-        codeCIP: 2,
+        codeCIP: "34009 300 877 1 8",
         title: 'Medoc2',
         description: 'cest trop cool',
       },
       {
-        codeCIP: 3,
+        codeCIP: "34009 337 656 2 0",
         title: 'Medoc3',
         description: 'cest trop top',
       },
 ];
 const data = [1, 2, 3];
 
-function goToDetails({ navigation, drug }) {
+async function getDrugById(code_cip){
+   return fetch('http://10.0.2.2:3000/getDrugById',{
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            code_cip: code_cip
+        }),
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            //console.log(JSON.stringify(responseJson))
+
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+   /* return fetch("http://10.0.2.2:3000/getDrugById", {
+        method: "POST",
+        mode: "no-cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            code_cip: code_cip,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => console.log(data));*/
+
+}
+
+async function goToDetails({ navigation, drug }) {
+     let data = await getDrugById(drug.codeCIP);
+    console.log(data[0].code_cip);
+
+    console.log("hello data")
     navigation.navigate('Details', {
-        codeCIP: drug.codeCIP,
+        codeCIP: data.code_cip,
         title: drug.title,
-        description: drug.description,
+        description: data[0].notice,
       })
+    insertToHistory(drug.codeCIP,drug.title)
     // Va navigation vers la notice en fonction de id du medoc cliqué
     // Get id 
     // Insert to history -> call insertToHistory
 }
 
-const insertToHistory = () => {
+const insertToHistory = (cip,name) => {
+    fetch('http://10.0.2.2:3000/insertHistory', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cip: cip,
+            name: name
+        }),
+    });
     // Print du name et description
     // plus tard : récupérer idDrug
 }
 
 const deleteHistory = () => {
-    alert("deleteHistory");
+    fetch('http://10.0.2.2:3000/deleteHistory', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cip: 1
+        }),
+    });
+    alert("Voulez-vous supprimer l'historique ?")
 }
 
-const deleteHistoryById = () => {
-    alert("deleteHistoryById");
+const deleteHistoryById = (req) => {
+    fetch('http://10.0.2.2:3000/deleteHistory', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cip: req
+        }),
+    });
 }
 
 findHistory = ({ navigation }) => {
@@ -83,7 +156,7 @@ findHistory = ({ navigation }) => {
                         <Button style={styles.roundButton}
                             color="#000080"
                             mode="contained"
-                            onPress={() => alert()}>
+                            onPress={() => deleteHistoryById(drug.codeCIP)}>
                             <AntDesign name="closecircleo" size={20} color="white" />
                         </Button>
                     </View>
@@ -115,7 +188,7 @@ function HistoryScreen({ navigation }) {
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
                 <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
-                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
+                    onPress={() => deleteHistory()}
                 />
             </View>
             <SafeAreaView style={styles.container}>

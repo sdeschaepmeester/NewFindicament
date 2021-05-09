@@ -58,6 +58,16 @@ medicaDb.getDrugs = ()=> {
         })
     })
 }
+medicaDb.getDrugById = (id)=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select * From medicament Where code_cip = ? ',id,(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
 
 medicaDb.insert = (email,password)=> {
     return new Promise((resolve,reject)=>{
@@ -68,6 +78,43 @@ medicaDb.insert = (email,password)=> {
             return resolve(result[0])
         })
     })
+}
+
+medicaDb.deleteHistory = (id = -1)=> {
+    if(id == -1){ // delete All
+        return new Promise((resolve,reject)=>{
+            pool.query('Delete From history ',(err,result)=>{
+                if(err){
+                    return reject(err)
+                }
+                return resolve(result[0])
+            })
+        })
+    }else{
+        return new Promise((resolve,reject)=>{
+            pool.query('Delete From history Where id_drug = ?',id,(err,result)=>{
+                if(err){
+                    return reject(err)
+                }
+                return resolve(result[0])
+            })
+        })
+    }
+
+}
+
+medicaDb.insertHistory = (id_drug,name)=> {
+
+    return new Promise((resolve,reject)=>{
+        pool.query('Insert INTO history (id_drug, `name`) Values(?,?) ',[id_drug,name],(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result[0])
+        })
+    })
+
+
 }
 
 medicaDb.comparePassword = async (password, inputPassword) => {

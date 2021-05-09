@@ -7,7 +7,7 @@ const DetailsScreen = ( {navigation}) => {
         <View style={styles.container}>
             <Text>Details Screen</Text>
             <Text style={styles.textStyle}>
-                Vous voici sur la page description de médicament
+                Vous voici sur la page description de médicament lala
             </Text>
           
         </View>
