@@ -1,9 +1,9 @@
 
 const pool = require('../db');
 
-let History = {}
+let favorite = {}
 
-History.deleteHistory = (id = -1)=> {
+favorite.deleteFavorite = (id = -1)=> {
     if(id == -1){ // delete All
         return new Promise((resolve,reject)=>{
             pool.query('Delete From history ',(err,result)=>{
@@ -26,18 +26,7 @@ History.deleteHistory = (id = -1)=> {
 
 }
 
-History.getDrugById = (id)=> {
-    return new Promise((resolve,reject)=>{
-        pool.query('Select * From history Where code_cip = ? ',id,(err,result)=>{
-            if(err){
-                return reject(err)
-            }
-            return resolve(result)
-        })
-    })
-}
-
-History.insertHistory = (id_drug,name)=> {
+favorite.insertFavorite = (id_drug,name)=> {
 
     return new Promise((resolve,reject)=>{
         pool.query('Insert INTO history (id_drug, `name`) Values(?,?) ',[id_drug,name],(err,result)=>{
@@ -51,4 +40,4 @@ History.insertHistory = (id_drug,name)=> {
 
 }
 
-module.exports =  History
+module.exports =  favorite
