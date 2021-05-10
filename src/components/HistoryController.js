@@ -145,9 +145,12 @@ const deleteHistoryById = (req) => {
     });
 }
 
-findHistory = ({ navigation }) => {
+let  findHistory =  ({ navigation }) => {
 
-    
+    //let getAllHistory = await getHistory();
+    //console.log(getAllHistory);
+
+
     return (
         <View>
             {drugs.map(drug => (
@@ -185,17 +188,12 @@ findHistory = ({ navigation }) => {
     )
 }
 
-const addToHistory = () => {
-    alert("addToHistory");
-}
-const printData = () => {
-    alert("printData");
-}
+
 
 // Homescreen
-function HistoryScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, paddingTop: 30 }}>
+ function HistoryScreen  ({ navigation }) {
+    return  (
+        <View style={{flex: 1, paddingTop: 30}}>
             <StatusBar
                 backgroundColor="lightblue"
             />
@@ -203,8 +201,8 @@ function HistoryScreen({ navigation }) {
                 <ImageBackground source={image} style={styles.image}>
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
-                <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
-                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
+                <AntDesign name="delete" size={35} color="#00004d" style={{paddingLeft: 20, paddingTop: 5}}
+                           onPress={() => alert("Voulez-vous supprimer l'historique ?")}
                 />
             </View>
             <SafeAreaView style={styles.container}>
@@ -212,8 +210,8 @@ function HistoryScreen({ navigation }) {
                     <FlatList
                         data={data}
                         renderItem={(item) =>
-                            <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                                {findHistory({ navigation })}
+                            <View style={{borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0'}}>
+                                {findHistory({navigation})}
                             </View>
                         }
                     />
