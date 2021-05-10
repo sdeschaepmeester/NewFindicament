@@ -1,5 +1,6 @@
 
 const pool = require('../db');
+const bcrypt = require('bcrypt');
 
 let Auth = {}
 
@@ -47,8 +48,10 @@ Auth.insert = (email,password)=> {
 }
 
 Auth.comparePassword = async (password, inputPassword) => {
-    console.log("hello"+password)
+    console.log("the password "+password)
     let compare = await bcrypt.compare(inputPassword,password)
+    console.log("the password are the same ? "+compare)
+
     return compare;
 }
 

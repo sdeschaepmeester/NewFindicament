@@ -33,7 +33,7 @@ const drugs = [
 const data = [1, 2, 3];
 
 async function getDrugById(code_cip){
-   return fetch('http://10.0.2.2:3000/getDrugById',{
+    return fetch('http://10.0.2.2:3000/getDrugById',{
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -52,31 +52,48 @@ async function getDrugById(code_cip){
         .catch((error) => {
             console.error(error);
         });
+}
 
-   /* return fetch("http://10.0.2.2:3000/getDrugById", {
-        method: "POST",
-        mode: "no-cors",
-        cache: "no-cache",
-        credentials: "same-origin",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            code_cip: code_cip,
-        }),
-    })
-        .then(response => response.json())
-        .then(data => console.log(data));*/
 
+let drugData = async ()=> {
+    return fetch('http://10.0.2.2:3000/getHistory')
+        .then((response) => response.json())
+        .then((responseJson) => {
+            //console.log(JSON.stringify(responseJson))
+
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+
+}
+
+
+async function  getHistory(){
+    let drugData = await drugData()
+    let drugArray = [];
+    for(var i in drugData)
+        drugArray.push([i, drugData [i]]);
+
+    /*console.log(drugArray[2][1].cip);
+
+    drugArray.map(drug => (
+        console.log(drug[1].name+ " // ")
+
+    ))*/
+    return drugArray
 }
 
 async function goToDetails({ navigation, drug }) {
      let data = await getDrugById(drug.codeCIP);
-    console.log(data[0].code_cip);
+
+    //console.log(tempo);
 
     console.log("hello data")
     navigation.navigate('Details', {
-        codeCIP: data.code_cip,
+        codeCIP: data[0].code_cip,
         title: drug.title,
         description: data[0].notice,
       })
@@ -130,7 +147,7 @@ const deleteHistoryById = (req) => {
 }
 
 findHistory = ({ navigation }) => {
-    
+
     
     return (
         <View>

@@ -36,6 +36,8 @@ router.post('/signin',async (req,res)=>{
     }
     try{
         // je verifie lsi les mots de passe sont les mêmes
+        console.log("before pas ")
+
         const isTheSamePassword = await auth.comparePassword(user.password,password)
         console.log("pass"+isTheSamePassword)
         if(!isTheSamePassword){
