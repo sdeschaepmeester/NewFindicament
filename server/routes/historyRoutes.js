@@ -2,6 +2,17 @@ const express = require('express');
 const history = require('../Model/HistoryModel')// calling file with sql method
 const historyRouter = express.Router();
 
+historyRouter.get('/getHistory', async (req,res)=>{
+    try{
+        let historyTable = await history.getHistory()
+        res.send(historyTable)
+    }catch (err){
+        return res.status(422).send({error :"Something wrong with the database"})
+    }
+
+
+})
+
 historyRouter.post('/deleteHistory', async (req,res)=>{
     const {cip} = req.body
     console.log("ok"+cip)
@@ -34,5 +45,8 @@ historyRouter.post('/insertHistory', async (req,res)=>{
 
 
 })
+
+
+
 
 module.exports = historyRouter
