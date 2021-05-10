@@ -1,4 +1,4 @@
-## Summary 
+# Summary 
 
 See below what you can find in the readMe :
 | Section       | Description   |
@@ -116,4 +116,7 @@ You can then type expo start and start debugging without bugs.
 
 # Database
 
-Pouet pouet faut remplir cte section
+Grab yourself a version of the sql dump sent on the discord.
+Download a database software such as wampserver.
+Open wampserver (icon should be green). Then go to http://localhost/phpmyadmin/index.php on chrome or firefox.
+On phpmyadmin, connect to the account. Select import. Import your file and create the database.
