@@ -1,3 +1,14 @@
+## Summary 
+
+See below what you can find in the readMe :
+| Section       | Description   |
+| ------------- |:-------------:|
+| Get started     | All you need to know in order to clone, install and run the project. |
+| Troubleshooting      | If you have a problem installing the project, take a look at this section.      |
+| Database | Everything you need to know to install the database.      |
+
+# Get started 
+
 ## Requirements : 
 If you're having trouble installing the project, verify if you have installed the following : 
 
@@ -11,7 +22,7 @@ If you're having trouble installing the project, verify if you have installed th
 3. Test the application
   - Expo Go application on your phone OR
   - Android Studio for simulating a device 
-
+  
 ## 1st step : Clone the project 
 
 Go to the root of NewFindicament project and click on the green button. Then copy the link.
@@ -63,7 +74,7 @@ Do NOT commit :
 - .expo folder
 - node modules
 
-## Troubleshooting 
+# Troubleshooting 
 
 If you have any of the following errors, here are some tips that works for some of us :
 
@@ -102,3 +113,7 @@ Recreate the nodes_modules folder with this command (still in the src folder):
 npm install
 ```
 You can then type expo start and start debugging without bugs.
+
+# Database
+
+Pouet pouet faut remplir cte section
