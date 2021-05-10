@@ -10,7 +10,7 @@ import {
 import { List, Button, Avatar } from 'react-native-paper';
 import { LocaleConfig } from 'react-native-calendars';
 import { enableExpoCliLogging } from 'expo/build/logs/Logs';
-import Form, { TYPES } from 'react-native-basic-form';
+import { useForm } from "react-hook-form";
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
@@ -84,11 +84,7 @@ function PlanningScreen({ navigation }) {
 };
 
 
-const fields = [
-  { name: 'drug', label: 'Medicament', required: true, autoCapitalize: "none", autoCorrect: false },
-  { name: 'comment', label: 'Commentaires', required: true, multiline: true },
-  { name: 'duration', label: 'Duree en nombre de jours', required: true, type: TYPES.Number },
-];
+
 
 const stylesAddTreatment = {
   button: {
@@ -97,20 +93,29 @@ const stylesAddTreatment = {
   backgroundColor: 'lightblue'
 }
 
-async function onSubmit(data) {
-  console.log(data)
-}
+
 
 function AddTreatmentScreen() {
   return (
-    <View>
-      <Text>hello</Text>
-      <Form
-        title={"Ajouter le traitement"}
-        fields={fields}
-        onSubmit={onSubmit}
-        style={stylesAddTreatment}></Form>
-    </View>
+    function App() {
+      const { register, handleSubmit } = useForm();
+      const onSubmit = data => console.log(data);
+      
+      <form onSubmit={handleSubmit(onSubmit)}>
+      <Headers />
+
+      <input {...register("firstName")} placeholder="First name" />
+      <input {...register("lastName")} placeholder="Last name" />
+      <select {...register("category")}>
+        <option value="">Select...</option>
+        <option value="A">Category A</option>
+        <option value="B">Category B</option>
+      </select>
+
+      <input type="submit" />
+    </form>
+    
+    }
   );
 };
 
