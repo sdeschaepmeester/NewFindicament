@@ -6,7 +6,7 @@ let favorite = {}
 favorite.deleteFavorite = (id = -1)=> {
     if(id == -1){ // delete All
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From history ',(err,result)=>{
+            pool.query('Delete From favorite ',(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -15,7 +15,7 @@ favorite.deleteFavorite = (id = -1)=> {
         })
     }else{
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From history Where id_drug = ?',id,(err,result)=>{
+            pool.query('Delete From favorite Where cip = ?',id,(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -26,10 +26,10 @@ favorite.deleteFavorite = (id = -1)=> {
 
 }
 
-favorite.insertFavorite = (id_drug,name)=> {
+favorite.insertFavorite = (cip,name)=> {
 
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO history (id_drug, `name`) Values(?,?) ',[id_drug,name],(err,result)=>{
+        pool.query('Insert INTO favorite (cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
             if(err){
                 return reject(err)
             }

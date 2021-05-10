@@ -28,7 +28,7 @@ History.deleteHistory = (id = -1)=> {
 
 History.getDrugById = (id)=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From history Where code_cip = ? ',id,(err,result)=>{
+        pool.query('Select * From history Where cip = ? ',id,(err,result)=>{
             if(err){
                 return reject(err)
             }
@@ -37,10 +37,10 @@ History.getDrugById = (id)=> {
     })
 }
 
-History.insertHistory = (id_drug,name)=> {
+History.insertHistory = (cip,name)=> {
 
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO history (id_drug, `name`) Values(?,?) ',[id_drug,name],(err,result)=>{
+        pool.query('Insert INTO history (cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
             if(err){
                 return reject(err)
             }
