@@ -127,10 +127,9 @@ const deleteHistory = () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            cip: 1
+            cip: -1
         }),
     });
-    alert("Voulez-vous supprimer l'historique ?")
 }
 
 const deleteHistoryById = (req) => {
@@ -205,7 +204,7 @@ function HistoryScreen({ navigation }) {
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
                 <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
-                    onPress={() => deleteHistory()}
+                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
                 />
             </View>
             <SafeAreaView style={styles.container}>
@@ -262,7 +261,7 @@ const alert = (s) => {
         s,
         'Cette action est irréversible',
         [
-            { text: 'Supprimer', onPress: () => console.log('Suppression de lhistorique'), style: 'cancel' },
+            { text: 'Supprimer', onPress: () => deleteHistory(), style: 'cancel' },
             { text: 'Annuler', onPress: () => console.log('Annulation') },
         ],
         { cancelable: false }
