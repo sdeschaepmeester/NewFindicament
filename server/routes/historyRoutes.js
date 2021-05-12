@@ -13,17 +13,6 @@ historyRouter.get('/getHistory', async (req,res)=>{
 
 })
 
-historyRouter.get('/getHistory2',  (req,res)=>{
-    try{
-        let historyTable =  history.getHistory2()
-        console.log("response all historic "+ historyTable)
-        res.send("ouais")
-    }catch (err){
-        return res.status(422).send(err.message)
-    }
-
-
-})
 
 historyRouter.post('/deleteHistory', async (req,res)=>{
     const {cip} = req.body

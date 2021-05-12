@@ -5,7 +5,7 @@ let History = {}
 
 History.getHistory = ()=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From history',(err,result)=>{
+        pool.query('Select * From history ',(err,result)=>{
             if(err){
                 return reject(err)
             }
@@ -14,17 +14,6 @@ History.getHistory = ()=> {
     })
 }
 
-History.getHistory2 = ()=> {
-    console.log("reponse non asyc ")
-    pool.query("SELECT * FROM history",(err,req,res) =>{
-        if (err) throw err;
-        console.log("reponse non asyc ")
-        //console.log(res)
-         return res
-    });
-
-
-}
 
 
 

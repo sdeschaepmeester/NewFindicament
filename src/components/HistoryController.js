@@ -1,5 +1,6 @@
 import { ListItem } from 'react-native-vector-icons';
-import * as React from 'react';
+//import * as React from "react";
+
 import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
 import { List, Button, Avatar } from 'react-native-paper';
 import { Ionicons as Icon } from '@expo/vector-icons';
@@ -8,29 +9,60 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsScreen from '../screens/DetailsScreen';
+import React,{useState,useEffect} from "react";
+
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const Stack = createStackNavigator();
 
+
+
+/*
 const drugs = [
     {
-        codeCIP: "34009 360 256 7 7",
-        title: 'Medoc1',
-        description: 'cest genial',
+        cip: "34009 360 256 7 7",
+        name: 'Medoc1',
+        id: 'cest genial',
       },
       {
-        codeCIP: "34009 300 877 1 8",
-        title: 'Medoc2',
-        description: 'cest trop cool',
+        cip: "34009 300 877 1 8",
+        name: 'Medoc2',
+        id: 'cest trop cool',
       },
       {
-        codeCIP: "34009 337 656 2 0",
-        title: 'Medoc3',
-        description: 'cest trop top',
+        cip: "34009 337 656 2 0",
+        name: 'Medoc3',
+        id: 'cest trop top',
       },
-];
+];*/
+
+const drugs =   [
+     [
+        "0",
+             {
+                 "id": 75,
+                 "cip": "34009 360 256 7 7",
+             "name": "Medoc1",
+             },
+    ],
+    [
+        "1",
+             {
+                 "id": 76,
+                 "cip": "34009 360 256 7 7",
+                "name": "Medoc1",
+             },
+     ],
+
+]
+
+
+
 const data = [1, 2, 3];
+
+
+
 
 async function getDrugById(code_cip){
     return fetch('http://10.0.2.2:3000/getDrugById',{
@@ -45,7 +77,7 @@ async function getDrugById(code_cip){
     })
         .then((response) => response.json())
         .then((responseJson) => {
-            //console.log(JSON.stringify(responseJson))
+            console.log(JSON.stringify(responseJson))
 
             return responseJson;
         })
@@ -56,12 +88,17 @@ async function getDrugById(code_cip){
 
 
 let drugData = async ()=> {
-    return fetch('http://10.0.2.2:3000/getHistory')
+    return fetch('http://10.0.2.2:3000/getHistory',{
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
         .then((response) => response.json())
         .then((responseJson) => {
             //console.log(JSON.stringify(responseJson))
-
-            return responseJson;
+            return responseJson
         })
         .catch((error) => {
             console.error(error);
@@ -71,9 +108,10 @@ let drugData = async ()=> {
 }
 
 
-async function  getHistory(){
-    let drugData = await drugData()
+async function  getHistory(drugData){
     let drugArray = [];
+    console.log(drugData)
+    console.log("stop")
     for(var i in drugData)
         drugArray.push([i, drugData [i]]);
 
@@ -145,20 +183,23 @@ const deleteHistoryById = (req) => {
     });
 }
 
-let  findHistory =  ({ navigation }) => {
+
+
+
+
+let  findHistory =  ({ navigation,data,count }) => {
 
     //let getAllHistory = await getHistory();
     //console.log(getAllHistory);
-
-
+    count = count != 1 ? 0 : 1;
     return (
         <View>
-            {drugs.map(drug => (
+            {data.map(drug => (
                 <List.Item
-                key={drug.codeCIP}
+                key={drug[1].cip}
                 onPress={() => goToDetails({ navigation, drug })}
-                title={drug.title}
-                description={drug.description}
+                title={drug[1].name}
+                description={drug[1].id}
                 left={props =>
                     <View style={{
                         justifyContent: 'center',
@@ -182,7 +223,6 @@ let  findHistory =  ({ navigation }) => {
                 }
             />
             ))}
-            
 
         </View>
     )
@@ -192,15 +232,71 @@ let  findHistory =  ({ navigation }) => {
 
 // Homescreen
  function HistoryScreen  ({ navigation }) {
-    return  (
-        <View style={{flex: 1, paddingTop: 30}}>
+     const [count, setCount] = useState(0);
+     /*let arrayData = {};
+     arrayData[0] ={}
+     arrayData[1] ={}
+     arrayData[0].cip= "34009 360 256 7 7"
+     arrayData[0].id= 76
+     arrayData[0].name= "Medoc1"
+     arrayData[1].cip= "34009 360 256 7 7"
+     arrayData[1].id= 76
+     arrayData[1].name= "Medoc1"*/
+     const [data, setData] = useState(drugs);
+
+
+     useEffect(() => {
+         // Using an IIFE
+         (async function anyNameFunction() {
+             if(count >= 1){
+                 let code_cip = "34009 360 256 7 7"
+                 /*let temp =await fetch('http://10.0.2.2:3000/getDrugById',{
+                     method: 'POST',
+                     headers: {
+                         Accept: 'application/json',
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({
+                         code_cip: code_cip
+                     }),
+                 })
+                     .then((response) => response.json())
+                     .then((responseJson) => {
+                         console.log(JSON.stringify(responseJson[0].code_cip))
+
+                     })
+                     .catch((error) => {
+                         console.error(error);
+                     });*/
+                 let temp = await drugData()
+                 let array = await getHistory(temp);
+                 //setCount(0);
+                 await console.log(array)
+                 await setData(array)
+                 console.log('ok');
+             }
+             if(count >= 4){
+                 console.log("ererz")
+             }
+         })();
+     }, [count]);
+
+
+     return  (
+        <View style={{flex: 1, paddingTop: 0}}>
             <StatusBar
                 backgroundColor="lightblue"
             />
             <View style={styles.container}>
-                <ImageBackground source={image} style={styles.image}>
+                <ImageBackground source={image} style={styles.image} >
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
+                <View>
+                    <Text>{count}</Text>
+                    <Button style={{backgroundColor: "black",color: "white"}} title="Update" onPress={()=>{setCount(count+1)}} />
+                    <Text>couou</Text>
+
+                </View>
                 <AntDesign name="delete" size={35} color="#00004d" style={{paddingLeft: 20, paddingTop: 5}}
                            onPress={() => alert("Voulez-vous supprimer l'historique ?")}
                 />
@@ -211,12 +307,13 @@ let  findHistory =  ({ navigation }) => {
                         data={data}
                         renderItem={(item) =>
                             <View style={{borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0'}}>
-                                {findHistory({navigation})}
+                                {findHistory({navigation,data,count})}
                             </View>
                         }
                     />
                 </ScrollView>
             </SafeAreaView>
+
         </View>
     );
 };
@@ -241,6 +338,7 @@ function ShowDetailsScreen({route}) {
 
 // Drugscreen
 const DrugsScreen = ({ navigation }) => {
+
     return (
         <NavigationContainer independent={true}>
             <Stack.Navigator initialRouteName="History" >
@@ -248,6 +346,7 @@ const DrugsScreen = ({ navigation }) => {
                 <Stack.Screen name="Details" component={ShowDetailsScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
+
     );
 };
 
