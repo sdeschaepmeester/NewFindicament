@@ -88,13 +88,15 @@ async function  parseHistoryToArray(drugData){
 }
 
 async function goToDetails({ navigation, drug }) {
-     let data = await getDrugById(drug.codeCIP);
+     let data = await getDrugById(drug[1].cip);
+
     navigation.navigate('Details', {
         codeCIP: data[0].code_cip,
-        title: drug.title,
+        title: drug[1].title,
         description: data[0].notice,
       })
-    insertToHistory(drug.codeCIP,drug.title)
+    asyncDone = false;
+    insertToHistory(drug[1].cip,drug[1].name)
 }
 
 const insertToHistory = (cip,name) => {
@@ -165,7 +167,7 @@ let  findHistory =  ({ navigation,data }) => {
                         <Button style={styles.roundButton}
                             color="#000080"
                             mode="contained"
-                            onPress={() => deleteHistoryById(drug.codeCIP)}>
+                            onPress={() => deleteHistoryById(drug[1].cip)}>
                             <AntDesign name="closecircleo" size={20} color="white" />
                         </Button>
                     </View>
@@ -181,6 +183,7 @@ let  findHistory =  ({ navigation,data }) => {
 
 // Homescreen
  function HistoryScreen  ({ navigation }) {
+    console.log('hello I m History')
 
      const [data, setData] = useState(tempoHistory);
 

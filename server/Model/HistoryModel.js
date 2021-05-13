@@ -5,7 +5,7 @@ let History = {}
 
 History.getHistory = ()=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From history ',(err,result)=>{
+        pool.query('Select * From history Group by cip ',(err,result)=>{
             if(err){
                 return reject(err)
             }
