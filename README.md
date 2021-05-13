@@ -116,7 +116,43 @@ You can then type expo start and start debugging without bugs.
 
 # Database
 
+## Creation of the database
 Grab yourself a version of the sql dump sent on the discord.
-Download a database software such as wampserver.
-Open wampserver (icon should be green). Then go to http://localhost/phpmyadmin/index.php on chrome or firefox.
-On phpmyadmin, connect to the account. Select import. Import your file and create the database.
+Download a database software such as **wampserver** (https://sourceforge.net/projects/wampserver/).
+
+Open wampserver (icon should be green). 
+![green_icon_wamp](https://zupimages.net/up/21/19/89wx.png)
+
+Open a browser such as Chrome or Firefox, and go to PHPmyAdmin with this address : **http://localhost/phpmyadmin/index.php**.
+![phpmyadmin_connection](https://zupimages.net/up/21/19/fxjc.png)
+
+Enter the user and password, and click on **Exécuter**.
+
+Select import. Import the sql dump you downloaded on discord and create the database. 
+
+Use the shortcut ctrl + F5 in order to refresh.
+
+## Connecting to the database
+
+When you want to connect to the database when loading the project, follow these steps :
+
+- Connect to the database
+
+```javascript
+cd server
+npm start
+```
+
+- Open the project. Open a new terminal in VScode without closing the previous one and enter these commands :
+
+```javascript
+cd src
+expo start
+```
+
+---
+**NOTE**
+
+Right now, you need to test the application with a simulator via Android Studio. There is currently a problem that won't allow you to connect to the database when using another device than the computer where the database is stocked.
+
+---
