@@ -1,13 +1,13 @@
 # Summary 
 
-See below what you can find in the readMe :
+See below what you will find in the readMe :
 | Section       | Description   |
 | ------------- |:-------------:|
-| Get started     | All you need to know in order to clone, install and run the project. |
-| Troubleshooting      | If you have a problem installing the project, take a look at this section.      |
-| Database | Everything you need to know to install the database.      |
+| [Get started](#getStarted) | All you need to know in order to clone, install and run the project. |
+| [Troubleshooting](#troubleshooting) | If you have a problem installing the project, take a look at this section. |
+| [Database](#db) | Everything you need to know to install the database. |
 
-# Get started 
+# <a name="getStarted">Get started </a>
 
 ## Requirements : 
 If you're having trouble installing the project, verify if you have installed the following : 
@@ -74,7 +74,7 @@ Do NOT commit :
 - .expo folder
 - node modules
 
-# Troubleshooting 
+# <a name="troubleshooting">Troubleshooting </a>
 
 If you have any of the following errors, here are some tips that works for some of us :
 
@@ -114,7 +114,7 @@ npm install
 ```
 You can then type expo start and start debugging without bugs.
 
-# Database
+# <a name="db">Database </a>
 
 ## Creation of the database
 Grab yourself a version of the sql dump sent on the discord.
