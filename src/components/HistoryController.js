@@ -1,5 +1,3 @@
-import { ListItem } from 'react-native-vector-icons';
-//import * as React from "react";
 
 import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
 import { List, Button, Avatar } from 'react-native-paper';
@@ -16,28 +14,10 @@ var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const Stack = createStackNavigator();
 
+//need to stop the async
+let asyncDone = false;
 
-
-/*
-const drugs = [
-    {
-        cip: "34009 360 256 7 7",
-        name: 'Medoc1',
-        id: 'cest genial',
-      },
-      {
-        cip: "34009 300 877 1 8",
-        name: 'Medoc2',
-        id: 'cest trop cool',
-      },
-      {
-        cip: "34009 337 656 2 0",
-        name: 'Medoc3',
-        id: 'cest trop top',
-      },
-];*/
-
-const drugs =   [
+const tempoHistory =   [
      [
         "0",
              {
@@ -50,17 +30,12 @@ const drugs =   [
         "1",
              {
                  "id": 76,
-                 "cip": "34009 360 256 7 7",
+                 "cip": "34009 360 256 7 8",
                 "name": "Medoc1",
              },
      ],
 
 ]
-
-
-
-const data = [1, 2, 3];
-
 
 
 
@@ -77,8 +52,6 @@ async function getDrugById(code_cip){
     })
         .then((response) => response.json())
         .then((responseJson) => {
-            console.log(JSON.stringify(responseJson))
-
             return responseJson;
         })
         .catch((error) => {
@@ -86,8 +59,8 @@ async function getDrugById(code_cip){
         });
 }
 
-
-let drugData = async ()=> {
+// get history table
+let getHistory = async ()=> {
     return fetch('http://10.0.2.2:3000/getHistory',{
         method: 'GET',
         headers: {
@@ -104,41 +77,24 @@ let drugData = async ()=> {
             console.error(error);
         });
 
-
 }
 
-
-async function  getHistory(drugData){
+// get the history data and transform to getHistory
+async function  parseHistoryToArray(drugData){
     let drugArray = [];
-    console.log(drugData)
-    console.log("stop")
-    for(var i in drugData)
+    for(let i in drugData)
         drugArray.push([i, drugData [i]]);
-
-    /*console.log(drugArray[2][1].cip);
-
-    drugArray.map(drug => (
-        console.log(drug[1].name+ " // ")
-
-    ))*/
     return drugArray
 }
 
 async function goToDetails({ navigation, drug }) {
      let data = await getDrugById(drug.codeCIP);
-
-    //console.log(tempo);
-
-    console.log("hello data")
     navigation.navigate('Details', {
         codeCIP: data[0].code_cip,
         title: drug.title,
         description: data[0].notice,
       })
     insertToHistory(drug.codeCIP,drug.title)
-    // Va navigation vers la notice en fonction de id du medoc cliqué
-    // Get id 
-    // Insert to history -> call insertToHistory
 }
 
 const insertToHistory = (cip,name) => {
@@ -153,8 +109,6 @@ const insertToHistory = (cip,name) => {
             name: name
         }),
     });
-    // Print du name et description
-    // plus tard : récupérer idDrug
 }
 
 const deleteHistory = () => {
@@ -185,21 +139,16 @@ const deleteHistoryById = (req) => {
 
 
 
+let  findHistory =  ({ navigation,data }) => {
 
-
-let  findHistory =  ({ navigation,data,count }) => {
-
-    //let getAllHistory = await getHistory();
-    //console.log(getAllHistory);
-    count = count != 1 ? 0 : 1;
     return (
         <View>
             {data.map(drug => (
                 <List.Item
-                key={drug[1].cip}
+                key={drug[1].id}
                 onPress={() => goToDetails({ navigation, drug })}
                 title={drug[1].name}
-                description={drug[1].id}
+                description={drug[1].cip}
                 left={props =>
                     <View style={{
                         justifyContent: 'center',
@@ -232,54 +181,21 @@ let  findHistory =  ({ navigation,data,count }) => {
 
 // Homescreen
  function HistoryScreen  ({ navigation }) {
-     const [count, setCount] = useState(0);
-     /*let arrayData = {};
-     arrayData[0] ={}
-     arrayData[1] ={}
-     arrayData[0].cip= "34009 360 256 7 7"
-     arrayData[0].id= 76
-     arrayData[0].name= "Medoc1"
-     arrayData[1].cip= "34009 360 256 7 7"
-     arrayData[1].id= 76
-     arrayData[1].name= "Medoc1"*/
-     const [data, setData] = useState(drugs);
 
+     const [data, setData] = useState(tempoHistory);
 
      useEffect(() => {
-         // Using an IIFE
-         (async function anyNameFunction() {
-             if(count >= 1){
-                 let code_cip = "34009 360 256 7 7"
-                 /*let temp =await fetch('http://10.0.2.2:3000/getDrugById',{
-                     method: 'POST',
-                     headers: {
-                         Accept: 'application/json',
-                         'Content-Type': 'application/json',
-                     },
-                     body: JSON.stringify({
-                         code_cip: code_cip
-                     }),
-                 })
-                     .then((response) => response.json())
-                     .then((responseJson) => {
-                         console.log(JSON.stringify(responseJson[0].code_cip))
+         if(!asyncDone){
+             //here we get the data from the db and change that. We need to stop the callback so we use a condition !asyncDone to end
+             (async function takeActualHistory() {
+                     let getDrug = await getHistory()
+                     let arrayDrug = await parseHistoryToArray(getDrug);
+                     await setData(arrayDrug)
+                     asyncDone = true;
+             })();
+         }
 
-                     })
-                     .catch((error) => {
-                         console.error(error);
-                     });*/
-                 let temp = await drugData()
-                 let array = await getHistory(temp);
-                 //setCount(0);
-                 await console.log(array)
-                 await setData(array)
-                 console.log('ok');
-             }
-             if(count >= 4){
-                 console.log("ererz")
-             }
-         })();
-     }, [count]);
+     }, [data]);
 
 
      return  (
@@ -291,14 +207,8 @@ let  findHistory =  ({ navigation,data,count }) => {
                 <ImageBackground source={image} style={styles.image} >
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
-                <View>
-                    <Text>{count}</Text>
-                    <Button style={{backgroundColor: "black",color: "white"}} title="Update" onPress={()=>{setCount(count+1)}} />
-                    <Text>couou</Text>
-
-                </View>
                 <AntDesign name="delete" size={35} color="#00004d" style={{paddingLeft: 20, paddingTop: 5}}
-                           onPress={() => alert("Voulez-vous supprimer l'historique ?")}
+                           onPress={() => alert("Voulez-vouss supprimer l'historique ?")}
                 />
             </View>
             <SafeAreaView style={styles.container}>
@@ -307,7 +217,7 @@ let  findHistory =  ({ navigation,data,count }) => {
                         data={data}
                         renderItem={(item) =>
                             <View style={{borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0'}}>
-                                {findHistory({navigation,data,count})}
+                                {findHistory({navigation,data})}
                             </View>
                         }
                     />
