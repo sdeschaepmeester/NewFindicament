@@ -13,35 +13,61 @@ class DetailsScreen extends Component {
 
     state = {
         choosenIndex: 1,
-        notice: "desc"
+        notice: "pos"
     };
 
-    parser(data){
+    parser(data,type){
         let notice = data.split("\n");
         let title = "";
-        let description = "";
-        let pathology = "";
-        let sideEffect = "";
         let component = "";
         let printData = false;
+        console.log(notice)
         notice.forEach((value) => {
-            if(value.includes("4. QUELS SONT LES")){
-               // console.log(value)
-                printData = true
+            if(type == "pos"){
+                if(value.includes("3. COMMENT PRENDRE") || value.includes("3. COMMENT prendre") || value.includes("3. COMMENT UTILISER")){
+                    printData = true
+                }
+                if(value.includes("4. QUELS SONT LES")){
+                    printData= false;
+                }
+            }else if(type == "pat"){
+                if(value.includes("1. QU’EST-CE QUE")){
+                    printData = true
+                }
+                if(value.includes("2. QUELLES SONT LES INFORMATIONS A CONNAITRE AVANT")){
+                    printData= false;
+                }
+            }else if(type == "es"){
+                if(value.includes("4. QUELS SONT LES")){
+                    printData = true
+                }
+                if(value.includes("5. COMMENT CONSERVER")){
+                    printData= false;
+                }
+            }else if(type == "com"){
+                if(value.includes("6. CONTENU DE L’EMBALLAGE")){
+                    printData = true
+                }
+                if(value.includes("Titulaire de l’autorisation")){
+                    printData= false;
+                }
+            }else if(type == "dang"){
+                if(value.includes("2. QUELLES SONT LES INFORMATIONS A CONNAITRE AVANT")){
+                    printData = true
+                }
+                if(value.includes("3. COMMENT PRENDRE") || value.includes("3. COMMENT prendre") || value.includes("3. COMMENT UTILISER")){
+                    printData= false;
+                }
+            }
 
-            }
-            if(value.includes("5.")){
-                //console.log("stop")
-                printData= false;
-            }
             if(printData)
-                sideEffect += " "+ value;
+                component += " "+ value;
         });
         if(notice[2] == "Dénomination du médicament"){
             title = notice[3];
         }
         //console.log("dara Side effect "+ sideEffect)
-        return sideEffect;
+        return component;
     }
 
     componentDidMount() {
@@ -52,61 +78,33 @@ class DetailsScreen extends Component {
         this.changeView()
     }
 
-    onPickerValueChange=(value, index)=>{
-        console.log('Picker : '+value.notice)
-        this.setState({notice :value.itemValue})
-    }
+
 
     changeView(){
-        let data = this.parser(this.props.valueFromParent["description"])
         let typeNotice = this.state.notice
-        if(typeNotice == "desc"){
-            return this.showDescription(data);
+
+        let data = this.parser(this.props.valueFromParent["description"],typeNotice)
+        if(typeNotice == "pos"){
+            return this.showComponent(data);
         }else if(typeNotice == "pat"){
-            return this.showPathology(data);
+            return this.showComponent(data);
         }else if(typeNotice == "es"){
-            return this.showSideEffect(data);
+            return this.showComponent(data);
         }else if(typeNotice == "com"){
+            return this.showComponent(data);
+        }else if(typeNotice == "dang"){
             return this.showComponent(data);
         }
     }
 
 
-    showDescription(data) {
-        console.log("data to print")
-
-        console.log(data)
-
-        return (
-            <View>
-                <Text style={styles.text}>
-                    {data}
-                </Text>
-
-            </View>
-        )
-    }
-    showPathology(data) {
-
-        return (
-            <View>
-                <Text>showPathologie</Text>
-            </View>
-        )
-    }
-    showSideEffect(data) {
-
-        return (
-            <View>
-                <Text>showSideEffect</Text>
-            </View>
-        )
-    }
     showComponent(data) {
 
         return (
             <View>
-                <Text>showComponent</Text>
+                <Text style={styles.noticeText}>
+                    {data}
+                </Text>
             </View>
         )
     }
@@ -128,10 +126,11 @@ class DetailsScreen extends Component {
                                 onValueChange={(itemValue, itemPosition) => this.setState({notice: itemValue, choosenIndex: itemPosition})}
                                 itemStyle={{ backgroundColor: "grey", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
                         >
-                            <Picker.Item  label="Description" value="desc" />
+                            <Picker.Item  label="Posologie" value="pos" />
                             <Picker.Item label="Pathologie" value="pat" />
                             <Picker.Item label="Effets Secondaires" value="es" />
                             <Picker.Item label="Composants" value="com" />
+                            <Picker.Item label="Danger" value="dang" />
                         </Picker>
                     </View>
                 </View>
@@ -167,6 +166,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginLeft: 20,
         marginBottom: 50
+    },
+    noticeText:{
+        textAlign: 'justify',
+        alignSelf: 'stretch',
+        fontSize: 18,
+        lineHeight: 25,
     },
     pickerStyle:{
         height: 50,
