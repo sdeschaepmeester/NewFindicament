@@ -233,18 +233,10 @@ let  findHistory =  ({ navigation,data }) => {
 
 // DetailsScreen
 function ShowDetailsScreen({route}) {
+
     return (
         <View>
-            <DetailsScreen />
-            <View>
-                <Text>
-                    {route.params.title}
-                </Text>
-                <Text>
-                    {route.params.description}
-                </Text>
-            </View>
-
+            <DetailsScreen valueFromParent={route.params} />
         </View>
     )
 }
