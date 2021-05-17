@@ -18,7 +18,6 @@ class DetailsScreen extends Component {
 
     parser(data,type){
         let notice = data.split("\n");
-        let title = "";
         let component = "";
         let printData = false;
         console.log(notice)
@@ -63,12 +62,12 @@ class DetailsScreen extends Component {
             if(printData)
                 component += " "+ value;
         });
-        if(notice[2] == "Dénomination du médicament"){
-            title = notice[3];
+        if(notice[2] == "Dénomination du médicament" && type == "title"){
+            component = notice[3];
         }
-        //console.log("dara Side effect "+ sideEffect)
         return component;
     }
+
 
     componentDidMount() {
         this.changeView()
@@ -84,24 +83,18 @@ class DetailsScreen extends Component {
         let typeNotice = this.state.notice
 
         let data = this.parser(this.props.valueFromParent["description"],typeNotice)
-        if(typeNotice == "pos"){
-            return this.showComponent(data);
-        }else if(typeNotice == "pat"){
-            return this.showComponent(data);
-        }else if(typeNotice == "es"){
-            return this.showComponent(data);
-        }else if(typeNotice == "com"){
-            return this.showComponent(data);
-        }else if(typeNotice == "dang"){
-            return this.showComponent(data);
+        let title = this.parser(this.props.valueFromParent["description"],"title")
+        if(typeNotice != ""){
+            return this.showComponent(data,title);
         }
     }
 
 
-    showComponent(data) {
+    showComponent(data,title) {
 
         return (
             <View>
+                <Text style={styles.title}>{title}</Text>
                 <Text style={styles.noticeText}>
                     {data}
                 </Text>
@@ -172,6 +165,7 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         fontSize: 18,
         lineHeight: 25,
+        marginRight: 10
     },
     pickerStyle:{
         height: 50,
@@ -218,7 +212,15 @@ const styles = StyleSheet.create({
     scrollView: {
         marginTop:50,
         marginBottom: 220,
-        marginHorizontal: 20,
+        marginLeft:20 ,
+        marginRight:10 ,
     },
+    title:{
+        fontSize: 20,
+        height: 75,
+        color: 'black',
+        textAlign: 'center',
+        fontWeight: 'bold'
+    }
 
 });

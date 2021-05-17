@@ -142,6 +142,7 @@ const deleteHistoryById = (req) => {
 
 
 let  findHistory =  ({ navigation,data }) => {
+    console.log("history n")
 
     return (
         <View>
@@ -183,7 +184,8 @@ let  findHistory =  ({ navigation,data }) => {
 
 // Homescreen
  function HistoryScreen  ({ navigation }) {
-    console.log('hello I m History')
+
+    console.log('hello I m History 1')
 
      const [data, setData] = useState(tempoHistory);
 
@@ -243,6 +245,7 @@ function ShowDetailsScreen({route}) {
 
 // Drugscreen
 const DrugsScreen = ({ navigation }) => {
+    console.log("DrugScreen 1")
 
     return (
         <NavigationContainer independent={true}>
