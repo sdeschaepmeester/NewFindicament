@@ -1,7 +1,10 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-const db = require('./db.js')// calling file with sql method
 const authRoutes = require("./routes/authRoutes");
+const historyRoutes = require("./routes/historyRoutes");
+const drugRoutes = require("./routes/drugRoutes");
+const planningRoutes = require("./routes/planningRoutes");
+const favoriteRoutes = require("./routes/favoriteRoutes");
 const app = express();
 const requireToken = require('./middleware/requireToken');
 const PORT = process.env.PORT || 3000;
@@ -9,12 +12,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json())
 app.use(authRoutes)
-
-/*
-app.get("/",(req,res)=>{
-    console.log(req.body)
-    res.send("Yoo")
-})*/
+app.use(historyRoutes)
+app.use(drugRoutes)
+app.use(planningRoutes)
+app.use(favoriteRoutes)
 
 
 app.get('/',requireToken,(req,res)=>{

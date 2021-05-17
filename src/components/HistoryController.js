@@ -1,5 +1,4 @@
-import { ListItem } from 'react-native-vector-icons';
-import * as React from 'react';
+
 import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
 import { List, Button, Avatar } from 'react-native-paper';
 import { Ionicons as Icon } from '@expo/vector-icons';
@@ -8,65 +7,151 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsScreen from '../screens/DetailsScreen';
+import React,{useState,useEffect} from "react";
+
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 const Stack = createStackNavigator();
 
-const drugs = [
-    {
-        codeCIP: 1,
-        title: 'Medoc1',
-        description: 'cest genial',
-      },
-      {
-        codeCIP: 2,
-        title: 'Medoc2',
-        description: 'cest trop cool',
-      },
-      {
-        codeCIP: 3,
-        title: 'Medoc3',
-        description: 'cest trop top',
-      },
-];
-const data = [1, 2, 3];
+//need to stop the async
+let asyncDone = false;
 
-function goToDetails({ navigation, drug }) {
-    navigation.navigate('Details', {
-        codeCIP: drug.codeCIP,
-        title: drug.title,
-        description: drug.description,
-      })
-    // Va navigation vers la notice en fonction de id du medoc cliqué
-    // Get id 
-    // Insert to history -> call insertToHistory
+const tempoHistory =   [
+     [
+        "0",
+             {
+                 "id": 75,
+                 "cip": "34009 360 256 7 7",
+             "name": "Medoc1",
+             },
+    ],
+    [
+        "1",
+             {
+                 "id": 76,
+                 "cip": "34009 360 256 7 8",
+                "name": "Medoc1",
+             },
+     ],
+
+]
+
+
+
+async function getDrugById(code_cip){
+    return fetch('http://10.0.2.2:3000/getDrugById',{
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            code_cip: code_cip
+        }),
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            return responseJson;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
-const insertToHistory = () => {
-    // Print du name et description
-    // plus tard : récupérer idDrug
+// get history table
+let getHistory = async ()=> {
+    return fetch('http://10.0.2.2:3000/getHistory',{
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            //console.log(JSON.stringify(responseJson))
+            return responseJson
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+}
+
+// get the history data and transform to getHistory
+async function  parseHistoryToArray(drugData){
+    let drugArray = [];
+    for(let i in drugData)
+        drugArray.push([i, drugData [i]]);
+    return drugArray
+}
+
+async function goToDetails({ navigation, drug }) {
+     let data = await getDrugById(drug[1].cip);
+
+    navigation.navigate('Details', {
+        codeCIP: data[0].code_cip,
+        title: drug[1].title,
+        description: data[0].notice,
+      })
+    asyncDone = false;
+    insertToHistory(drug[1].cip,drug[1].name)
+}
+
+const insertToHistory = (cip,name) => {
+    fetch('http://10.0.2.2:3000/insertHistory', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cip: cip,
+            name: name
+        }),
+    });
 }
 
 const deleteHistory = () => {
-    alert("deleteHistory");
+    fetch('http://10.0.2.2:3000/deleteHistory', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cip: -1
+        }),
+    });
 }
 
-const deleteHistoryById = () => {
-    alert("deleteHistoryById");
+const deleteHistoryById = (req) => {
+    fetch('http://10.0.2.2:3000/deleteHistory', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            cip: req
+        }),
+    });
 }
 
-findHistory = ({ navigation }) => {
-    
-    
+
+
+let  findHistory =  ({ navigation,data }) => {
+    console.log("history n")
+
     return (
         <View>
-            {drugs.map(drug => (
+            {data.map(drug => (
                 <List.Item
-                key={drug.codeCIP}
+                key={drug[1].id}
                 onPress={() => goToDetails({ navigation, drug })}
-                title={drug.title}
-                description={drug.description}
+                title={drug[1].name}
+                description={drug[1].cip}
                 left={props =>
                     <View style={{
                         justifyContent: 'center',
@@ -83,39 +168,52 @@ findHistory = ({ navigation }) => {
                         <Button style={styles.roundButton}
                             color="#000080"
                             mode="contained"
-                            onPress={() => alert()}>
+                            onPress={() => deleteHistoryById(drug[1].cip)}>
                             <AntDesign name="closecircleo" size={20} color="white" />
                         </Button>
                     </View>
                 }
             />
             ))}
-            
 
         </View>
     )
 }
 
-const addToHistory = () => {
-    alert("addToHistory");
-}
-const printData = () => {
-    alert("printData");
-}
+
 
 // Homescreen
-function HistoryScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, paddingTop: 30 }}>
+ function HistoryScreen  ({ navigation }) {
+
+    console.log('hello I m History 1')
+
+     const [data, setData] = useState(tempoHistory);
+
+     useEffect(() => {
+         if(!asyncDone){
+             //here we get the data from the db and change that. We need to stop the callback so we use a condition !asyncDone to end
+             (async function takeActualHistory() {
+                     let getDrug = await getHistory()
+                     let arrayDrug = await parseHistoryToArray(getDrug);
+                     await setData(arrayDrug)
+                     asyncDone = true;
+             })();
+         }
+
+     }, [data]);
+
+
+     return  (
+        <View style={{flex: 1, paddingTop: 0}}>
             <StatusBar
                 backgroundColor="lightblue"
             />
             <View style={styles.container}>
-                <ImageBackground source={image} style={styles.image}>
+                <ImageBackground source={image} style={styles.image} >
                     <Text style={styles.text}>Historique</Text>
                 </ImageBackground>
-                <AntDesign name="delete" size={35} color="#00004d" style={{ paddingLeft: 20, paddingTop: 5 }}
-                    onPress={() => alert("Voulez-vous supprimer l'historique ?")}
+                <AntDesign name="delete" size={35} color="#00004d" style={{paddingLeft: 20, paddingTop: 5}}
+                           onPress={() => alert("Voulez-vouss supprimer l'historique ?")}
                 />
             </View>
             <SafeAreaView style={styles.container}>
@@ -123,37 +221,32 @@ function HistoryScreen({ navigation }) {
                     <FlatList
                         data={data}
                         renderItem={(item) =>
-                            <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                                {findHistory({ navigation })}
+                            <View style={{borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0'}}>
+                                {findHistory({navigation,data})}
                             </View>
                         }
                     />
                 </ScrollView>
             </SafeAreaView>
+
         </View>
     );
 };
 
 // DetailsScreen
 function ShowDetailsScreen({route}) {
+
     return (
         <View>
-            <DetailsScreen />
-            <View>
-                <Text>
-                    {route.params.title}
-                </Text>
-                <Text>
-                    {route.params.description}
-                </Text>
-            </View>
-
+            <DetailsScreen valueFromParent={route.params} />
         </View>
     )
 }
 
 // Drugscreen
 const DrugsScreen = ({ navigation }) => {
+    console.log("DrugScreen 1")
+
     return (
         <NavigationContainer independent={true}>
             <Stack.Navigator initialRouteName="History" >
@@ -161,6 +254,7 @@ const DrugsScreen = ({ navigation }) => {
                 <Stack.Screen name="Details" component={ShowDetailsScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
+
     );
 };
 
@@ -172,7 +266,7 @@ const alert = (s) => {
         s,
         'Cette action est irréversible',
         [
-            { text: 'Supprimer', onPress: () => console.log('Suppression de lhistorique'), style: 'cancel' },
+            { text: 'Supprimer', onPress: () => deleteHistory(), style: 'cancel' },
             { text: 'Annuler', onPress: () => console.log('Annulation') },
         ],
         { cancelable: false }

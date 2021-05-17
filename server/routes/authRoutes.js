@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../db.js')// calling file with sql method
+const auth = require('../Model/AuthModel')// calling file with sql method
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -13,8 +13,8 @@ router.post("/signup",async(req,res,next)=>{
 
         let hashPass =bcrypt.hash = await bcrypt.hash(password,salt);
         console.log("hashed pass" + hashPass);
-        await db.insert(email,hashPass)
-        let _id = await db.getByEmail(email)
+        await auth.insert(email,hashPass)
+        let _id = await auth.getByEmail(email)
         const token = jwt.sign({userId:_id.id},jwtkey)
         console.log("lid : "+ _id.id+ " toekn "+token);
         res.send(token)
@@ -30,13 +30,15 @@ router.post('/signin',async (req,res)=>{
     if(!email || !password){
         return res.status(422).send({error: "need email or password "})
     }
-    const user = await db.getByEmail(email)
+    const user = await auth.getByEmail(email)
     if(!user){
         return res.status(422).send({error :"email does not match"})
     }
     try{
         // je verifie lsi les mots de passe sont les mêmes
-        const isTheSamePassword = await db.comparePassword(user.password,password)
+        console.log("before pas ")
+
+        const isTheSamePassword = await auth.comparePassword(user.password,password)
         console.log("pass"+isTheSamePassword)
         if(!isTheSamePassword){
             return res.status(422).send({error :"password does not match"+password})
@@ -50,25 +52,6 @@ router.post('/signin',async (req,res)=>{
     }
 
 })
-
-
-router.get('/getDrugs', async (req,res)=>{
-
-    try{
-        let drugs = await db.getDrugs()
-        res.send(drugs)
-    }catch (err){
-        res.status(422).send(err.message)
-    }
-
-})
-
-router.get('/getDetails', async (req,res)=>{
-
-
-
-})
-
 
 
 
