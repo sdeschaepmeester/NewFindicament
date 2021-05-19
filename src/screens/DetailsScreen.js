@@ -1,8 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import {View, Text, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView,StatusBar } from 'react-native';
-import styled, { createGlobalStyle } from "styled-components";
 import {Picker} from "@react-native-picker/picker";
-import {SafeAreaConsumer} from "react-native-safe-area-context";
 
 
 
@@ -10,17 +8,52 @@ import {SafeAreaConsumer} from "react-native-safe-area-context";
 class DetailsScreen extends Component {
 
 
-
     state = {
         choosenIndex: 1,
-        notice: "pos"
+        notice: "pos",
+        description: null
     };
 
+    /**
+     * When the request are done the description state get the new value.
+     * Thanks to that when we render we have the description data from the query.
+     * So we can use async.
+     * @param code_cip
+     * @returns {Promise<void>}
+     */
+    async getDrugById(code_cip){
+        const descriptionResponses = await  fetch('http://10.0.2.2:3000/getDrugById',{
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                code_cip: code_cip
+            }),
+        })
+            .then(res => res.json())
+            .then((responseJson) => {
+                return responseJson;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+        const description = descriptionResponses[0].notice
+        this.setState({description:description})
+    }
+
+    /**
+     * Parse the notice to different sub part getting what part are selected
+     * @param data
+     * @param type
+     * @returns {string}
+     */
     parser(data,type){
         let notice = data.split("\n");
         let component = "";
         let printData = false;
-        console.log(notice)
         notice.forEach((value) => {
             if(type == "pos"){
                 if(value.includes("3. COMMENT PRENDRE") || value.includes("3. COMMENT prendre") || value.includes("3. COMMENT UTILISER")){
@@ -68,31 +101,40 @@ class DetailsScreen extends Component {
         return component;
     }
 
-
-    componentDidMount() {
-        this.changeView()
+    /**
+     * We call at the beginning the query and change the body of the notice
+     */
+    async componentDidMount() {
+        await  this.getDrugById(this.props.valueFromParent["codeCIP"])
+        this.changeView(this.state.description)
     }
 
+    /**
+     * Just need to call the function which change the body with the description.
+     */
     componentDidUpdate() {
-        this.changeView()
+        this.changeView(this.state.description)
     }
 
 
-
-    changeView(){
+    /**
+     * We got which notice are selected and parse them.
+     * Next to return the render method pathing the notice and the title of the drug.
+     * @param description
+     * @returns {View}
+     */
+    changeView(description){
         let typeNotice = this.state.notice
-
-        let data = this.parser(this.props.valueFromParent["description"],typeNotice)
-        let title = this.parser(this.props.valueFromParent["description"],"title")
+        let data =  this.parser(description,typeNotice)
+        let title =  this.parser(description,"title")
         if(typeNotice != ""){
-            return this.showComponent(data,title);
+            return  this.showComponent(data,title);
         }
     }
 
 
-    showComponent(data,title) {
-
-        return (
+     showComponent(data,title) {
+         return (
             <View>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.noticeText}>
@@ -102,12 +144,8 @@ class DetailsScreen extends Component {
         )
     }
 
-//onValueChange={(itemValue, itemPosition) =>
-//                                     this.setState({language: itemValue, choosenIndex: itemPosition})}
     render() {
-        //console.log(this.props.valueFromParent.descritption)
-        //let title = this.parser(this.props.valueFromParent["description"]);
-
+        const { description } = this.state;
         return(
             <View >
                 <SafeAreaView>
@@ -129,7 +167,10 @@ class DetailsScreen extends Component {
                 </View>
             </SafeAreaView>
             <ScrollView style={styles.scrollView}>
-                {this.changeView()}
+                { description ?
+                    <View>{this.changeView(description)}</View>  :
+                    <Text>Loading...</Text>
+                }
 
             </ScrollView>
 
@@ -140,7 +181,6 @@ class DetailsScreen extends Component {
 }
 
 export default DetailsScreen;
-
 
 
 const styles = StyleSheet.create({
