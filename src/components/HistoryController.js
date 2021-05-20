@@ -8,7 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsScreen from '../screens/DetailsScreen';
 import React,{useState,useEffect} from "react";
-
+import {moreDetails} from './GoToDetails';
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
@@ -67,28 +67,6 @@ async function  parseHistoryToArray(drugData){
     return drugArray
 }
 
-async function goToDetails({ navigation, drug }) {
-
-    navigation.navigate('Details', {
-        codeCIP: drug[1].cip
-      })
-    asyncDone = false;
-    insertToHistory(drug[1].cip,drug[1].name)
-}
-
-const insertToHistory = (cip,name) => {
-    fetch('http://10.0.2.2:3000/insertHistory', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            cip: cip,
-            name: name
-        }),
-    });
-}
 
 const deleteHistory = () => {
     fetch('http://10.0.2.2:3000/deleteHistory', {
@@ -126,7 +104,7 @@ let  findHistory =  ({ navigation,data }) => {
             {data.map(drug => (
                 <List.Item
                 key={drug[1].id}
-                onPress={() => goToDetails({ navigation, drug })}
+                onPress={() => moreDetails({navigation},drug[1].cip,drug[1].name)}
                 title={drug[1].name}
                 description={drug[1].cip}
                 left={props =>
