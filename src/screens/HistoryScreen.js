@@ -3,7 +3,7 @@ import * as React from 'react';
 import { View, FlatList, Alert, StyleSheet, Text } from 'react-native';
 import { List, Button, Avatar } from 'react-native-paper';
 import { Ionicons as Icon } from '@expo/vector-icons';
-import HistoryController from "../components/HistoryController";
+import HistoryController from "../components/Controller/HistoryController";
 
 const HistoryScreen = ({ navigation }) => {
   return (
