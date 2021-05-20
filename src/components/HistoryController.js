@@ -70,8 +70,7 @@ async function  parseHistoryToArray(drugData){
 async function goToDetails({ navigation, drug }) {
 
     navigation.navigate('Details', {
-        codeCIP: drug[1].cip,
-        title: drug[1].title
+        codeCIP: drug[1].cip
       })
     asyncDone = false;
     insertToHistory(drug[1].cip,drug[1].name)
