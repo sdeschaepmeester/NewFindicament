@@ -39,26 +39,6 @@ const tempoHistory =   [
 
 
 
-async function getDrugById(code_cip){
-    return fetch('http://10.0.2.2:3000/getDrugById',{
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            code_cip: code_cip
-        }),
-    })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            return responseJson;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
-
 // get history table
 let getHistory = async ()=> {
     return fetch('http://10.0.2.2:3000/getHistory',{
@@ -88,12 +68,10 @@ async function  parseHistoryToArray(drugData){
 }
 
 async function goToDetails({ navigation, drug }) {
-     let data = await getDrugById(drug[1].cip);
 
     navigation.navigate('Details', {
-        codeCIP: data[0].code_cip,
-        title: drug[1].title,
-        description: data[0].notice,
+        codeCIP: drug[1].cip,
+        title: drug[1].title
       })
     asyncDone = false;
     insertToHistory(drug[1].cip,drug[1].name)

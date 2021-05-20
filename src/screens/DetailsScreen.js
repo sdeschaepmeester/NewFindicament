@@ -47,11 +47,11 @@ class DetailsScreen extends Component {
     /**
      * Parse the notice to different sub part getting what part are selected
      * @param data
-     * @param type
+     * @param type (what part of the notice are selected)
      * @returns {string}
      */
-    parser(data,type){
-        let notice = data.split("\n");
+    parser(description,type){
+        let notice = description.split("\n");
         let component = "";
         let printData = false;
         notice.forEach((value) => {
@@ -110,7 +110,7 @@ class DetailsScreen extends Component {
     }
 
     /**
-     * Just need to call the function which change the body with the description.
+     * Just need to call the function which one change the body with the description.
      */
     componentDidUpdate() {
         this.changeView(this.state.description)
