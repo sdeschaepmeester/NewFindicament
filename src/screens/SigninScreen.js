@@ -47,7 +47,7 @@ const SigninScreen = (props) => {
         <View style={styles.container}>
             <KeyboardAvoidingView behavior={"height"}>
                 <View>
-                    <Text style={{ fontSize: 35, marginLeft: 15}} >Se Connecter</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 30}} >Se connecter</Text>
                     <Card>
                         <TextInput
                             label="Email"
@@ -71,7 +71,7 @@ const SigninScreen = (props) => {
                     </Card>
                 </View>
                 <TouchableOpacity>
-                    <Text style={{textAlign: 'center'}} onPress={() => props.navigation.navigate("signup")}>Vous n'avez pas de compte ?</Text>
+                    <Text style={{textAlign: 'center', marginTop: 10}} onPress={() => props.navigation.navigate("signup")}>Vous n'avez pas de compte ?</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
 
