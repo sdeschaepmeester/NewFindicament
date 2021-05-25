@@ -105,7 +105,19 @@ class DetailsScreen extends Component {
      * We call at the beginning the query and change the body of the notice
      */
     async componentDidMount() {
-        await  this.getDrugById(this.props.valueFromParent["codeCIP"])
+        await console.log("route.params")
+        //await console.log(this.props.navigation.state.params.codeCIP)
+
+        if(this.props.valueFromParent != null){
+            await  this.getDrugById(this.props.valueFromParent)
+
+        }
+        else{//Home
+            await  this.getDrugById(this.props.navigation.state.params.codeCIP)
+
+        }
+
+
         this.changeView(this.state.description)
     }
 
@@ -146,6 +158,11 @@ class DetailsScreen extends Component {
 
     render() {
         const { description } = this.state;
+
+        console.log("la description ")
+        console.log({ desc: this.state.description })
+        //console.log(this.state.description)
+
         return(
             <View >
                 <SafeAreaView>

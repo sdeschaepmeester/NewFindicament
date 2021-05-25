@@ -1,42 +1,21 @@
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { Component } from 'react';
+import {View,Text} from 'react-native';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import {createAppContainer} from 'react-navigation';
 
-function Home({navigation}) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Planning')}>
-        <Text style={styles.buttonText}>planning</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
+import Home from './Controller/HomeController';
+import Details from '../screens/DetailsScreen';
 
-export default Home
+const DrawerNavigator = createDrawerNavigator({
+  Home: {screen: Home},
+  Details: {screen: Details}
+},{initialRouteName: 'Home'});
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ebebeb'
-  },
-  text: {
-    color: '#101010',
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
-  buttonContainer: {
-    backgroundColor: '#222',
-    borderRadius: 5,
-    padding: 10,
-    margin: 20
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff'
+const Stack = createAppContainer(DrawerNavigator);
+
+export default class App extends Component {
+  render() {
+
+    return <Stack />;
   }
-})
-
+}

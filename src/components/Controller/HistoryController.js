@@ -193,7 +193,7 @@ function ShowDetailsScreen({route}) {
 
     return (
         <View>
-            <DetailsScreen valueFromParent={route.params} />
+            <DetailsScreen valueFromParent={route.params.codeCIP} />
         </View>
     )
 }

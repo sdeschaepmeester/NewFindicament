@@ -1,11 +1,13 @@
 import React, {Component} from "react";
-import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,Button,TouchableHighlight} from "react-native";
 import {Avatar, List} from "react-native-paper";
 import {moreDetails} from '../GoToDetails';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import DetailsScreen from "../../screens/DetailsScreen";
-
+import {withNavigation} from 'react-navigation';
+import Tabs from '../../navigation/tabs'
+import Home from  '../Home'
 
 class HomeController extends Component {
 
@@ -92,6 +94,18 @@ class HomeController extends Component {
             </View>
         )
     }
+
+    GoToButton() {
+        const navigation = useNavigation();
+        const screenName = "ok"
+        return (
+            <Button
+                title={`Go to ${screenName}`}
+                onPress={() => navigation.navigate(screenName)}
+            />
+        );
+    }
+
     ShowHomeScreen() {
 
 
@@ -108,12 +122,14 @@ class HomeController extends Component {
         let drugs = this.state.drugs;
         const {navigation}= this.props;
         console.log("the list of drugs :")
-        console.log(drugs[0].code_cip)
+        //console.log(drugs[0].code_cip)
 
         const Item = ({ title }) => (
 
             <TouchableOpacity
-                onPress={()=> console.log("item "+ title)}
+
+                onPress={()=>this.props.navigation.navigate('Details', {
+                 codeCIP: title,})}
                 style={styles.item}>
                 <Text >Title </Text>
                 <Text >{title}</Text>
@@ -131,6 +147,7 @@ class HomeController extends Component {
 
                 <SafeAreaView style={styles.container}>
                     <Text>Hello</Text>
+
                 </SafeAreaView>
                 <ScrollView style={styles.scrollView}>
                     <FlatList
@@ -151,7 +168,7 @@ class HomeController extends Component {
 
 }
 
-export  default  HomeController
+export  default  withNavigation(HomeController)
 
 const styles = StyleSheet.create({
     item:{
