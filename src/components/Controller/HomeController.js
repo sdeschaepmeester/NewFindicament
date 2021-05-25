@@ -1,14 +1,6 @@
 import React, {Component} from "react";
 import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,Button,TouchableHighlight} from "react-native";
 import {Avatar, List} from "react-native-paper";
-import {moreDetails} from '../GoToDetails';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import DetailsScreen from "../../screens/DetailsScreen";
-import {withNavigation} from 'react-navigation';
-import Tabs from '../../navigation/tabs'
-import Home from  '../Home'
-
 class HomeController extends Component {
 
 
@@ -86,14 +78,7 @@ class HomeController extends Component {
         )
     }
 
-    ShowDetailsScreen() {
 
-        return (
-            <View>
-                <Text>ok</Text>
-            </View>
-        )
-    }
 
     GoToButton() {
         const navigation = useNavigation();
@@ -105,16 +90,6 @@ class HomeController extends Component {
             />
         );
     }
-
-    ShowHomeScreen() {
-
-
-    }
-
-// Drugscreen
-
-
-    /**/
 
 
     render() {
@@ -168,7 +143,7 @@ class HomeController extends Component {
 
 }
 
-export  default  withNavigation(HomeController)
+export  default  HomeController
 
 const styles = StyleSheet.create({
     item:{

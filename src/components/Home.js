@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import {View,Text} from 'react-native';
-import { createDrawerNavigator } from 'react-navigation-drawer';
-import {createAppContainer} from 'react-navigation';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Home from './Controller/HomeController';
-import Details from '../screens/DetailsScreen';
+import  DetailsScreen  from '../screens/DetailsScreen';
 
-const DrawerNavigator = createDrawerNavigator({
-  Home: {screen: Home},
-  Details: {screen: Details}
-},{initialRouteName: 'Home'});
 
-const Stack = createAppContainer(DrawerNavigator);
+const Stack = createStackNavigator();
 
 export default class App extends Component {
   render() {
-
-    return <Stack />;
+    return (
+        <Stack.Navigator >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+        </Stack.Navigator>
+    );
   }
 }
