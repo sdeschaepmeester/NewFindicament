@@ -1,16 +1,36 @@
-import * as React from 'react';
+
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React, { useState } from "react";
 import {
   ViewStyle,
   TextStyle,
-  TextInputProps, SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text
+  TextInputProps,
+   SafeAreaView,
+    ScrollView,
+    CheckBox,
+    ImageBackground, 
+    View, 
+    FlatList,
+    Alert,
+    StyleSheet, 
+    Text,
+    TextBase,
+    TextInput, 
+    TextInputBase, 
+    Switch,
+    selectedDotColor,
+    
 } from 'react-native';
-import { List, Button, Avatar } from 'react-native-paper';
+import { List, Button, Avatar, Checkbox } from 'react-native-paper';
 import { LocaleConfig } from 'react-native-calendars';
 import { enableExpoCliLogging } from 'expo/build/logs/Logs';
 import { useForm } from "react-hook-form";
+import ReactDOM from "react-dom";
+import { Formik, Field, Form } from "formik";
+import { Card, ListItem, Icon } from 'react-native-elements'
+
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
@@ -23,7 +43,8 @@ LocaleConfig.defaultLocale = 'fr';
 
 const Stack = createStackNavigator();
 
-function AddTreatment({ navigation }) {
+function AddTreatment({ navigation, day }) {
+  console.log(day);
   navigation.navigate('Treatment')
 }
 
@@ -43,9 +64,10 @@ function PlanningScreen({ navigation }) {
         showScrollIndicator={true}
         //...calendarParams
         /* onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
-        onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}
-        onDayPress={(day) => {console.log('selected day', day)}} */
-        onDayPress={() => AddTreatment({ navigation })}
+        onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}*/
+        onDayPress={(day) => AddTreatment({navigation, day})}
+        
+        
 
         //onDayPress={()=>navigation.navigate('Details')}
         // Callback that gets called when day changes while scrolling agenda list
@@ -95,29 +117,41 @@ const stylesAddTreatment = {
 
 
 
+
 function AddTreatmentScreen() {
+
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
+    const [isSelected, setSelection] = useState(false);
+  
   return (
-    function App() {
-      const { register, handleSubmit } = useForm();
-      const onSubmit = data => console.log(data);
-      
-      <form onSubmit={handleSubmit(onSubmit)}>
-      <Headers />
-
-      <input {...register("firstName")} placeholder="First name" />
-      <input {...register("lastName")} placeholder="Last name" />
-      <select {...register("category")}>
-        <option value="">Select...</option>
-        <option value="A">Category A</option>
-        <option value="B">Category B</option>
-      </select>
-
-      <input type="submit" />
-    </form>
-    
-    }
+    <View style={styles.container}>
+      <Card>
+      <Text style={{fontSize: 30}}>Ajouter un traitement</Text>
+      <TextInput
+        style={{height: 40, borderRadius: 2, borderWidth:1, borderColor: 2374}}
+        placeholder="Sélectionner le médicament"
+      />
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}
+        />
+        <Text style={styles.label}>Traitement régulier</Text>
+      </View>
+            <Button  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+              Confirmer
+            </Button>
+            <Button  style={{ backgroundColor: "#0099ff",marginLeft: 18, marginRight: 18, marginTop: 20}}>
+              Annuler
+            </Button>
+            </Card>
+    </View>
   );
+  
 };
+
 
 const DrugsScreen = ({ navigation }) => {
   return (
@@ -130,5 +164,23 @@ const DrugsScreen = ({ navigation }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#def3ff'
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
+  label: {
+    margin: 8,
+  },
+});
 
 export default DrugsScreen;
