@@ -156,9 +156,8 @@ class DetailsScreen extends Component {
     render() {
         const { description } = this.state;
 
-        console.log("la description ")
-        console.log({ desc: this.state.description })
-        //console.log(this.state.description)
+        //console.log("la description ")
+        //console.log({ desc: this.state.description })
 
         return(
             <View >

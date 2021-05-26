@@ -13,7 +13,6 @@ import LoadingScreen from "../screens/LoadingScreen";
 import Scanner from "../components/Scanner";
 import HomeScreen from "../screens/HomeScreen";
 import FiltersController from "../components/Controller/FiltersController";
-import Home from "../components/Home";
 
 const Tab = createBottomTabNavigator();
 
