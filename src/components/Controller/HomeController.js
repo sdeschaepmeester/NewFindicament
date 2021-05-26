@@ -1,6 +1,12 @@
 import React, {Component} from "react";
 import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,Button,TouchableHighlight} from "react-native";
 import {Avatar, List} from "react-native-paper";
+import DetailsScreen from "../../screens/DetailsScreen";
+import { createStackNavigator } from '@react-navigation/stack';
+import {moreDetails} from '../GoToDetails';
+
+
+
 class HomeController extends Component {
 
 
@@ -47,49 +53,10 @@ class HomeController extends Component {
     async componentDidMount() {
         console.log("start")
         await  this.getDrugs()
-        this.findHistory()
+        //this.findHistory()
         //this.changeView(this.state.description)
     }
 
-    findHistory(drugs) {
-
-
-        return (
-            <View>
-                {drugs.map(drug => (
-                    <List.Item
-                        key={drug.code_cip}
-                        title={drug.id}
-                        left={props =>
-                            <View style={{
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Text>Hello</Text>
-                            </View>
-                        }
-                    />
-                ))}
-
-
-
-
-            </View>
-        )
-    }
-
-
-
-    GoToButton() {
-        const navigation = useNavigation();
-        const screenName = "ok"
-        return (
-            <Button
-                title={`Go to ${screenName}`}
-                onPress={() => navigation.navigate(screenName)}
-            />
-        );
-    }
 
 
     render() {
@@ -102,9 +69,7 @@ class HomeController extends Component {
         const Item = ({ title }) => (
 
             <TouchableOpacity
-
-                onPress={()=>this.props.navigation.navigate('Details', {
-                 codeCIP: title,})}
+                onPress={()=> moreDetails({navigation},title,"Medoc")}
                 style={styles.item}>
                 <Text >Title </Text>
                 <Text >{title}</Text>
@@ -143,7 +108,22 @@ class HomeController extends Component {
 
 }
 
-export  default  HomeController
+export default class HomeStack extends Component {
+
+
+
+    render() {
+
+        const Stack = createStackNavigator();
+
+        return (
+            <Stack.Navigator >
+                <Stack.Screen name="Home" component={HomeController} />
+                <Stack.Screen name="Details" component={DetailsScreen} />
+            </Stack.Navigator>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     item:{

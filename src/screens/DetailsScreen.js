@@ -105,9 +105,6 @@ class DetailsScreen extends Component {
      * We call at the beginning the query and change the body of the notice
      */
     async componentDidMount() {
-        console.log("route.params")
-        console.log(this.props.route.params.codeCIP)
-        //await console.log(this.props.navigation.state.params.codeCIP)
 
         if(this.props.valueFromParent != null){
             await  this.getDrugById(this.props.valueFromParent)
