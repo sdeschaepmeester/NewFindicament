@@ -1,6 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import {View, Text, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView,StatusBar } from 'react-native';
-import styled, { createGlobalStyle } from "styled-components";
+import {View, Image, Text, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView,StatusBar } from 'react-native';
 import {Picker} from "@react-native-picker/picker";
 import {SafeAreaConsumer} from "react-native-safe-area-context";
 
@@ -9,10 +8,9 @@ import {SafeAreaConsumer} from "react-native-safe-area-context";
 
 class DetailsScreen extends Component {
 
-
-
     state = {
         choosenIndex: 1,
+        bgImage: { uri: "https://zupimages.net/up/21/21/2t7p.png" },
         notice: "pos"
     };
 
@@ -20,7 +18,7 @@ class DetailsScreen extends Component {
         let notice = data.split("\n");
         let component = "";
         let printData = false;
-        console.log(notice)
+        //console.log(notice)
         notice.forEach((value) => {
             if(type == "pos"){
                 if(value.includes("3. COMMENT PRENDRE") || value.includes("3. COMMENT prendre") || value.includes("3. COMMENT UTILISER")){
@@ -29,6 +27,8 @@ class DetailsScreen extends Component {
                 if(value.includes("4. QUELS SONT LES")){
                     printData= false;
                 }
+                this.state.bgImage={ uri: "https://zupimages.net/up/21/21/1w5n.png" };
+
             }else if(type == "pat"){
                 if(value.includes("1. QU’EST-CE QUE")){
                     printData = true
@@ -36,6 +36,7 @@ class DetailsScreen extends Component {
                 if(value.includes("2. QUELLES SONT LES INFORMATIONS A CONNAITRE AVANT")){
                     printData= false;
                 }
+                this.state.bgImage={ uri: "https://zupimages.net/up/21/21/b84v.png" };
             }else if(type == "es"){
                 if(value.includes("4. QUELS SONT LES")){
                     printData = true
@@ -43,6 +44,7 @@ class DetailsScreen extends Component {
                 if(value.includes("5. COMMENT CONSERVER")){
                     printData= false;
                 }
+                this.state.bgImage={ uri: "https://zupimages.net/up/21/21/zr5h.png" };
             }else if(type == "com"){
                 if(value.includes("6. CONTENU DE L’EMBALLAGE")){
                     printData = true
@@ -50,6 +52,7 @@ class DetailsScreen extends Component {
                 if(value.includes("Titulaire de l’autorisation")){
                     printData= false;
                 }
+                this.state.bgImage={ uri: "https://zupimages.net/up/21/21/2t7p.png" };
             }else if(type == "dang"){
                 if(value.includes("2. QUELLES SONT LES INFORMATIONS A CONNAITRE AVANT")){
                     printData = true
@@ -57,17 +60,17 @@ class DetailsScreen extends Component {
                 if(value.includes("3. COMMENT PRENDRE") || value.includes("3. COMMENT prendre") || value.includes("3. COMMENT UTILISER")){
                     printData= false;
                 }
+                this.state.bgImage={ uri: "https://zupimages.net/up/21/21/qohb.png" };
             }
 
             if(printData)
-                component += " "+ value;
+                component += "\n"+ value;
         });
         if(notice[2] == "Dénomination du médicament" && type == "title"){
             component = notice[3];
         }
         return component;
     }
-
 
     componentDidMount() {
         this.changeView()
@@ -77,13 +80,12 @@ class DetailsScreen extends Component {
         this.changeView()
     }
 
-
-
     changeView(){
         let typeNotice = this.state.notice
 
         let data = this.parser(this.props.valueFromParent["description"],typeNotice)
         let title = this.parser(this.props.valueFromParent["description"],"title")
+
         if(typeNotice != ""){
             return this.showComponent(data,title);
         }
@@ -94,6 +96,7 @@ class DetailsScreen extends Component {
 
         return (
             <View>
+                <Image style={styles.image} source={this.state.bgImage} /> 
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.noticeText}>
                     {data}
@@ -213,7 +216,7 @@ const styles = StyleSheet.create({
         marginTop:50,
         marginBottom: 220,
         marginLeft:20 ,
-        marginRight:10 ,
+        marginRight:20 ,
     },
     title:{
         fontSize: 20,
@@ -221,6 +224,13 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         fontWeight: 'bold'
+    },
+    image:{
+        margin:0,
+        height: 100,
+        width: '100%',
+        resizeMode : 'contain',
+        backgroundColor : '#00affb'
     }
 
 });
