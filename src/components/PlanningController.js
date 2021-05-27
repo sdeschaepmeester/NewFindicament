@@ -7,28 +7,27 @@ import {
   ViewStyle,
   TextStyle,
   TextInputProps,
-   SafeAreaView,
-    ScrollView,
-    CheckBox,
-    ImageBackground, 
-    View, 
-    FlatList,
-    Alert,
-    StyleSheet, 
-    Text,
-    TextBase,
-    TextInput, 
-    TextInputBase, 
-    Switch,
-    selectedDotColor,
-    
+  SafeAreaView,
+  ScrollView,
+  CheckBox,
+  ImageBackground,
+  View,
+  FlatList,
+  Alert,
+  StyleSheet,
+  Text,
+  TextBase,
+  TextInput,
+  TextInputBase,
+  Switch,
+  selectedDotColor,
+
 } from 'react-native';
 import { List, Button, Avatar, Checkbox } from 'react-native-paper';
 import { LocaleConfig } from 'react-native-calendars';
 import { enableExpoCliLogging } from 'expo/build/logs/Logs';
 import { useForm } from "react-hook-form";
 import ReactDOM from "react-dom";
-import { Formik, Field, Form } from "formik";
 import { Card, ListItem, Icon } from 'react-native-elements'
 
 
@@ -45,7 +44,7 @@ const Stack = createStackNavigator();
 
 function AddTreatment({ navigation, day }) {
   console.log(day);
-  navigation.navigate('Treatment')
+  navigation.navigate('Treatment',{day})
 }
 
 function PlanningScreen({ navigation }) {
@@ -65,10 +64,17 @@ function PlanningScreen({ navigation }) {
         //...calendarParams
         /* onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
         onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}*/
-        onDayPress={(day) => AddTreatment({navigation, day})}
-        
-        
+        onDayPress={(day) => AddTreatment({ navigation, day })}
+        markedDates={{
 
+          '2021-05-22': { startingDay: true, color: '#00adf5' },
+          '2021-05-23': { startingDay: false, color: '#00adf5' },
+          '2021-05-24': { startingDay: false, color: '#00adf5' },
+          '2021-05-25': { startingDay: false, color: '#00adf5' },
+          '2021-05-26': { endingDay: true, color: '#00adf5' },
+        }}
+        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+        markingType={'period'}
         //onDayPress={()=>navigation.navigate('Details')}
         // Callback that gets called when day changes while scrolling agenda list
         style={{
@@ -118,38 +124,41 @@ const stylesAddTreatment = {
 
 
 
-function AddTreatmentScreen() {
+function AddTreatmentScreen({ route, navigation }) {
 
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
-    const [isSelected, setSelection] = useState(false);
+  const { day } = route.params;
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [isSelected, setSelection] = useState(false);
   
+
   return (
     <View style={styles.container}>
       <Card>
-      <Text style={{fontSize: 30}}>Ajouter un traitement</Text>
-      <TextInput
-        style={{height: 40, borderRadius: 2, borderWidth:1, borderColor: 2374}}
-        placeholder="Sélectionner le médicament"
-      />
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
-          style={styles.checkbox}
+        <Text style={{ fontSize: 30 }}>Ajouter un traitement</Text>
+        <Text>{JSON.stringify(day.datestrinf)}</Text>
+        <TextInput
+          style={{ height: 40, borderRadius: 2, borderWidth: 1, borderColor: 2374 }}
+          placeholder="Sélectionner le médicament"
         />
-        <Text style={styles.label}>Traitement régulier</Text>
-      </View>
-            <Button  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
-              Confirmer
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={isSelected}
+            onValueChange={setSelection}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>Traitement régulier</Text>
+        </View>
+        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
+          Confirmer
             </Button>
-            <Button  style={{ backgroundColor: "#0099ff",marginLeft: 18, marginRight: 18, marginTop: 20}}>
-              Annuler
+        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
+          Annuler
             </Button>
-            </Card>
+      </Card>
     </View>
   );
-  
+
 };
 
 
@@ -166,10 +175,10 @@ const DrugsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: '#def3ff'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#def3ff'
   },
   checkboxContainer: {
     flexDirection: "row",
