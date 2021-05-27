@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from 'react';
 import {View, Image, Text, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView,StatusBar } from 'react-native';
 import {Picker} from "@react-native-picker/picker";
 import {SafeAreaConsumer} from "react-native-safe-area-context";
+import { Card } from 'react-native-elements'
 
 
 
@@ -95,12 +96,10 @@ class DetailsScreen extends Component {
     showComponent(data,title) {
 
         return (
-            <View>
-                <Image style={styles.image} source={this.state.bgImage} /> 
+            <View style={{backgroundColor:"white"}}>
+                <Image style={styles.image} source={this.state.bgImage} />
                 <Text style={styles.title}>{title}</Text>
-                <Text style={styles.noticeText}>
-                    {data}
-                </Text>
+                <Text style={styles.noticeText}>{data}</Text>
             </View>
         )
     }
@@ -115,7 +114,7 @@ class DetailsScreen extends Component {
             <View >
                 <SafeAreaView>
                 <View style={styles.container}>
-                    <Text>Parcourir la notice :</Text>
+                    <Text>Parcourir la notice : </Text>
                     <View style={styles.dropDown} >
                         <Picker style={styles.pickerStyle}
                                 selectedValue={this.state.notice}
@@ -197,6 +196,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 2,
+        backgroundColor: 'white'
     }
     ,
     button: {
@@ -231,6 +231,8 @@ const styles = StyleSheet.create({
         width: '100%',
         resizeMode : 'contain',
         backgroundColor : '#00affb'
+    },
+    card:{
+        width: '100%',
     }
-
 });
