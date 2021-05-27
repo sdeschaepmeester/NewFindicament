@@ -1,9 +1,10 @@
-import React, {Component} from "react";
-import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,Button,TouchableHighlight} from "react-native";
-import {Avatar, List} from "react-native-paper";
+import React, { Component } from "react";
+import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button, TouchableHighlight } from "react-native";
+import { Avatar, List } from "react-native-paper";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
-import {moreDetails} from '../GoToDetails';
+import { moreDetails } from '../GoToDetails';
+import { Card, ListItem } from 'react-native-elements'
 
 
 
@@ -29,8 +30,8 @@ class HomeController extends Component {
     };
 
 
-    async getDrugs(){
-        const drugsResponses = await  fetch('http://10.0.2.2:3000/getDrugs',{
+    async getDrugs() {
+        const drugsResponses = await fetch('http://10.0.2.2:3000/getDrugs', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -46,13 +47,13 @@ class HomeController extends Component {
             });
 
         const drugs = drugsResponses
-        this.setState({drugs:drugs})
+        this.setState({ drugs: drugs })
 
     }
 
     async componentDidMount() {
         console.log("start")
-        await  this.getDrugs()
+        await this.getDrugs()
         //this.findHistory()
         //this.changeView(this.state.description)
     }
@@ -62,32 +63,36 @@ class HomeController extends Component {
     render() {
 
         let drugs = this.state.drugs;
-        const {navigation}= this.props;
+        const { navigation } = this.props;
         console.log("the list of drugs :")
         //console.log(drugs[0].code_cip)
 
         const Item = ({ title }) => (
+            <View style={{
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
 
-            <TouchableOpacity
-                onPress={()=> moreDetails({navigation},title,"Medoc")}
-                style={styles.item}>
-                <Text >Title </Text>
-                <Text >{title}</Text>
-            </TouchableOpacity>
 
+                <TouchableOpacity
+                    onPress={() => moreDetails({ navigation }, title, "Medoc")}
+                    style={styles.item}>
+                    <Text >Title </Text>
+                    <Text >{title}</Text>
+                </TouchableOpacity>
+            </View>
         );
 
         const renderItem = ({ item }) => (
-            <Item  title={item.code_cip} />
+            <Item title={item.code_cip} />
         );
 
 
         return (
-            <View style={{ flex: 1, paddingTop: 30 }}>
+            <View style={{ flex: 1, paddingTop: 30, backgroundColor: "#dff2ff" }}>
 
-                <SafeAreaView style={styles.container}>
-                    <Text>Hello</Text>
-
+                <SafeAreaView >
+                <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
                 </SafeAreaView>
                 <ScrollView style={styles.scrollView}>
                     <FlatList
@@ -126,10 +131,12 @@ export default class HomeStack extends Component {
 }
 
 const styles = StyleSheet.create({
-    item:{
-        height:75,
+    item: {
+        height: 75,
+        backgroundColor: "white",
+        width: "90%",
         padding: 20,
-        fontSize:24,
+        fontSize: 24,
         borderBottomColor: 'grey',
         borderBottomWidth: 1,
         shadowColor: "#000",
@@ -141,5 +148,10 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
 
         elevation: 2,
-    }
+        marginBottom: 5
+    },
+    image: {
+        height: 30,
+        position: "relative"
+    },
 });
