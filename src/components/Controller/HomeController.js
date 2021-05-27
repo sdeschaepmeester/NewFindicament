@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-import {FlatList, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,Button,TouchableHighlight} from "react-native";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
-import {moreDetails} from '../GoToDetails';
 import List from '../List'
+import History from "../History";
+
+const history = new History(null);
 
 
 class HomeController extends Component {
-
 
 
     state = {
@@ -65,9 +65,12 @@ class HomeController extends Component {
         console.log("the list of drugs :")
 
         return(
+
             <List
                 navigation={navigation}
                 drugs={drugs}
+                page={"Home"}
+                onCreate={history.addToHistory}
             />
         )
 

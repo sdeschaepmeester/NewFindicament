@@ -11,23 +11,51 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {moreDetails} from "./GoToDetails";
+import {AntDesign} from "@expo/vector-icons";
+import {Button} from "react-native-paper";
 
-const List = ({navigation,drugs})=> {
+const Item = ({ navigation, title,page,onDelete,onCreate }) => (
+
+    <TouchableOpacity
+        onPress={()=> moreDetails({navigation,onCreate},title,"Medoc")}
+        style={styles.item}>
+        <View style={styles.card}>
+            <View>
+                <Text >Title </Text>
+                <Text >{title}</Text>
+            </View>
+            <View style={styles.block_right}>
+                {ButtonDeleteById({title,page,onDelete})}
+
+            </View>
+        </View>
 
 
-    const Item = ({ title }) => (
+    </TouchableOpacity>
 
-        <TouchableOpacity
-            onPress={()=> moreDetails({navigation},title,"Medoc")}
-            style={styles.item}>
-            <Text >Title </Text>
-            <Text >{title}</Text>
-        </TouchableOpacity>
+);
 
-    );
+const ButtonDeleteById = ({title, page,onDelete}) =>{
+    if(page == "History"){
+        return (
+            <Button style={styles.roundButton}
+                    color="#000080"
+                    mode="contained"
+                    onPress={() => onDelete(title)}>
+                <AntDesign name="closecircleo" size={20} color="white" />
+            </Button>
+        )
+    }
+
+}
+
+const List = ({navigation,drugs,page,onDelete,onCreate})=> {
+
+    console.log("drugs")
+    console.log(drugs)
 
     const renderItem = ({ item }) => (
-        <Item  title={item.code_cip} />
+        <Item navigation={navigation}  title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
     );
 
 
@@ -75,5 +103,14 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
 
         elevation: 2,
+    },
+
+    card:{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    block_right:{
+
     }
 });
