@@ -52,7 +52,7 @@ const ButtonDeleteById = ({title, page,onDelete}) =>{
 const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
     console.log("drugs")
-    console.log(drugs)
+    //console.log(drugs)
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation}  title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>

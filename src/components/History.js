@@ -15,15 +15,7 @@ class History extends Component {
             {
                 code_cip: 1,
                 id: 'Medoc1',
-            },
-            {
-                codeCIP: 2,
-                id: 'Medoc2',
-            },
-            {
-                codeCIP: 3,
-                id: 'Medoc3',
-            },
+            }
         ]
     };
 
@@ -49,20 +41,29 @@ class History extends Component {
 
     }
 
-     addToHistory =  () =>{
-        return "coucou"
-
-    }
-
     async componentDidMount() {
         console.log("start")
         await  this.getDrugs()
+        this.focusListener  = this.props.navigation.addListener("focus",async () => {
+            console.log("start 2")
+            await  this.getDrugs()
+
+        });
+
         //this.findHistory()
         //this.changeView(this.state.description)
     }
 
+    componentWillUnmount() {
+        // remove event listener
+        if (this.focusListener != null && this.focusListener.remove) {
+            this.focusListener.remove();
+        }
+    }
 
-     deleteHistoryById = (cip) => {
+
+      deleteHistoryById = async (cip) => {
+        console.log("delete")
          fetch('http://10.0.2.2:3000/deleteHistory', {
              method: 'POST',
              headers: {
@@ -73,6 +74,7 @@ class History extends Component {
                  cip: cip
              }),
          });
+         await  this.getDrugs()
     }
 
     alert = (s) => {
@@ -102,7 +104,6 @@ class History extends Component {
                     drugs={drugs}
                     page={"History"}
                     onDelete={this.deleteHistoryById}
-                    onCreate={this.addToHistory}
                 />
 
         )

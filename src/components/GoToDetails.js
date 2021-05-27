@@ -1,15 +1,18 @@
 import React from "react";
 
 
-export let moreDetails = ({navigation,onCreate},codeCIP,name) => {
+export let moreDetails = ({navigation},codeCIP,name) => {
     navigation.navigate('Details', {
         codeCIP: codeCIP
     })
 
-    insertToHistory(codeCIP,name,onCreate)
+
+    insertToHistory(codeCIP,name)
 }
 
-const insertToHistory = (cip,name,onCreate) => {
+
+
+const insertToHistory = (cip,name) => {
     try{
         fetch('http://10.0.2.2:3000/insertHistory', {
             method: 'POST',
@@ -25,7 +28,7 @@ const insertToHistory = (cip,name,onCreate) => {
     }catch (e){
         console.warn("Cannot insert to history")
     }
-    console.log(onCreate())
+
 }
 
 

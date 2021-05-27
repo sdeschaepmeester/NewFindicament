@@ -106,6 +106,8 @@ class DetailsScreen extends Component {
      */
     async componentDidMount() {
 
+        console.log("details Hello ")
+
         if(this.props.valueFromParent != null){
             await  this.getDrugById(this.props.valueFromParent)
 

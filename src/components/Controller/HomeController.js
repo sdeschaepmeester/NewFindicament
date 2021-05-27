@@ -2,12 +2,10 @@ import React, {Component} from "react";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import List from '../List'
-import History from "../History";
-
-const history = new History(null);
 
 
 class HomeController extends Component {
+
 
 
     state = {
@@ -70,7 +68,6 @@ class HomeController extends Component {
                 navigation={navigation}
                 drugs={drugs}
                 page={"Home"}
-                onCreate={history.addToHistory}
             />
         )
 
