@@ -7,7 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import DetailsScreen from '../screens/DetailsScreen';
+import DetailsScreen from '../../screens/DetailsScreen';
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 

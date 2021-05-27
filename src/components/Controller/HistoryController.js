@@ -6,9 +6,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import DetailsScreen from '../screens/DetailsScreen';
+import DetailsScreen from '../../screens/DetailsScreen';
 import React,{useState,useEffect} from "react";
-
+import {moreDetails} from '../GoToDetails';
 
 var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
@@ -39,26 +39,6 @@ const tempoHistory =   [
 
 
 
-async function getDrugById(code_cip){
-    return fetch('http://10.0.2.2:3000/getDrugById',{
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            code_cip: code_cip
-        }),
-    })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            return responseJson;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-}
-
 // get history table
 let getHistory = async ()=> {
     return fetch('http://10.0.2.2:3000/getHistory',{
@@ -87,31 +67,6 @@ async function  parseHistoryToArray(drugData){
     return drugArray
 }
 
-async function goToDetails({ navigation, drug }) {
-     let data = await getDrugById(drug[1].cip);
-
-    navigation.navigate('Details', {
-        codeCIP: data[0].code_cip,
-        title: drug[1].title,
-        description: data[0].notice,
-      })
-    asyncDone = false;
-    insertToHistory(drug[1].cip,drug[1].name)
-}
-
-const insertToHistory = (cip,name) => {
-    fetch('http://10.0.2.2:3000/insertHistory', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            cip: cip,
-            name: name
-        }),
-    });
-}
 
 const deleteHistory = () => {
     fetch('http://10.0.2.2:3000/deleteHistory', {
@@ -149,7 +104,7 @@ let  findHistory =  ({ navigation,data }) => {
             {data.map(drug => (
                 <List.Item
                 key={drug[1].id}
-                onPress={() => goToDetails({ navigation, drug })}
+                onPress={() => moreDetails({navigation},drug[1].cip,drug[1].name)}
                 title={drug[1].name}
                 description={drug[1].cip}
                 left={props =>
@@ -238,7 +193,7 @@ function ShowDetailsScreen({route}) {
 
     return (
         <View>
-            <DetailsScreen valueFromParent={route.params} />
+            <DetailsScreen valueFromParent={route.params.codeCIP} />
         </View>
     )
 }

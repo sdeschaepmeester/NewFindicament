@@ -12,7 +12,8 @@ import SigninScreen from "../screens/SigninScreen"
 import LoadingScreen from "../screens/LoadingScreen";
 import Scanner from "../components/Scanner";
 import HomeScreen from "../screens/HomeScreen";
-import FiltersController from "../components/FiltersController";
+import FiltersController from "../components/Controller/FiltersController";
+import Home from "../components/Home";
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +58,7 @@ const Tabs = () => {
                 }
             }}
         >
-            <Tab.Screen name="Drugs" component={FiltersController}
+            <Tab.Screen name="Drugs" component={HomeScreen}
             options={{
                 tabBarIcon: ({focused})=>(
                     <View style={{alignItems:'center',justifyContent:'center',top: 10}}>

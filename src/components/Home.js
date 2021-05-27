@@ -1,42 +1,19 @@
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, { Component } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
-function Home({navigation}) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Planning')}>
-        <Text style={styles.buttonText}>planning</Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
+import Home from './Controller/HomeController';
+import  DetailsScreen  from '../screens/DetailsScreen';
 
-export default Home
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ebebeb'
-  },
-  text: {
-    color: '#101010',
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
-  buttonContainer: {
-    backgroundColor: '#222',
-    borderRadius: 5,
-    padding: 10,
-    margin: 20
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff'
+const Stack = createStackNavigator();
+
+export default class App extends Component {
+  render() {
+    return (
+        <Stack.Navigator >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Details" component={DetailsScreen} />
+        </Stack.Navigator>
+    );
   }
-})
-
+}

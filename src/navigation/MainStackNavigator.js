@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import Planning from '../components/PlanningController'
+import Planning from '../components/Controller/PlanningController'
 
 import Scanner from '../components/Scanner'
 //import Home from '../components/Home'
