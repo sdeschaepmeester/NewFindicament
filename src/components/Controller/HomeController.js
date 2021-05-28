@@ -1,11 +1,7 @@
 import React, { Component } from "react";
-import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, Button, TouchableHighlight } from "react-native";
-import { Avatar, List } from "react-native-paper";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import List from '../List'
-import { moreDetails } from '../GoToDetails';
-import { Card, ListItem } from 'react-native-elements'
 
 
 

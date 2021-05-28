@@ -15,23 +15,27 @@ import {AntDesign} from "@expo/vector-icons";
 import {Button} from "react-native-paper";
 
 const Item = ({ navigation, title,page,onDelete,onCreate }) => (
+    <View style={{
+        justifyContent: 'center',
+        alignItems: 'center'
+    }}>
+        <TouchableOpacity
+            onPress={()=> moreDetails({navigation,onCreate},title,"Medoc")}
+            style={styles.item}>
+            <View style={styles.card}>
+                <View>
+                    <Text >Title </Text>
+                    <Text >{title}</Text>
+                </View>
+                <View style={styles.block_right}>
+                    {ButtonDeleteById({title,page,onDelete})}
 
-    <TouchableOpacity
-        onPress={()=> moreDetails({navigation,onCreate},title,"Medoc")}
-        style={styles.item}>
-        <View style={styles.card}>
-            <View>
-                <Text >Title </Text>
-                <Text >{title}</Text>
+                </View>
             </View>
-            <View style={styles.block_right}>
-                {ButtonDeleteById({title,page,onDelete})}
-
-            </View>
-        </View>
 
 
-    </TouchableOpacity>
+        </TouchableOpacity>
+    </View>
 
 );
 
@@ -60,10 +64,10 @@ const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
 
     return (
-        <View style={{ flex: 1, paddingTop: 30 }}>
+        <View style={{ flex: 1, paddingTop: 30, backgroundColor: "#dff2ff" }}>
 
             <SafeAreaView style={styles.container}>
-                <Text>Filtre </Text>
+                <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
 
             </SafeAreaView>
             <ScrollView style={styles.scrollView}>
@@ -89,9 +93,11 @@ export default List;
 
 const styles = StyleSheet.create({
     item:{
-        height:75,
+        height: 75,
+        backgroundColor: "white",
+        width: "90%",
         padding: 20,
-        fontSize:24,
+        fontSize: 24,
         borderBottomColor: 'grey',
         borderBottomWidth: 1,
         shadowColor: "#000",
@@ -103,6 +109,7 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
 
         elevation: 2,
+        marginBottom: 5
     },
 
     card:{
