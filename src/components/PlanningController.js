@@ -136,7 +136,7 @@ function AddTreatmentScreen({ route, navigation }) {
     <View style={styles.container}>
       <Card>
         <Text style={{ fontSize: 30 }}>Ajouter un traitement</Text>
-        <Text>{JSON.stringify(day.datestrinf)}</Text>
+        <Text style={{marginLeft: 18, marginRight: 18, marginTop: 20,marginBottom: 20}}>dêbut du traitemant le {JSON.stringify(day.day)}/{JSON.stringify(day.month)}/{JSON.stringify(day.year)} </Text>
         <TextInput
           style={{ height: 40, borderRadius: 2, borderWidth: 1, borderColor: 2374 }}
           placeholder="Sélectionner le médicament"
@@ -149,10 +149,11 @@ function AddTreatmentScreen({ route, navigation }) {
           />
           <Text style={styles.label}>Traitement régulier</Text>
         </View>
-        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
+        <Button onPress={()=>this.navigation.navigate('planning')}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
           Confirmer
             </Button>
-        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
+            
+        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
           Annuler
             </Button>
       </Card>
