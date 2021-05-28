@@ -6,8 +6,11 @@ export let moreDetails = ({navigation},codeCIP,name) => {
         codeCIP: codeCIP
     })
 
+
     insertToHistory(codeCIP,name)
 }
+
+
 
 const insertToHistory = (cip,name) => {
     try{

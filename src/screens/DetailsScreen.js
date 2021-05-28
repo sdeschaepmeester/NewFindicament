@@ -113,8 +113,10 @@ class DetailsScreen extends Component {
      */
     async componentDidMount() {
 
-        if (this.props.valueFromParent != null) {
-            await this.getDrugById(this.props.valueFromParent)
+        console.log("details Hello ")
+
+        if(this.props.valueFromParent != null){
+            await  this.getDrugById(this.props.valueFromParent)
 
         }
         else {//Home
@@ -162,9 +164,8 @@ class DetailsScreen extends Component {
     render() {
         const { description } = this.state;
 
-        console.log("la description ")
-        console.log({ desc: this.state.description })
-        //console.log(this.state.description)
+        //console.log("la description ")
+        //console.log({ desc: this.state.description })
 
         return (
             <View >

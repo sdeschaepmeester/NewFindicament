@@ -3,6 +3,7 @@ import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableO
 import { Avatar, List } from "react-native-paper";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
+import List from '../List'
 import { moreDetails } from '../GoToDetails';
 import { Card, ListItem } from 'react-native-elements'
 
@@ -65,46 +66,15 @@ class HomeController extends Component {
         let drugs = this.state.drugs;
         const { navigation } = this.props;
         console.log("the list of drugs :")
-        //console.log(drugs[0].code_cip)
 
-        const Item = ({ title }) => (
-            <View style={{
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
+        return(
 
-
-                <TouchableOpacity
-                    onPress={() => moreDetails({ navigation }, title, "Medoc")}
-                    style={styles.item}>
-                    <Text >Title </Text>
-                    <Text >{title}</Text>
-                </TouchableOpacity>
-            </View>
-        );
-
-        const renderItem = ({ item }) => (
-            <Item title={item.code_cip} />
-        );
-
-
-        return (
-            <View style={{ flex: 1, paddingTop: 30, backgroundColor: "#dff2ff" }}>
-
-                <SafeAreaView >
-                <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
-                </SafeAreaView>
-                <ScrollView style={styles.scrollView}>
-                    <FlatList
-                        data={drugs}
-                        renderItem={renderItem}
-
-                        keyExtractor={item => item.id}
-                    />
-                </ScrollView>
-
-            </View>
-        );
+            <List
+                navigation={navigation}
+                drugs={drugs}
+                page={"Home"}
+            />
+        )
 
     }
 
@@ -130,28 +100,3 @@ export default class HomeStack extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    item: {
-        height: 75,
-        backgroundColor: "white",
-        width: "90%",
-        padding: 20,
-        fontSize: 24,
-        borderBottomColor: 'grey',
-        borderBottomWidth: 1,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-
-        elevation: 2,
-        marginBottom: 5
-    },
-    image: {
-        height: 30,
-        position: "relative"
-    },
-});

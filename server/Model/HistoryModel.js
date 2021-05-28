@@ -5,7 +5,7 @@ let History = {}
 
 History.getHistory = ()=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From history Group by cip ',(err,result)=>{
+        pool.query('Select * From history Group by code_cip ',(err,result)=>{
             if(err){
                 return reject(err)
             }
@@ -29,7 +29,7 @@ History.deleteHistory = (id = -1)=> {
         })
     }else{
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From history Where cip = ?',id,(err,result)=>{
+            pool.query('Delete From history Where code_cip = ?',id,(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -45,7 +45,7 @@ History.deleteHistory = (id = -1)=> {
 History.insertHistory = (cip,name)=> {
 
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO history (cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
+        pool.query('Insert INTO history (code_cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
             if(err){
                 return reject(err)
             }
