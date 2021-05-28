@@ -13,6 +13,10 @@ import {
 import {moreDetails} from "./GoToDetails";
 import {AntDesign} from "@expo/vector-icons";
 import {Button} from "react-native-paper";
+import { SearchBar } from 'react-native-elements';
+import {ShowFilter} from './Controller/FiltersController'
+
+
 
 const Item = ({ navigation, title,page,onDelete,onCreate }) => (
     <View style={{
@@ -39,6 +43,8 @@ const Item = ({ navigation, title,page,onDelete,onCreate }) => (
 
 );
 
+
+
 const ButtonDeleteById = ({title, page,onDelete}) =>{
     if(page == "History"){
         return (
@@ -53,7 +59,11 @@ const ButtonDeleteById = ({title, page,onDelete}) =>{
 
 }
 
-const List = ({navigation,drugs,page,onDelete,onCreate})=> {
+
+
+
+
+export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
     console.log("drugs")
     //console.log(drugs)
@@ -68,6 +78,9 @@ const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
             <SafeAreaView style={styles.container}>
                 <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
+                <ShowFilter
+                    page={page}
+                />
 
             </SafeAreaView>
             <ScrollView style={styles.scrollView}>
@@ -87,7 +100,6 @@ const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 }
 
 
-export default List;
 //export default HistoryController;
 
 
@@ -121,3 +133,4 @@ const styles = StyleSheet.create({
 
     }
 });
+

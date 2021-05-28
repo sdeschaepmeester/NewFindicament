@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
-import List from '../List'
+import {List} from '../List'
 
 
 

@@ -25,6 +25,7 @@
     "react-native-basic-form": "^1.1.11",
     "react-native-calendars": "^1.1259.0",
     "react-native-dropdown-menu": "^2.0.0",
+    "react-native-elements": "^3.4.1",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-material-dropdown": "^0.11.1",
     "react-native-material-menu": "^1.2.0",

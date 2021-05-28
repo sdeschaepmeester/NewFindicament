@@ -1,57 +1,11 @@
 import * as React from 'react';
 import { ListItem } from 'react-native-vector-icons';
-import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text, Modal, Pressable, String } from 'react-native';
 import { List, Button, Avatar } from 'react-native-paper';
-import { Ionicons as Icon } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar';
-import { NavigationContainer } from '@react-navigation/native';
 import { SearchBar } from 'react-native-elements';
-import {createStackNavigator} from "@react-navigation/stack";
-
 // Search bar
-class SearchBarByDrugName extends React.Component {
-  state = {
-    search: '',
-  };
 
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
-
-  render() {
-    const { search } = this.state;
-
-    return (
-      <SearchBar
-        lightTheme
-        placeholder="Type Here..."
-        onChangeText={this.updateSearch}
-        value={search}
-      />
-    );
-  }
-}
-
-const Stack = createStackNavigator();
-
-const drugs = [
-  {
-    codeCIP: 1,
-    title: 'Medoc1',
-    description: 'ceste genial',
-  },
-  {
-    codeCIP: 2,
-    title: 'Medoc2',
-    description: 'cest trop cool',
-  },
-  {
-    codeCIP: 3,
-    title: 'Medoc3',
-    description: 'cest trop top',
-  }
-];
+const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
 class SearchBarByFilter extends React.Component {
   state = {
@@ -59,117 +13,73 @@ class SearchBarByFilter extends React.Component {
   };
 
   updateSearch = (search) => {
-    this.setState({ search });
+    this.setState({search});
   };
 
   render() {
-    const { search } = this.state;
+    const {search} = this.state;
 
     return (
-      <SearchBar
-        lightTheme
-        placeholder="Type Here..."
-        onChangeText={this.updateSearch}
-        value={search}
-      />
+        <SearchBar
+            lightTheme
+            placeholder="Chercher un symptome"
+            onChangeText={this.updateSearch}
+            value={search}
+        />
     );
   }
 }
 
-// Functions
-const goToDetails = () => {
-  alert("goToDetails"); c
+const  filter = (id)=> {
+
+  console.log(id)
+  var malDeTete = "mal de tete";
+  var malDeGorge = "mal de gorge";
+
+
+  if (malDeGorge===id){
+    alert("Mal de Gorge");
+  }else if (malDeTete===id){
+    alert("Mal de Tete");
+  }
 }
 
-let findDrugsList = () => {
-  return (
-      <View>
-        {drugs.map(drug => (
-            <List.Item
-                key={drug.codeCIP}
-                title={drug.title}
-                description={drug.description}
-                left={props =>
-                    <View style={{
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}>
-                      <Avatar.Image size={64} source=
-                          {{
-                            uri: ('https://zupimages.net/up/21/17/3jev.jpg')
-                          }} />
-                    </View>
-                }
-            />
-        ))}
+export const ShowFilter = ({page})=>{
+  if(page == "Home") {
 
+    const [expanded, setExpanded] = React.useState(false);
+    const handlePress = () => setExpanded(!expanded);
 
-      </View>
-  )
+    return (
+        <View style={{paddingTop: 30}}>
+          <View style={stylesFilter.container2}>
+            <ImageBackground source={image} style={stylesFilter.image}>
+              <Text style={stylesFilter.text}>Médicaments</Text>
+            </ImageBackground>
+          </View>{/* Fin titre */}
+
+          <List.Section>
+            <List.Accordion
+                title="Recherche par symptome"
+                left={props => <List.Icon {...props} icon="filter"/>}
+                expanded={expanded}
+                onPress={handlePress}>
+              <SearchBar
+                  lightTheme
+                  placeholder="Chercher un symptome"
+
+              />
+              <List.Item title="Mal de tête" id="mal de tete" onPress={(e) => filter("mal de tete")}/>
+              <List.Item title="Mal de gorge" id="mal de gorge" onPress={(e) => filter("mal de gorge")}/>
+            </List.Accordion>
+          </List.Section>
+        </View>
+    )
+  }
 }
 
-function DrugsScreen({ navigation }) {
-  return (
-      <View style={{ flex: 1, paddingTop: 30 }}>
 
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={styles.scrollView}>
-            <FlatList
-                data={data}
-                renderItem={(item) =>
-                    <View style={{ borderRadius: 5, borderWidth: 1, margin: 5, borderColor: '#e0e0e0' }}>
-                      {findDrugsList({ navigation })}
-                    </View>
-                }
-            />
-          </ScrollView>
-        </SafeAreaView>
-      </View>
-  );
-};
-
-const DrugsController = () => {
-  const [expanded, setExpanded] = React.useState(false);
-  const handlePress = () => setExpanded(!expanded);
-
-  return (
-    <View style={{ paddingTop: 30 }}>
-      {/* View contenant l'image et le titre de la page  */}
-      <View style={styles.container}>
-        <ImageBackground source={image} style={styles.image}>
-          <Text style={styles.text}>Médicaments</Text>
-        </ImageBackground>
-      </View>{/* Fin titre  */}
-
-      <SearchBarByDrugName />
-      <List.Section title="Accordions">
-        <List.Accordion
-          title="Recherche par symptome"
-          left={props => <List.Icon {...props} icon="folder" />}
-          expanded={expanded}
-          onPress={handlePress}>
-          <SearchBarByFilter />
-          <List.Item title="Ibuprofène" />
-          <List.Item title="Antalgique" />
-        </List.Accordion>
-      </List.Section>
-      {findDrugsList()}
-      <NavigationContainer independent={true}>
-        <Stack.Navigator initialRouteName="Home" >
-          <Stack.Screen name="Home" component={DrugsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
-  );
-};
-
-export default DrugsController;
-
-const data = [1, 2, 3, 4, 5, 6];
-
-var image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
-
-const styles = StyleSheet.create({
+const stylesFilter = StyleSheet.create({
   roundButton: {
     width: 30,
     height: 30,
@@ -185,12 +95,13 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
+    flexDirection: "column",
     resizeMode: "cover",
     justifyContent: "center",
     maxHeight: 200
   },
   text: {
-    color: "white",
+    color: "#80CFFF",
     fontSize: 42,
     fontWeight: "bold",
     textAlign: "center"
@@ -233,5 +144,12 @@ const styles = StyleSheet.create({
   infoIcon: {
     color: "#676767",
     marginRight: 5
-  }
+  },
+  container2: {
+    flex: 1,
+    marginTop: 30,
+    marginBottom: 40,
+    flexDirection: "column",
+    backgroundColor: "#80CFFF"
+  },
 });
