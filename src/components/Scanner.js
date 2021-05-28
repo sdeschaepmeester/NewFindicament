@@ -5,6 +5,8 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { MainStackNavigator } from '../navigation/MainStackNavigator';
+import { moreDetails } from './GoToDetails';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -34,9 +36,14 @@ export default class App extends Component {
   handleBarCodeScanned = ({ data }) => {
     new ResultScan().getResult(data);
   };
+  testhandleBarCodeScanned = ({ data }) => {
+    data = "34009 363 672 1 0"
+    console.log(data);
+  };
 
   render() {
     const { CameraPermissionGranted } = this.state;
+    const { navigation } = this.props;
     if (CameraPermissionGranted === null) {
       return (
         <View style={styles.container}>
@@ -70,6 +77,14 @@ export default class App extends Component {
               source={require('../assets/qr_render.png')}
             />
           </BarCodeScanner>
+          <Button
+            style={{ fontSize: 20, color: 'green' }}
+            styleDisabled={{ color: 'red' }}
+            onPress={() => moreDetails({ navigation }, "34009 363 672 1 0", "Medoc")}
+            title="Test scanner"
+          >
+            Test scanner
+          </Button>
         </View>
       );
     }
