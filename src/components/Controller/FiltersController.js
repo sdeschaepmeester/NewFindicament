@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { ListItem } from 'react-native-vector-icons';
-import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text, Modal, Pressable, String } from 'react-native';
-import { List, Button, Avatar } from 'react-native-paper';
+import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
+import { List } from 'react-native-paper';
 import { SearchBar } from 'react-native-elements';
-// Search bar
 
 const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 

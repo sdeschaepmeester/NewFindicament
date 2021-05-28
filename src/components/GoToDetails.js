@@ -5,8 +5,6 @@ export let moreDetails = ({navigation},codeCIP,name) => {
     navigation.navigate('Details', {
         codeCIP: codeCIP
     })
-
-
     insertToHistory(codeCIP,name)
 }
 

@@ -13,16 +13,9 @@ class HomeController extends Component {
         drugs: [
             {
                 code_cip: 1,
-                id: 'Medoc1',
-            },
-            {
-                codeCIP: 2,
-                id: 'Medoc2',
-            },
-            {
-                codeCIP: 3,
-                id: 'Medoc3',
-            },
+                id: 'Aucun médicament chargé',
+            }
+
         ]
     };
 
@@ -51,8 +44,6 @@ class HomeController extends Component {
     async componentDidMount() {
         console.log("start")
         await this.getDrugs()
-        //this.findHistory()
-        //this.changeView(this.state.description)
     }
 
 
@@ -74,14 +65,9 @@ class HomeController extends Component {
 
     }
 
-
-
-
 }
 
 export default class HomeStack extends Component {
-
-
 
     render() {
 

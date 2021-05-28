@@ -1,5 +1,4 @@
 import React,{useEffect} from 'react';
-import { Button,TextInput} from 'react-native-paper';
 import {
     ActivityIndicator, StyleSheet
 } from "react-native";

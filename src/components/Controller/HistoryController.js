@@ -23,7 +23,7 @@ const tempoHistory =   [
              {
                  "id": 75,
                  "cip": "34009 360 256 7 7",
-             "name": "Medoc1",
+             "name": "Medicament en cours de chargement",
              },
     ],
     [
@@ -31,7 +31,7 @@ const tempoHistory =   [
              {
                  "id": 76,
                  "cip": "34009 360 256 7 8",
-                "name": "Medoc1",
+                "name": "Medicament en cours de chargement",
              },
      ],
 

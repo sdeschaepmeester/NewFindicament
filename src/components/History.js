@@ -8,8 +8,6 @@ import {AntDesign} from "@expo/vector-icons";
 
 class History extends Component {
 
-
-
     state = {
         drugs: [
             {
@@ -50,8 +48,6 @@ class History extends Component {
 
         });
 
-        //this.findHistory()
-        //this.changeView(this.state.description)
     }
 
     componentWillUnmount() {
@@ -95,7 +91,6 @@ class History extends Component {
 
         let drugs = this.state.drugs;
         const {navigation}= this.props;
-        //console.log("the list of drugs :")
         const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
         return(
@@ -105,19 +100,11 @@ class History extends Component {
                     page={"History"}
                     onDelete={this.deleteHistoryById}
                 />
-
         )
-
     }
-
-
-
-
 }
 
 export default class HistoryStack extends Component {
-
-
 
     render() {
 
@@ -133,6 +120,5 @@ export default class HistoryStack extends Component {
 }
 
 const styles = StyleSheet.create({
-
 
 })

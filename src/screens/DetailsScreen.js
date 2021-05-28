@@ -2,9 +2,6 @@ import React, { Component, useEffect, useState } from 'react';
 import { View, Image, Text, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 
-
-
-
 class DetailsScreen extends Component {
 
 
@@ -163,9 +160,6 @@ class DetailsScreen extends Component {
 
     render() {
         const { description } = this.state;
-
-        //console.log("la description ")
-        //console.log({ desc: this.state.description })
 
         return (
             <View >

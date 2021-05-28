@@ -3,8 +3,6 @@ import {View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, TouchableOpacit
 import { Button,TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
 const SigninScreen = (props) => {
 
     const [email, setEmail] = useState('');

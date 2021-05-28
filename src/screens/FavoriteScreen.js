@@ -4,10 +4,6 @@ import { Button ,TextInput} from 'react-native-paper';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-
-
-
 const FavoriteScreen = (props) => {
 
 

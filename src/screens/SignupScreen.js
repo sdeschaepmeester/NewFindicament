@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet,  KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Button,TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

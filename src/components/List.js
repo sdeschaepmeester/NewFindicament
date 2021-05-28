@@ -13,7 +13,6 @@ import {
 import {moreDetails} from "./GoToDetails";
 import {AntDesign} from "@expo/vector-icons";
 import {Button} from "react-native-paper";
-import { SearchBar } from 'react-native-elements';
 import {ShowFilter} from './Controller/FiltersController'
 
 
@@ -33,7 +32,6 @@ const Item = ({ navigation, title,page,onDelete,onCreate }) => (
                 </View>
                 <View style={styles.block_right}>
                     {ButtonDeleteById({title,page,onDelete})}
-
                 </View>
             </View>
 
@@ -56,17 +54,9 @@ const ButtonDeleteById = ({title, page,onDelete}) =>{
             </Button>
         )
     }
-
 }
 
-
-
-
-
 export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
-
-    console.log("drugs")
-    //console.log(drugs)
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation}  title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
@@ -98,10 +88,6 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
 
 }
-
-
-//export default HistoryController;
-
 
 const styles = StyleSheet.create({
     item:{
