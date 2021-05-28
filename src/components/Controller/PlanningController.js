@@ -1,16 +1,35 @@
-import * as React from 'react';
+
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import React, { useState } from "react";
 import {
   ViewStyle,
   TextStyle,
-  TextInputProps, SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text
+  TextInputProps,
+  SafeAreaView,
+  ScrollView,
+  CheckBox,
+  ImageBackground,
+  View,
+  FlatList,
+  Alert,
+  StyleSheet,
+  Text,
+  TextBase,
+  TextInput,
+  TextInputBase,
+  Switch,
+  selectedDotColor,
+
 } from 'react-native';
-import { List, Button, Avatar } from 'react-native-paper';
+import { List, Button, Avatar, Checkbox } from 'react-native-paper';
 import { LocaleConfig } from 'react-native-calendars';
 import { enableExpoCliLogging } from 'expo/build/logs/Logs';
-import Form, { TYPES } from 'react-native-basic-form';
+import { useForm } from "react-hook-form";
+import ReactDOM from "react-dom";
+import { Card, ListItem, Icon } from 'react-native-elements'
+
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
@@ -23,8 +42,9 @@ LocaleConfig.defaultLocale = 'fr';
 
 const Stack = createStackNavigator();
 
-function AddTreatment({ navigation }) {
-  navigation.navigate('Treatment')
+function AddTreatment({ navigation, day }) {
+  console.log(day);
+  navigation.navigate('Treatment',{day})
 }
 
 function PlanningScreen({ navigation }) {
@@ -43,10 +63,18 @@ function PlanningScreen({ navigation }) {
         showScrollIndicator={true}
         //...calendarParams
         /* onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
-        onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}
-        onDayPress={(day) => {console.log('selected day', day)}} */
-        onDayPress={() => AddTreatment({ navigation })}
+        onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}*/
+        onDayPress={(day) => AddTreatment({ navigation, day })}
+        markedDates={{
 
+          '2021-05-22': { startingDay: true, color: '#00adf5' },
+          '2021-05-23': { startingDay: false, color: '#00adf5' },
+          '2021-05-24': { startingDay: false, color: '#00adf5' },
+          '2021-05-25': { startingDay: false, color: '#00adf5' },
+          '2021-05-26': { endingDay: true, color: '#00adf5' },
+        }}
+        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+        markingType={'period'}
         //onDayPress={()=>navigation.navigate('Details')}
         // Callback that gets called when day changes while scrolling agenda list
         style={{
@@ -84,11 +112,7 @@ function PlanningScreen({ navigation }) {
 };
 
 
-const fields = [
-  { name: 'drug', label: 'Medicament', required: true, autoCapitalize: "none", autoCorrect: false },
-  { name: 'comment', label: 'Commentaires', required: true, multiline: true },
-  { name: 'duration', label: 'Duree en nombre de jours', required: true, type: TYPES.Number },
-];
+
 
 const stylesAddTreatment = {
   button: {
@@ -97,22 +121,47 @@ const stylesAddTreatment = {
   backgroundColor: 'lightblue'
 }
 
-async function onSubmit(data) {
-  console.log(data)
-}
 
-function AddTreatmentScreen() {
+
+
+function AddTreatmentScreen({ route, navigation }) {
+
+  const { day } = route.params;
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [isSelected, setSelection] = useState(false);
+  
+
   return (
-    <View>
-      <Text>hello</Text>
-      <Form
-        title={"Ajouter le traitement"}
-        fields={fields}
-        onSubmit={onSubmit}
-        style={stylesAddTreatment}></Form>
+    <View style={styles.container}>
+      <Card>
+        <Text style={{ fontSize: 30 }}>Ajouter un traitement</Text>
+        <Text style={{marginLeft: 18, marginRight: 18, marginTop: 20,marginBottom: 20}}>dêbut du traitemant le {JSON.stringify(day.day)}/{JSON.stringify(day.month)}/{JSON.stringify(day.year)} </Text>
+        <TextInput
+          style={{ height: 40, borderRadius: 2, borderWidth: 1, borderColor: 2374 }}
+          placeholder="Sélectionner le médicament"
+        />
+        <View style={styles.checkboxContainer}>
+          <CheckBox
+            value={isSelected}
+            onValueChange={setSelection}
+            style={styles.checkbox}
+          />
+          <Text style={styles.label}>Traitement régulier</Text>
+        </View>
+        <Button onPress={()=>this.navigation.navigate('planning')}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+          Confirmer
+            </Button>
+            
+        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+          Annuler
+            </Button>
+      </Card>
     </View>
   );
+
 };
+
 
 const DrugsScreen = ({ navigation }) => {
   return (
@@ -125,5 +174,23 @@ const DrugsScreen = ({ navigation }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#def3ff'
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
+  label: {
+    margin: 8,
+  },
+});
 
 export default DrugsScreen;
