@@ -75,6 +75,10 @@ export const ShowFilter = ({page})=>{
           </List.Section>
         </View>
     )
+  }else {
+    return(
+        <Text></Text>
+    )
   }
 }
 
