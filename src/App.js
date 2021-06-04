@@ -36,7 +36,6 @@ const App = ({navigation}) => {
         <NavigationContainer  >
             <Stack.Navigator headerMode={"none"}>
                <Stack.Screen name={"tab"} children={()=> <Tabs/>}/>
-                <Stack.Screen name="drugs" component={DrugsScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );

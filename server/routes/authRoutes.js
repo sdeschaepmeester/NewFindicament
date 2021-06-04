@@ -29,6 +29,7 @@ router.post('/signin',async (req,res)=>{
         return res.status(400).send({error: "need email or password "})
     }
     const user = await auth.getByEmail(email)
+
     if(!user){
         return res.status(400).send({error :"email does not match"})
     }

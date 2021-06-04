@@ -81,6 +81,9 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
                     keyExtractor={item => item.id}
                 />
             </ScrollView>
+            <SafeAreaView style={styles.heightList}>
+
+            </SafeAreaView>
 
         </View>
     );
@@ -117,6 +120,9 @@ const styles = StyleSheet.create({
     },
     block_right:{
 
+    },
+    heightList:{
+        height: 100,
     }
 });
 

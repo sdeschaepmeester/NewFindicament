@@ -27,10 +27,11 @@ Auth.one = (id)=> {
 }
 Auth.getByEmail = (email)=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From user Where email = ? Limit 1',[email],(err,result)=>{
+        pool.query('Select * From user Where email = ? Limit 1',email,(err,result)=>{
             if(err){
                 return reject(err)
             }
+            console.log(resolve(result[0]))
             return resolve(result[0])
         })
     })
