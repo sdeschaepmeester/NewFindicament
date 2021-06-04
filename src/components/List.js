@@ -11,7 +11,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {moreDetails} from "./GoToDetails";
-import {AntDesign} from "@expo/vector-icons";
+import {AntDesign,Ionicons as Icon} from "@expo/vector-icons";
 import {Button} from "react-native-paper";
 import {ShowFilter} from './Controller/FiltersController'
 
@@ -46,11 +46,23 @@ const Item = ({ navigation, title,page,onDelete,onCreate }) => (
 const ButtonDeleteById = ({title, page,onDelete}) =>{
     if(page == "History"){
         return (
-            <Button style={styles.roundButton}
+            <Button
                     color="#000080"
                     mode="contained"
                     onPress={() => onDelete(title)}>
                 <AntDesign name="closecircleo" size={20} color="white" />
+            </Button>
+        )
+    }
+}
+const ButtonDelete = ({ page,onDelete}) =>{
+    if(page == "History"){
+        return (
+            <Button style={styles.roundButton}
+                    color="#000080"
+                    mode="contained"
+                    onPress={() => onDelete(-1)}>
+                <AntDesign name="delete" size={20} color="white" />
             </Button>
         )
     }
@@ -73,6 +85,7 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
                 />
 
             </SafeAreaView>
+            {ButtonDelete({page, onDelete})}
             <ScrollView style={styles.scrollView}>
                 <FlatList
                     data={drugs}
@@ -123,6 +136,11 @@ const styles = StyleSheet.create({
     },
     heightList:{
         height: 100,
+    },
+    roundButton:{
+        width: 40,
+        marginBottom: 15,
+        marginLeft: 20
     }
 });
 

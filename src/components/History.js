@@ -34,7 +34,7 @@ class History extends Component {
                 console.error(error);
             });
 
-        const drugs = drugsResponses
+        const drugs = await drugsResponses
         this.setState({drugs:drugs})
 
     }
@@ -58,9 +58,8 @@ class History extends Component {
     }
 
 
-      deleteHistoryById = async (cip) => {
-        console.log("delete")
-         fetch('http://10.0.2.2:3000/deleteHistory', {
+      deleteHistory = async (cip) => {
+        await fetch('http://10.0.2.2:3000/deleteHistory', {
              method: 'POST',
              headers: {
                  Accept: 'application/json',
@@ -70,7 +69,9 @@ class History extends Component {
                  cip: cip
              }),
          });
-         await  this.getDrugs()
+        console.log("delete")
+
+         await this.getDrugs()
     }
 
     alert = (s) => {
@@ -98,7 +99,7 @@ class History extends Component {
                     navigation={navigation}
                     drugs={drugs}
                     page={"History"}
-                    onDelete={this.deleteHistoryById}
+                    onDelete={this.deleteHistory}
                 />
         )
     }
