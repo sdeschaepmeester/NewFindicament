@@ -1,4 +1,5 @@
 
+
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -21,6 +22,7 @@ import {
   TextInputBase,
   Switch,
   selectedDotColor,
+  TouchableHighlight
 
 } from 'react-native';
 import { List, Button, Avatar, Checkbox } from 'react-native-paper';
@@ -28,7 +30,8 @@ import { LocaleConfig } from 'react-native-calendars';
 import { enableExpoCliLogging } from 'expo/build/logs/Logs';
 import { useForm } from "react-hook-form";
 import ReactDOM from "react-dom";
-import { Card, ListItem, Icon } from 'react-native-elements'
+import { Card, ListItem, Icon } from 'react-native-elements';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
 LocaleConfig.locales['fr'] = {
@@ -44,7 +47,7 @@ const Stack = createStackNavigator();
 
 function AddTreatment({ navigation, day }) {
   console.log(day);
-  navigation.navigate('Treatment',{day})
+  navigation.navigate('Treatment', { day })
 }
 
 function PlanningScreen({ navigation }) {
@@ -130,13 +133,29 @@ function AddTreatmentScreen({ route, navigation }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isSelected, setSelection] = useState(false);
-  
+
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
 
   return (
+
     <View style={styles.container}>
       <Card>
         <Text style={{ fontSize: 30 }}>Ajouter un traitement</Text>
-        <Text style={{marginLeft: 18, marginRight: 18, marginTop: 20,marginBottom: 20}}>dêbut du traitemant le {JSON.stringify(day.day)}/{JSON.stringify(day.month)}/{JSON.stringify(day.year)} </Text>
+        <Text style={{ marginLeft: 18, marginRight: 18, marginTop: 20, marginBottom: 20 }}>début du traitement le {JSON.stringify(day.day)}/{JSON.stringify(day.month)}/{JSON.stringify(day.year)} </Text>
         <TextInput
           style={{ height: 40, borderRadius: 2, borderWidth: 1, borderColor: 2374 }}
           placeholder="Sélectionner le médicament"
@@ -148,14 +167,26 @@ function AddTreatmentScreen({ route, navigation }) {
             style={styles.checkbox}
           />
           <Text style={styles.label}>Traitement régulier</Text>
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+          />
+
         </View>
-        <Button onPress={()=>this.navigation.navigate('planning')}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+        <Button onPress={showDatePicker} style={{ backgroundColor: "#e9f0ef", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
+          Début de traitement
+        </Button>
+
+        <Button onPress={() => this.navigation.navigate('planning')} style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
           Confirmer
-            </Button>
-            
-        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+        </Button>
+
+        <Button style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
           Annuler
-            </Button>
+        </Button>
       </Card>
     </View>
   );
@@ -176,7 +207,6 @@ const DrugsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#def3ff'
@@ -191,6 +221,30 @@ const styles = StyleSheet.create({
   label: {
     margin: 8,
   },
+  btnClickContain: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    alignSelf: 'stretch',
+    backgroundColor: 'grey',
+    borderRadius: 5,
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  btnContainer: {
+    flexDirection: 'row',
+  },
+  btnIcon: {
+    height: 25,
+    width: 25,
+  },
+  btnText: {
+    fontSize: 18,
+    color: 'white',
+    marginLeft: 10,
+    marginTop: 2,
+  }
 });
 
 export default DrugsScreen;
