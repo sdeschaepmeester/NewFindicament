@@ -8,6 +8,8 @@ import {AntDesign} from "@expo/vector-icons";
 
 class History extends Component {
 
+
+
     state = {
         drugs: [
             {
@@ -104,6 +106,8 @@ class History extends Component {
         )
     }
 }
+
+export {History as HistoryClass}
 
 export default class HistoryStack extends Component {
 

@@ -14,6 +14,17 @@ History.getHistory = ()=> {
     })
 }
 
+History.countHistory = ()=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select count(id) as id From history',(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
+
 
 
 
