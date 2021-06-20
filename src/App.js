@@ -9,6 +9,8 @@ import 'react-native-gesture-handler';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "./screens/LoadingScreen";
 import DrugsScreen from "./screens/DrugsScreen";
+import CheckPassword from "./components/CheckPassword";
+
 const Stack = createStackNavigator()
 
 const App = ({navigation}) => {
@@ -35,6 +37,7 @@ const App = ({navigation}) => {
     return(
         <NavigationContainer  >
             <Stack.Navigator headerMode={"none"}>
+               <Stack.Screen name={"check"} children={()=> <CheckPassword/>}/>
                <Stack.Screen name={"tab"} children={()=> <Tabs/>}/>
             </Stack.Navigator>
         </NavigationContainer>
