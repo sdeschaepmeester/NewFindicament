@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SafeAreaView, ScrollView, ImageBackground, View, FlatList, Alert, StyleSheet, Text } from 'react-native';
-import { List } from 'react-native-paper';
+import { List, Searchbar } from 'react-native-paper';
 import { SearchBar } from 'react-native-elements';
 
 const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
@@ -33,12 +33,15 @@ const  filter = (id)=> {
   console.log(id)
   var malDeTete = "mal de tete";
   var malDeGorge = "mal de gorge";
+  var irritations = "irritations";
 
 
   if (malDeGorge===id){
-    alert("Mal de Gorge");
+    alert("Mal De Gorge")
   }else if (malDeTete===id){
-    alert("Mal de Tete");
+    alert("Mal De Tête")
+  }else if (irritations===id){
+    alert("Irritations")
   }
 }
 
@@ -65,15 +68,15 @@ export const ShowFilter = ({page})=>{
               <SearchBar
                   lightTheme
                   placeholder="Chercher un symptome"
-
               />
-              <List.Item title="Mal de tête" id="mal de tete" onPress={(e) => filter("mal de tete")}/>
-              <List.Item title="Mal de gorge" id="mal de gorge" onPress={(e) => filter("mal de gorge")}/>
+              <List.Item title="Mal de tête" onPress={(e) => filter("mal de tete")}/>
+              <List.Item title="Mal de gorge" onPress={(e) => filter("mal de gorge")}/>
+              <List.Item title="Irritations" onPress={(e) => filter("irritations")}/>
             </List.Accordion>
           </List.Section>
         </View>
     )
-  }else {
+  }else{
     return(
         <Text></Text>
     )
