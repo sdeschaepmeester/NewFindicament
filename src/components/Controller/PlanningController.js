@@ -45,6 +45,19 @@ LocaleConfig.defaultLocale = 'fr';
 
 const Stack = createStackNavigator();
 
+let inserPlanning = () => {
+  fetch('http://10.0.2.2:3000/enterTreatmentDate', {
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          
+      }),
+  });
+}
+
 function AddTreatment({ navigation, day }) {
   console.log(day);
   navigation.navigate('Treatment', { day })
@@ -180,7 +193,7 @@ function AddTreatmentScreen({ route, navigation }) {
           Début de traitement
         </Button>
 
-        <Button onPress={() => this.navigation.navigate('planning')} style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
+        <Button onPress={() => inserPlanning(),this.navigation.navigate('planning')} style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
           Confirmer
         </Button>
 
