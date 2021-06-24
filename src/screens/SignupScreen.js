@@ -2,33 +2,63 @@ import React,{useState} from 'react';
 import {View, Text, StyleSheet,  KeyboardAvoidingView, TouchableOpacity} from 'react-native';
 import { Button,TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePasswordValidation } from "../hooks/usePasswordValidation";
+
 
 const SignupScreen = (props) => {
 
     const [email,setEmail] = useState('');
-    const [password,setPassword]=useState('')
+    const [password, setPassword] = useState({
+        firstPassword: "",
+        secondPassword: "",
+    });
+    //const [password,setPassword]=useState('')
+    const [
+        validLength,
+        hasNumber,
+        upperCase,
+        lowerCase,
+        match,
+        specialChar,
+    ] = usePasswordValidation({
+        firstPassword: password.firstPassword,
+        secondPassword: password.secondPassword,
+    });
 
     const sendCred= async (props)=>{
-        fetch("http://10.0.2.2:3000/signup",{
-            method:"POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                "email":email,
-                "password":password
+
+        if(validLength&&hasNumber&&upperCase&&lowerCase&&match&&specialChar){
+            console.log("bonne longueur")
+
+            fetch("http://10.0.2.2:3000/signup", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "email": email,
+                    "password": password.firstPassword
+                })
             })
-        })
-            .then(res=>res.json())
-            .then(async (data)=>{
-                try {
-                    await AsyncStorage.setItem('token',data.token)
-                    props.navigation.replace("home")
-                } catch (e) {
-                    console.log("error hai",e)
-                }
-            })
+                .then(res => res.json())
+                .then(async (data) => {
+                    try {
+                        await AsyncStorage.setItem('token', data.token)
+                        props.navigation.replace("home")
+                    } catch (e) {
+                        console.log("error hai", e)
+                    }
+                })
+        }else{
+            console.log("mauvaise longeur")
+        }
     }
+    const setFirst = (value) => {
+        setPassword({ ...password, firstPassword: value });
+    };
+    const setSecond = (value) => {
+        setPassword({ ...password, secondPassword: value });
+    };
 
     return (
         <View style={styles.container}>
@@ -43,14 +73,36 @@ const SignupScreen = (props) => {
                     mode={"outlined"}
                     onChangeText={(text)=>setEmail(text)}
                 />
-                <TextInput
-                    label="Password"
-                    value={password}
-                    secureTextEntry={true}
-                    style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
-                    mode={"outlined"}
-                    onChangeText={(text)=>setPassword(text)}
-                />
+                <View>
+                    <View>
+                        <Text>Mot de passe</Text>
+                        <TextInput
+                            label="Password"
+                            style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
+                            mode={"outlined"}
+                            value={password.firstPassword}
+                            onChangeText={text => setFirst(text)} type='text' />
+                    </View>
+                    <View>
+                        <Text>Vérification mot de passe</Text>
+                        <TextInput
+                            label="SecondPassword"
+                            style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
+                            mode={"outlined"}
+                            value={password.secondPassword}
+
+                            onChangeText={text => setSecond(text)} type='text' />
+                    </View>
+                    <View>
+                             {validLength ? null : <Text>Il faut qu'il y ait au moins 8 charactere</Text>}
+                             {hasNumber ? null : <Text>Il faut au moins un chiffre</Text>}
+                             {upperCase ? null : <Text>Il faut au moins une majuscule</Text>}
+                            {lowerCase ? null: <Text>Il faut au moins une minuscule</Text>}
+                            {match ? null : <Text>Les deux mots de passe ne correspondent pas </Text>}
+                            {specialChar ? null : <Text>Il faut au moins un charactère spéciale  </Text>}
+                    </View>
+                </View>
+
                 <Button  mode="contained" style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     onPress={() =>sendCred()}>
                     Creation
