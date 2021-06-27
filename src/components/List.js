@@ -13,7 +13,6 @@ import {
 import {moreDetails} from "./GoToDetails";
 import {AntDesign,Ionicons as Icon} from "@expo/vector-icons";
 import {Button} from "react-native-paper";
-import {ShowFilter} from './Controller/FiltersController'
 import {useEffect, useState} from "react";
 import {SearchBar} from "react-native-elements";
 
@@ -125,9 +124,6 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
                     value={search}
                 />
 
-                <ShowFilter
-                    page={page}
-                />
 
             </SafeAreaView>
             {ButtonDelete({page, onDelete})}
