@@ -3,6 +3,27 @@ const pool = require('../db');
 
 let favorite = {}
 
+favorite.getFavorite = ()=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select * From favorite Group by code_cip ',(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
+favorite.CheckIfExist = (cip)=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select count(distinct(code_cip)) as nb From favorite where code_cip = ? ',cip,(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
+
 favorite.deleteFavorite = (id = -1)=> {
     if(id == -1){ // delete All
         return new Promise((resolve,reject)=>{
@@ -15,7 +36,7 @@ favorite.deleteFavorite = (id = -1)=> {
         })
     }else{
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From favorite Where cip = ?',id,(err,result)=>{
+            pool.query('Delete From favorite Where code_cip = ?',id,(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -29,7 +50,7 @@ favorite.deleteFavorite = (id = -1)=> {
 favorite.insertFavorite = (cip,name)=> {
 
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO favorite (cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
+        pool.query('Insert INTO favorite (code_cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
             if(err){
                 return reject(err)
             }

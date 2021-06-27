@@ -5,7 +5,7 @@ import {List} from './List'
 import {Alert, ImageBackground, StyleSheet, Text, View} from "react-native";
 
 
-class History extends Component {
+class Favorite extends Component {
 
 
 
@@ -16,7 +16,7 @@ class History extends Component {
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://10.0.2.2:3000/getHistory',{
+        const drugsResponses = await  fetch('http://10.0.2.2:3000/getFavorite',{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -55,20 +55,20 @@ class History extends Component {
     }
 
 
-      deleteHistory = async (cip) => {
-        await fetch('http://10.0.2.2:3000/deleteHistory', {
-             method: 'POST',
-             headers: {
-                 Accept: 'application/json',
-                 'Content-Type': 'application/json',
-             },
-             body: JSON.stringify({
-                 cip: cip
-             }),
-         });
+    deleteFavorite = async (cip) => {
+        await fetch('http://10.0.2.2:3000/deleteFavorite', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                cip: cip
+            }),
+        });
         console.log("delete")
 
-         await this.getDrugs()
+        await this.getDrugs()
     }
 
     alert = (s) => {
@@ -76,7 +76,7 @@ class History extends Component {
             s,
             'Cette action est irréversible',
             [
-                { text: 'Supprimer', onPress: () => deleteHistory(), style: 'cancel' },
+                { text: 'Supprimer', onPress: () => deleteFavorite(), style: 'cancel' },
                 { text: 'Annuler', onPress: () => console.log('Annulation') },
             ],
             { cancelable: false }
@@ -96,22 +96,22 @@ class History extends Component {
                 <List
                     navigation={navigation}
                     drugs={drugs}
-                    page={"History"}
-                    onDelete={this.deleteHistory}
+                    page={"Favorite"}
+                    onDelete={this.deleteFavorite}
                 />
             )
         }else{
             return(
-                <Text>No History data</Text>
+                <Text>No Favorite data</Text>
             )
         }
 
     }
 }
 
-export {History as HistoryClass}
+export {Favorite as FavoriteClass}
 
-export default class HistoryStack extends Component {
+export default class FavoriteStack extends Component {
 
     render() {
 
@@ -119,7 +119,7 @@ export default class HistoryStack extends Component {
 
         return (
             <Stack.Navigator >
-                <Stack.Screen name="History" component={History} />
+                <Stack.Screen name="Favorite" component={Favorite} />
                 <Stack.Screen name="Details" component={DetailsScreen} />
             </Stack.Navigator>
         );

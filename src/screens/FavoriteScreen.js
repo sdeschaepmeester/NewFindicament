@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button ,TextInput} from 'react-native-paper';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Favorite from "../components/Favorite";
 
 const FavoriteScreen = (props) => {
 
@@ -32,8 +33,9 @@ const FavoriteScreen = (props) => {
         })
     }
 
-    return (
-        <View style={styles.container}>
+    /* POur se deconnecter
+    *
+    *  <View style={styles.container}>
             <Text> Favorite Screen</Text>
             <Button
                 mode="contained"
@@ -42,6 +44,10 @@ const FavoriteScreen = (props) => {
                 logout
             </Button>
         </View>
+    * */
+
+    return (
+            <Favorite />
     );
 };
 
