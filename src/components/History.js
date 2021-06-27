@@ -12,10 +12,6 @@ class History extends Component {
 
     state = {
         drugs: [
-            {
-                code_cip: 1,
-                id: 'Medoc1',
-            }
         ]
     };
 
@@ -96,14 +92,21 @@ class History extends Component {
         const {navigation}= this.props;
         const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
-        return(
+        if(this.state.drugs.length != 0){
+            return(
                 <List
                     navigation={navigation}
                     drugs={drugs}
                     page={"History"}
                     onDelete={this.deleteHistory}
                 />
-        )
+            )
+        }else{
+            return(
+                <Text>No History data</Text>
+            )
+        }
+
     }
 }
 
