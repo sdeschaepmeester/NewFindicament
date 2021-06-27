@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DetailsScreen from "../../screens/DetailsScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import {List} from '../List'
+import {Text} from "react-native";
 
 
 
@@ -11,10 +12,7 @@ class HomeController extends Component {
 
     state = {
         drugs: [
-            {
-                code_cip: 1,
-                id: 'Aucun médicament chargé',
-            }
+
 
         ]
     };
@@ -53,15 +51,22 @@ class HomeController extends Component {
         let drugs = this.state.drugs;
         const { navigation } = this.props;
         console.log("the list of drugs :")
+        if(drugs.length != 0){
+            return(
 
-        return(
+                <List
+                    navigation={navigation}
+                    drugs={drugs}
+                    page={"Home"}
+                />
+            )
+        }
+        else{
+            return (
+                <Text>Aucun médicamnet</Text>
+            )
+        }
 
-            <List
-                navigation={navigation}
-                drugs={drugs}
-                page={"Home"}
-            />
-        )
 
     }
 

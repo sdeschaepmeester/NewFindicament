@@ -14,7 +14,8 @@ import {moreDetails} from "./GoToDetails";
 import {AntDesign,Ionicons as Icon} from "@expo/vector-icons";
 import {Button} from "react-native-paper";
 import {ShowFilter} from './Controller/FiltersController'
-
+import {useEffect, useState} from "react";
+import {SearchBar} from "react-native-elements";
 
 
 const Item = ({ navigation, title,page,onDelete,onCreate }) => (
@@ -68,7 +69,42 @@ const ButtonDelete = ({ page,onDelete}) =>{
     }
 }
 
+
+
+
 export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
+
+    const [search, setSearch] = useState('');
+    const [filteredDataSource, setFilteredDataSource] = useState([]);
+    const [masterDataSource, setMasterDataSource] = useState([]);
+
+    useEffect(() => {
+        console.log("the list of drugs searchar")
+        console.log(drugs)
+        setFilteredDataSource(drugs);
+        setMasterDataSource(drugs);
+
+    }, []);
+
+    const searchFilterFunction = (text) => {
+        if (text) {
+            // Filter the masterDataSource
+            // Update FilteredDataSource
+            const newData = masterDataSource.filter(function (item) {
+                const itemData = item.code_cip
+                    ? item.code_cip.toUpperCase()
+                    : ''.toUpperCase();
+                const textData = text.toUpperCase();
+                return itemData.indexOf(textData) > -1;
+            });
+            setFilteredDataSource(newData);
+            setSearch(text);
+        } else {
+            // Inserted text is blank
+            setFilteredDataSource(masterDataSource);
+            setSearch(text);
+        }
+    };
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation}  title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
@@ -80,6 +116,15 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
             <SafeAreaView style={styles.container}>
                 <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
+                <SearchBar
+                    round
+                    searchIcon={{ size: 24 }}
+                    onChangeText={(text) => searchFilterFunction(text)}
+                    onClear={(text) => searchFilterFunction('')}
+                    placeholder="Type Here..."
+                    value={search}
+                />
+
                 <ShowFilter
                     page={page}
                 />
@@ -88,7 +133,7 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
             {ButtonDelete({page, onDelete})}
             <ScrollView style={styles.scrollView}>
                 <FlatList
-                    data={drugs}
+                    data={filteredDataSource}
                     renderItem={renderItem}
 
                     keyExtractor={item => item.id}
