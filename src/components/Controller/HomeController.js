@@ -51,7 +51,6 @@ class HomeController extends Component {
         let drugs = this.state.drugs;
         const { navigation } = this.props;
         console.log("the list of drugs :")
-        if(drugs.length != 0){
             return(
 
                 <List
@@ -60,14 +59,6 @@ class HomeController extends Component {
                     page={"Home"}
                 />
             )
-        }
-        else{
-            return (
-                <Text>Aucun médicamnet</Text>
-            )
-        }
-
-
     }
 
 }

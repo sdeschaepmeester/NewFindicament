@@ -28,7 +28,8 @@ import { LocaleConfig } from 'react-native-calendars';
 import { enableExpoCliLogging } from 'expo/build/logs/Logs';
 import { useForm } from "react-hook-form";
 import ReactDOM from "react-dom";
-import { Card, ListItem, Icon } from 'react-native-elements'
+import { Card, ListItem, Icon } from 'react-native-elements';
+import { insertToPlanning } from '../goToPlanning';
 
 
 LocaleConfig.locales['fr'] = {
@@ -149,7 +150,7 @@ function AddTreatmentScreen({ route, navigation }) {
           />
           <Text style={styles.label}>Traitement régulier</Text>
         </View>
-        <Button onPress={()=>this.navigation.navigate('planning')}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+        <Button onPress={() => insertToPlanning("voicimonnom","uncommentaireinutile")}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
           Confirmer
             </Button>
             
