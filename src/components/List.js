@@ -44,7 +44,7 @@ const Item = ({ navigation, title,page,onDelete,onCreate }) => (
 
 
 const ButtonDeleteById = ({title, page,onDelete}) =>{
-    if(page == "History"){
+    if(page == "History" || page == "Favorite"){
         return (
             <Button
                     color="#000080"
@@ -56,7 +56,7 @@ const ButtonDeleteById = ({title, page,onDelete}) =>{
     }
 }
 const ButtonDelete = ({ page,onDelete}) =>{
-    if(page == "History"){
+    if(page == "History" || page == "Favorite"){
         return (
             <Button style={styles.roundButton}
                     color="#000080"

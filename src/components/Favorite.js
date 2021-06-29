@@ -25,10 +25,16 @@ class Favorite extends Component {
         })
             .then(res => res.json())
             .then((responseJson) => {
+                if(responseJson.error){
+                    console.log("response")
+                    console.log(responseJson.error)
+                    return []
+                }
                 return responseJson;
             })
             .catch((error) => {
                 console.error(error);
+                return [];
             });
 
         const drugs = await drugsResponses
@@ -49,9 +55,11 @@ class Favorite extends Component {
 
     componentWillUnmount() {
         // remove event listener
-        if (this.focusListener != null && this.focusListener.remove) {
+        console.log("exit")
+        this.focusListener();
+        /*if (this.focusListener != null && this.focusListener.remove) {
             this.focusListener.remove();
-        }
+        }*/
     }
 
 

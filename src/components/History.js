@@ -25,13 +25,26 @@ class History extends Component {
         })
             .then(res => res.json())
             .then((responseJson) => {
+                console.log("ok il pasze pas")
+
+                if(responseJson.error){
+                    console.log("response")
+                    console.log(responseJson.error)
+                    return []
+                }
+                console.log("ok il pasze")
                 return responseJson;
             })
             .catch((error) => {
+                 console.log("errro")
+
                 console.error(error);
+                return [];
             });
 
-        const drugs = await drugsResponses
+        const drugs = await drugsResponses;
+        await console.log("lenght 2"+ drugsResponses.length)
+
         this.setState({drugs:drugs})
 
     }
@@ -90,8 +103,8 @@ class History extends Component {
         let drugs = this.state.drugs;
         const {navigation}= this.props;
         const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
-
-        if(this.state.drugs.length != 0){
+        console.log("lenght"+ drugs.length)
+        if(drugs.length != 0){
             return(
                 <List
                     navigation={navigation}

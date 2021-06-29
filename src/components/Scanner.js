@@ -4,7 +4,6 @@ import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { MainStackNavigator } from '../navigation/MainStackNavigator';
 import { moreDetails } from './GoToDetails';
 import { createStackNavigator } from '@react-navigation/stack';
 

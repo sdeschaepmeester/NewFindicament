@@ -28,10 +28,13 @@ class HomeController extends Component {
         })
             .then(res => res.json())
             .then((responseJson) => {
+                console.log("respon,se are "+responseJson)
                 return responseJson;
             })
             .catch((error) => {
+                console.log("response are "+error)
                 console.error(error);
+                return [];
             });
 
         const drugs = drugsResponses
