@@ -75,7 +75,7 @@ export const List = ({navigation,drugs,page,onDelete,onCreate,handleLoadMore})=>
 
 
     console.log("fuck it")
-    console.log(drugs)
+    //console.log(drugs)
     /*let [search, setSearch] = useState('');
     let [filteredDataSource, setFilteredDataSource] = useState({drugs});
     let [masterDataSource, setMasterDataSource] = useState({drugs});*/

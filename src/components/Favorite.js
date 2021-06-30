@@ -15,7 +15,9 @@ class Favorite extends Component {
         page:1,
         previousDrugs:[
 
-        ]
+        ],
+        isReloading: false
+
     };
 
 
@@ -41,8 +43,17 @@ class Favorite extends Component {
                 return [];
             });
 
-        const drugs = await drugsResponses
-        this.setState({drugs:drugs})
+        let drugs =  drugsResponses
+
+        if(this.state.isReloading){
+            console.log("reloading")
+            this.setState({ previousDrugs: this.state.drugs })
+            drugs = drugs.concat(this.state.previousDrugs)
+            this.state.isReloading = false
+
+        }
+
+        this.setState({ drugs: drugs })
 
     }
 
@@ -50,6 +61,7 @@ class Favorite extends Component {
         console.log("start")
         await  this.getDrugs()
         this.focusListener  = this.props.navigation.addListener("focus",async () => {
+            this.state.page = 1
             console.log("start 2")
             await  this.getDrugs()
 
@@ -59,16 +71,16 @@ class Favorite extends Component {
 
     componentWillUnmount() {
         // remove event listener
-        console.log("exit")
-        this.focusListener();
+
         if (this.focusListener != null && this.focusListener.remove) {
             this.focusListener.remove();
         }
     }
 
     handleLoadMore = () =>{
-        console.log("this.state.page")
-        console.log(this.state.page)
+        //console.log("this.state.page")
+        //console.log(this.state.page)
+        this.state.isReloading = true
         this.state.page += 8
         this.getDrugs()
     }
@@ -86,7 +98,7 @@ class Favorite extends Component {
             }),
         });
         console.log("delete")
-
+        this.state.page = 1
         await this.getDrugs()
     }
 
@@ -110,7 +122,7 @@ class Favorite extends Component {
         const {navigation}= this.props;
         const image = { uri: "https://zupimages.net/up/21/17/y60l.png" };
 
-        if(this.state.drugs.length != 0){
+        if(drugs.length != 0){
             return(
                 <List
                     navigation={navigation}

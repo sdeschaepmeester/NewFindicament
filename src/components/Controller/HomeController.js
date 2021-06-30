@@ -44,7 +44,7 @@ class HomeController extends Component {
 
         if(this.state.drugs.length > 0){
             this.setState({ previousDrugs: this.state.drugs })
-            drugs = drugs.concat(this.state.previousDrugs)
+            drugs = this.state.previousDrugs.concat(drugs)
         }
         this.setState({ drugs: drugs })
     }

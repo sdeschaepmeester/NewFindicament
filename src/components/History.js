@@ -15,7 +15,8 @@ class History extends Component {
         page:1,
         previousDrugs:[
 
-        ]
+        ],
+        isReloading: false
     };
 
 
@@ -45,13 +46,17 @@ class History extends Component {
                 console.error(error);
                 return [];
             });
-
         let drugs =  drugsResponses
-
-        if(this.state.drugs.length > 0){
+        console.log("drugs")
+        console.log(drugs)
+        if(this.state.isReloading){
+            console.log("reloading")
             this.setState({ previousDrugs: this.state.drugs })
             drugs = drugs.concat(this.state.previousDrugs)
+            this.state.isReloading = false
+
         }
+
         this.setState({ drugs: drugs })
 
     }
@@ -61,6 +66,7 @@ class History extends Component {
         await  this.getDrugs()
         this.focusListener  = this.props.navigation.addListener("focus",async () => {
             console.log("start 2")
+            this.state.page = 1
             await  this.getDrugs()
 
         });
@@ -78,6 +84,7 @@ class History extends Component {
     handleLoadMore = () =>{
         console.log("this.state.page")
         console.log(this.state.page)
+        this.state.isReloading = true
         this.state.page += 8
         this.getDrugs()
     }
@@ -95,7 +102,7 @@ class History extends Component {
              }),
          });
         console.log("delete")
-
+        this.state.page = 1
          await this.getDrugs()
     }
 
