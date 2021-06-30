@@ -83,7 +83,6 @@ class History extends Component {
 
     handleLoadMore = () =>{
         console.log("this.state.page")
-        console.log(this.state.page)
         this.state.isReloading = true
         this.state.page += 8
         this.getDrugs()
