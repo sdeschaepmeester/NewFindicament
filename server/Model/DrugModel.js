@@ -5,7 +5,7 @@ let Drug = {}
 
 Drug.getDrugs = ()=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select id,code_cip From medicament Limit 100 ',(err,result)=>{
+        pool.query('Select id,code_cip From medicament Limit 10 ',(err,result)=>{
             if(err){
                 return reject(err)
             }

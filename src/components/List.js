@@ -73,19 +73,24 @@ const ButtonDelete = ({ page,onDelete}) =>{
 
 export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
-    const [search, setSearch] = useState('');
-    const [filteredDataSource, setFilteredDataSource] = useState([]);
-    const [masterDataSource, setMasterDataSource] = useState([]);
 
-    useEffect(() => {
+
+    console.log("fuck it")
+    console.log(drugs)
+    /*let [search, setSearch] = useState('');
+    let [filteredDataSource, setFilteredDataSource] = useState({drugs});
+    let [masterDataSource, setMasterDataSource] = useState({drugs});*/
+
+
+    /*useEffect(() => {
         console.log("the list of drugs searchar")
         console.log(drugs)
         setFilteredDataSource(drugs);
         setMasterDataSource(drugs);
 
-    }, []);
+    }, []);*/
 
-    const searchFilterFunction = (text) => {
+    /*const searchFilterFunction = (text) => {
         if (text) {
             // Filter the masterDataSource
             // Update FilteredDataSource
@@ -103,33 +108,35 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
             setFilteredDataSource(masterDataSource);
             setSearch(text);
         }
-    };
+    };*/
 
     const renderItem = ({ item }) => (
         <Item navigation={navigation}  title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
     );
 
 
+    /*<SafeAreaView style={styles.container}>
+        <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
+        <SearchBar
+            round
+            searchIcon={{ size: 24 }}
+            onChangeText={(text) => searchFilterFunction(text)}
+            onClear={(text) => searchFilterFunction('')}
+            placeholder="Type Here..."
+            value={search}
+        />
+
+
+    </SafeAreaView>*/
+
     return (
         <View style={{ flex: 1, paddingTop: 30, backgroundColor: "#dff2ff" }}>
 
-            <SafeAreaView style={styles.container}>
-                <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
-                <SearchBar
-                    round
-                    searchIcon={{ size: 24 }}
-                    onChangeText={(text) => searchFilterFunction(text)}
-                    onClear={(text) => searchFilterFunction('')}
-                    placeholder="Type Here..."
-                    value={search}
-                />
 
-
-            </SafeAreaView>
             {ButtonDelete({page, onDelete})}
             <ScrollView style={styles.scrollView}>
                 <FlatList
-                    data={filteredDataSource}
+                    data={drugs}
                     renderItem={renderItem}
 
                     keyExtractor={item => item.id}

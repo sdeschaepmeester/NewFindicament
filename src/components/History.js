@@ -43,7 +43,6 @@ class History extends Component {
             });
 
         const drugs = await drugsResponses;
-        await console.log("lenght 2"+ drugsResponses.length)
 
         this.setState({drugs:drugs})
 
