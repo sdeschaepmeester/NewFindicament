@@ -17,18 +17,17 @@ import {useEffect, useState} from "react";
 import {SearchBar} from "react-native-elements";
 
 
-const Item = ({ navigation, title,page,onDelete,onCreate }) => (
+const Item = ({ navigation,name, title,page,onDelete,onCreate }) => (
     <View style={{
         justifyContent: 'center',
         alignItems: 'center'
     }}>
         <TouchableOpacity
-            onPress={()=> moreDetails({navigation,onCreate},title,"Medoc")}
+            onPress={()=> moreDetails({navigation,onCreate},title,name)}
             style={styles.item}>
             <View style={styles.card}>
-                <View>
-                    <Text >Title </Text>
-                    <Text >{title}</Text>
+                <View style={styles.containerCard}>
+                    <Text style={styles.text} >{name}</Text>
                 </View>
                 <View style={styles.block_right}>
                     {ButtonDeleteById({title,page,onDelete})}
@@ -111,7 +110,7 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
     };*/
 
     const renderItem = ({ item }) => (
-        <Item navigation={navigation}  title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
+        <Item navigation={navigation} name={item.name} title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
     );
 
 
@@ -189,6 +188,12 @@ const styles = StyleSheet.create({
         width: 40,
         marginBottom: 15,
         marginLeft: 20
-    }
+    },
+
+    containerCard: {
+        justifyContent: 'center', //Centered vertically
+        alignItems: 'center', // Centered horizontally
+        flex:1
+    },
 });
 
