@@ -11,12 +11,16 @@ class Favorite extends Component {
 
     state = {
         drugs: [
+        ],
+        page:1,
+        previousDrugs:[
+
         ]
     };
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://10.0.2.2:3000/getFavorite',{
+        const drugsResponses = await  fetch('http://10.0.2.2:3000/getFavorite/'+this.state.page,{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -57,9 +61,16 @@ class Favorite extends Component {
         // remove event listener
         console.log("exit")
         this.focusListener();
-        /*if (this.focusListener != null && this.focusListener.remove) {
+        if (this.focusListener != null && this.focusListener.remove) {
             this.focusListener.remove();
-        }*/
+        }
+    }
+
+    handleLoadMore = () =>{
+        console.log("this.state.page")
+        console.log(this.state.page)
+        this.state.page += 8
+        this.getDrugs()
     }
 
 
@@ -106,6 +117,7 @@ class Favorite extends Component {
                     drugs={drugs}
                     page={"Favorite"}
                     onDelete={this.deleteFavorite}
+                    handleLoadMore={this.handleLoadMore}
                 />
             )
         }else{

@@ -11,12 +11,16 @@ class History extends Component {
 
     state = {
         drugs: [
+        ],
+        page:1,
+        previousDrugs:[
+
         ]
     };
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://10.0.2.2:3000/getHistory',{
+        const drugsResponses = await  fetch('http://10.0.2.2:3000/getHistory/'+this.state.page,{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -42,9 +46,13 @@ class History extends Component {
                 return [];
             });
 
-        const drugs = await drugsResponses;
+        let drugs =  drugsResponses
 
-        this.setState({drugs:drugs})
+        if(this.state.drugs.length > 0){
+            this.setState({ previousDrugs: this.state.drugs })
+            drugs = drugs.concat(this.state.previousDrugs)
+        }
+        this.setState({ drugs: drugs })
 
     }
 
@@ -64,6 +72,14 @@ class History extends Component {
         if (this.focusListener != null && this.focusListener.remove) {
             this.focusListener.remove();
         }
+    }
+
+
+    handleLoadMore = () =>{
+        console.log("this.state.page")
+        console.log(this.state.page)
+        this.state.page += 8
+        this.getDrugs()
     }
 
 
@@ -110,6 +126,7 @@ class History extends Component {
                     drugs={drugs}
                     page={"History"}
                     onDelete={this.deleteHistory}
+                    handleLoadMore={this.handleLoadMore}
                 />
             )
         }else{

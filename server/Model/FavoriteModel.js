@@ -3,9 +3,9 @@ const pool = require('../db');
 
 let favorite = {}
 
-favorite.getFavorite = ()=> {
+favorite.getFavorite = (offset)=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From favorite Group by code_cip ',(err,result)=>{
+        pool.query('SELECT * FROM favorite GROUP BY code_cip ORDER BY id ASC limit 8 OFFSET ?  ',[offset],(err,result)=>{
             if(err){
                 return reject(err)
             }

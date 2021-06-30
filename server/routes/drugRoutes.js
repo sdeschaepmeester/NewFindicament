@@ -14,6 +14,17 @@ drugRouter.get('/getDrugs', async (req,res)=>{
 
 })
 
+drugRouter.get('/getDrugs/:offsetId', async (req,res)=>{
+    let {offsetId} = req.params
+    try{
+        let drugs = await drug.getDrugsPaginate(parseInt(offsetId))
+        res.send(drugs)
+    }catch (err){
+        res.status(422).send(err.message)
+    }
+
+})
+
 drugRouter.post('/getDrugById', async (req,res)=>{
     const {code_cip} = req.body;
 

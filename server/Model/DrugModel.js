@@ -3,9 +3,19 @@ const pool = require('../db');
 
 let Drug = {}
 
+Drug.getDrugsPaginate = (offset)=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('SELECT id,code_cip,name FROM medicament2 ORDER BY id ASC limit 8 OFFSET ? ',[offset],(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
 Drug.getDrugs = ()=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select id,code_cip,name From medicament2 Limit 10 ',(err,result)=>{
+        pool.query('SELECT id,code_cip,name FROM medicament2 ORDER BY id ASC limit 1 ',(err,result)=>{
             if(err){
                 return reject(err)
             }

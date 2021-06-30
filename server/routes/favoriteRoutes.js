@@ -3,9 +3,11 @@ const favorite = require('../Model/FavoriteModel')// calling file with sql metho
 const favoriteRouter = express.Router();
 
 
-favoriteRouter.get('/getFavorite', async (req,res)=>{
+favoriteRouter.get('/getFavorite/:offsetId', async (req,res)=>{
+    let {offsetId} = req.params
+
     try{
-        let favoriteTable = await favorite.getFavorite()
+        let favoriteTable = await favorite.getFavorite(parseInt(offsetId))
         res.send(favoriteTable)
     }catch (err){
         return res.status(421).send({error :"Something wrong with the database : "+err.message})

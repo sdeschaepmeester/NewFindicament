@@ -3,9 +3,9 @@ const pool = require('../db');
 
 let History = {}
 
-History.getHistory = ()=> {
+History.getHistory = (offset)=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From history Group by code_cip ',(err,result)=>{
+        pool.query('SELECT * FROM history GROUP BY code_cip ORDER BY id ASC limit 8 OFFSET ? ',[offset],(err,result)=>{
             if(err){
                 return reject(err)
             }

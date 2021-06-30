@@ -14,12 +14,16 @@ class HomeController extends Component {
         drugs: [
 
 
+        ],
+        page:1,
+        previousDrugs:[
+
         ]
     };
 
 
     async getDrugs() {
-        const drugsResponses = await fetch('http://10.0.2.2:3000/getDrugs', {
+        const drugsResponses = await fetch('http://10.0.2.2:3000/getDrugs/'+this.state.page, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -36,10 +40,13 @@ class HomeController extends Component {
                 console.error(error);
                 return [];
             });
+        let drugs =  drugsResponses
 
-        const drugs = drugsResponses
+        if(this.state.drugs.length > 0){
+            this.setState({ previousDrugs: this.state.drugs })
+            drugs = drugs.concat(this.state.previousDrugs)
+        }
         this.setState({ drugs: drugs })
-
     }
 
     async componentDidMount() {
@@ -47,6 +54,10 @@ class HomeController extends Component {
         await this.getDrugs()
     }
 
+    handleLoadMore = () =>{
+        this.state.page += 8
+        this.getDrugs()
+    }
 
 
     render() {
@@ -61,6 +72,7 @@ class HomeController extends Component {
                     navigation={navigation}
                     drugs={drugs}
                     page={"Home"}
+                    handleLoadMore={this.handleLoadMore}
                 />
             )
         }

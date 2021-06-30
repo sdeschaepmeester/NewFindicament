@@ -8,7 +8,7 @@ import {
     Alert,
     StyleSheet,
     Text,
-    TouchableOpacity
+    TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import {moreDetails} from "./GoToDetails";
 import {AntDesign,Ionicons as Icon} from "@expo/vector-icons";
@@ -70,7 +70,7 @@ const ButtonDelete = ({ page,onDelete}) =>{
 
 
 
-export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
+export const List = ({navigation,drugs,page,onDelete,onCreate,handleLoadMore})=> {
 
 
 
@@ -113,6 +113,13 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
         <Item navigation={navigation} name={item.name} title={item.code_cip} page={page} onDelete={onDelete} onCreate={onCreate}/>
     );
 
+    let renderFooter= ()=>{
+        return(
+            <View   style={styles.loader}>
+                <ActivityIndicator size={"large"}/>
+            </View>
+        )
+    }
 
     /*<SafeAreaView style={styles.container}>
         <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
@@ -133,12 +140,17 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
 
             {ButtonDelete({page, onDelete})}
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={{flex: 1}} contentContainerStyle={{flex: 1}}
+            >
                 <FlatList
                     data={drugs}
                     renderItem={renderItem}
 
                     keyExtractor={item => item.id}
+                    onSt
+                    onEndReached={handleLoadMore}
+                    onEndReachedThreshold={0.1}
+                    ListFooterComponent={renderFooter}
                 />
             </ScrollView>
             <SafeAreaView style={styles.heightList}>
@@ -172,7 +184,10 @@ const styles = StyleSheet.create({
         elevation: 2,
         marginBottom: 5
     },
-
+    loader:{
+        marginTop:5,
+        alignItems: "center"
+    },
     card:{
         flex: 1,
         flexDirection: 'row',
