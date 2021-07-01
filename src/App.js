@@ -20,7 +20,7 @@ const App = ({navigation}) => {
 
 
     const checkIfConnected = async ()=>{
-        const drugsResponses = await fetch('http://10.0.2.2:3000/getDrugs', {
+        const drugsResponses = await fetch('http://192.168.1.91:3000/getDrugs', {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

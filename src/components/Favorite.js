@@ -22,7 +22,7 @@ class Favorite extends Component {
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://10.0.2.2:3000/getFavorite/'+this.state.page,{
+        const drugsResponses = await  fetch('http://192.168.1.91:3000/getFavorite/'+this.state.page,{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -87,7 +87,7 @@ class Favorite extends Component {
 
 
     deleteFavorite = async (cip) => {
-        await fetch('http://10.0.2.2:3000/deleteFavorite', {
+        await fetch('http://192.168.1.91:3000/deleteFavorite', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

@@ -5,7 +5,7 @@ import {IconButton,Colors} from "react-native-paper";
 
 const checkIfExist = async (cip) => {
     try {
-        let ifExist = await fetch('http://10.0.2.2:3000/checkIfExist', {
+        let ifExist = await fetch('http://192.168.1.91:3000/checkIfExist', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -33,7 +33,7 @@ const checkIfExist = async (cip) => {
 
 const insertFavorite = (cip,name) =>{
     try{
-        fetch('http://10.0.2.2:3000/insertFavorite', {
+        fetch('http://192.168.1.91:3000/insertFavorite', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

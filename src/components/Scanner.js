@@ -2,15 +2,8 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Button, Text, View, Dimensions, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Constants } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
 import { moreDetails } from './GoToDetails';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import DetailsScreen from '../screens/DetailsScreen';
 
-const DEVICE_WIDTH = Dimensions.get('window').width;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
 const { width } = Dimensions.get('window')
 const qrSize = width * 0.7
 //ATTENTION
@@ -33,10 +26,6 @@ export default class App extends Component {
   handleBarCodeScanned = ({ data }) => {
     const { navigation } = this.props;
     new ResultScan().getResult({navigation},data);
-  };
-  testhandleBarCodeScanned = ({ data }) => {
-    data = "34009 363 672 1 0"
-    console.log(data);
   };
 
   render() {
@@ -66,7 +55,6 @@ export default class App extends Component {
           alignItems: 'center',
         }}>
           <BarCodeScanner
-            //onBarCodeScanned = {this.barCodeScanned }
             onBarCodeScanned={this.handleBarCodeScanned}
             style={[StyleSheet.absoluteFill, styles.container]}>
             <Text style={styles.description}>Scannez votre code</Text>
@@ -75,23 +63,10 @@ export default class App extends Component {
               source={require('../assets/qr_render.png')}
             />
           </BarCodeScanner>
-          <Button
-            style={{ fontSize: 20, color: 'green' }}
-            styleDisabled={{ color: 'red' }}
-            onPress={() => moreDetails({ navigation }, "34009 363 672 1 0", "Medoc")}
-            title="Test scanner"
-          >
-            Test scanner
-          </Button>
         </View>
       );
     }
   }
-}
-
-const goToDetails = () => {
-  const { navigation } = this.props;
-  moreDetails({ navigation }, "34009 363 672 1 0", "Medoc")
 }
 
 class ResultScan extends Component {
@@ -104,15 +79,14 @@ class ResultScan extends Component {
     if(firstNumbers.includes("34009")){
       //Get the 13 characters starting at the position where 3 starts
       codeCIP = Value.substring(Value.indexOf("34009"),17)
-      //alert(codeCIP)
-      //moreDetails({ navigation },codeCIP,"")
+      codeCIP = codeCIP.substring(0,5)+(" ")+codeCIP.substring(5,8)+(" ")+codeCIP.substring(8,11)+" "+codeCIP.substring(11,12)+" "+codeCIP.substring(12,14)
+      moreDetails({ navigation }, codeCIP, "Medoc")
     }
     else{
       if(firstNumbers.startsWith("009")){
         //Add 34 at the beginning and delete the last character (")
         codeCIP = "34"+firstNumbers.slice(0, -1)
         codeCIP = codeCIP.substring(0,5)+(" ")+codeCIP.substring(5,8)+(" ")+codeCIP.substring(8,11)+" "+codeCIP.substring(11,12)+" "+codeCIP.substring(12,14)
-        //alert(codeCIP)
         moreDetails({ navigation }, codeCIP, "Medoc")
       }
       else{

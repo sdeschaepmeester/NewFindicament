@@ -21,7 +21,7 @@ class History extends Component {
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://10.0.2.2:3000/getHistory/'+this.state.page,{
+        const drugsResponses = await  fetch('http://192.168.1.91:3000/getHistory/'+this.state.page,{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -90,7 +90,7 @@ class History extends Component {
 
 
       deleteHistory = async (cip) => {
-        await fetch('http://10.0.2.2:3000/deleteHistory', {
+        await fetch('http://192.168.1.91:3000/deleteHistory', {
              method: 'POST',
              headers: {
                  Accept: 'application/json',
