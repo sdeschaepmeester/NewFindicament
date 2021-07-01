@@ -52,7 +52,7 @@ class History extends Component {
         if(this.state.isReloading){
             console.log("reloading")
             this.setState({ previousDrugs: this.state.drugs })
-            drugs = drugs.concat(this.state.previousDrugs)
+            drugs = this.state.previousDrugs.concat(drugs)
             this.state.isReloading = false
 
         }
