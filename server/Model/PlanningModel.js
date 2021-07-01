@@ -14,6 +14,17 @@ Planning.getPlanning = ()=> {
     })
 }
 
+Planning.getPlanningDates = ()=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select start_date From planning',(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
+
 Planning.insertPlanning = (name, comment, start_date)=> {
 
     return new Promise((resolve,reject)=>{

@@ -19,16 +19,47 @@ LocaleConfig.defaultLocale = 'fr';
 
 function AddTreatment({ navigation, day }) {
   navigation.navigate('Treatment', { day })
-  console.log("Voici le futur start_date:")
-  console.log(day)
 }
 
 class Planning extends Component {
 
   state = {
     plannings: [
-    ]
+    ],
+    planningsDates: [
+    ],
   };
+
+  async getMarkedDates() {
+    // Get all start dates
+    const planningsResponses = await fetch('http://10.0.2.2:3000/getPlanningDates', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(res => res.json())
+      .then((responseJson) => {
+        // We must parse the JSON. We have an array of object with start_date as an attribute.
+        // We want an array with the similar structure : '2021-05-25': { color: '#00adf5' }
+        let response = [];
+        let datesSplit = responseJson[0].start_date.split("/");
+        let correctDateFormat = datesSplit[2]+"-"+datesSplit[1]+"-"+datesSplit[0];
+        let trueMonth = datesSplit[1];
+        let trueDay = datesSplit[0];
+        let trueDate = new Date(toString(correctDateFormat));
+        console.log("trueDate")
+        console.log(datesSplit[2]+"-"+datesSplit[1]+"-"+datesSplit[0])
+        return responseJson;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    const planningsDates = await planningsResponses
+    this.setState({ planningsDates: planningsDates })
+  }
 
   async getPlanning() {
     // Get planning
@@ -41,6 +72,7 @@ class Planning extends Component {
     })
       .then(res => res.json())
       .then((responseJson) => {
+        //console.log(responseJson)
         return responseJson;
       })
       .catch((error) => {
@@ -54,10 +86,14 @@ class Planning extends Component {
   async componentDidMount() {
     console.log("GET PLANNING")
     await this.getPlanning()
-    this.focusListener = this.props.navigation.addListener("focus", async () => {
-      console.log("start 2")
-      await this.getPlanning()
+    console.log("GET MARKEDDATES")
+    await this.getMarkedDates()
 
+    this.focusListener = this.props.navigation.addListener("focus", async () => {
+      console.log("GET PLANNING CALLED AGAIN")
+      await this.getPlanning()
+      console.log("GET MARKEDDATES CALLED AGAIN")
+      await this.getMarkedDates()
     });
   } // ComponentDidMount
 
@@ -65,15 +101,15 @@ class Planning extends Component {
   render() {
 
     let plannings = this.state.plannings;
+    let planningDates = this.state.planningsDates;
     const { navigation } = this.props;
-
-
+    let markedDates = { '2021-07-22': { color: '#00adf5' }, '2021-07-20': { color: '#00adf5' } };
 
     return (
       <View>
         <CalendarList
           // Callback which gets executed when visible months change in scroll view. Default = undefined
-          onVisibleMonthsChange={(months) => { console.log('now these months are visible', months); }}
+          onVisibleMonthsChange={(months) => { console.log('n'); }}
           // Max amount of months allowed to scroll to the past. Default = 50
           pastScrollRange={50}
           // Max amount of months allowed to scroll to the future. Default = 50
@@ -86,15 +122,23 @@ class Planning extends Component {
           /* onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
           onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}*/
           onDayPress={(day) => AddTreatment({ navigation, day })}
-          markedDates={{
+          //markedDates = {dayWithTreatment}
+
+          markedDates={planningDates}
+
+          // markedDates={{
+          //   dayWithTreatment
+          //   ////[plannings.start_date]:{selected: true, marked: true}
+
+          //   // '2021-05-22': { startingDay: true, color: '#00adf5' },
+          //   // '2021-05-23': { startingDay: false, color: '#00adf5' },
+          //   // '2021-05-24': { startingDay: false, color: '#00adf5' },
+          //   // '2021-05-25': { startingDay: false, color: '#00adf5' },
+          //   // '2021-05-26': { endingDay: true, color: '#00adf5' },
+          // }}
 
 
-            // '2021-05-22': { startingDay: true, color: '#00adf5' },
-            // '2021-05-23': { startingDay: false, color: '#00adf5' },
-            // '2021-05-24': { startingDay: false, color: '#00adf5' },
-            // '2021-05-25': { startingDay: false, color: '#00adf5' },
-            // '2021-05-26': { endingDay: true, color: '#00adf5' },
-          }}
+
           // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
           markingType={'period'}
           //onDayPress={()=>navigation.navigate('Details')}

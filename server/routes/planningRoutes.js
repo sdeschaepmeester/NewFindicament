@@ -11,6 +11,15 @@ planningRouter.get('/getPlanning', async (req,res)=>{
     }
 })
 
+planningRouter.get('/getPlanningDates', async (req,res)=>{
+    try{
+        let planningTable = await planning.getPlanningDates()
+        res.send(planningTable)
+    }catch (err){
+        return res.status(421).send({error :"Something wrong with the database : "+err.message})
+    }
+})
+
 planningRouter.post('/insertPlanning', async (req, res)=>{
     const {name,comment,start_date} = req.body
     try{
