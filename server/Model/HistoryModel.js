@@ -53,7 +53,7 @@ History.deleteHistory = (id = -1)=> {
 
 
 
-History.insertHistory = (cip,name)=> {
+History.insertHistory = (cip,name,start_date)=> {
 
     return new Promise((resolve,reject)=>{
         pool.query('Insert INTO history (code_cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{

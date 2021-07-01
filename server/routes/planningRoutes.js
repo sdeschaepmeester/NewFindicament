@@ -14,7 +14,7 @@ planningRouter.get('/getPlanning', async (req,res)=>{
 planningRouter.post('/insertPlanning', async (req, res)=>{
     const {name,comment,start_date} = req.body
     try{
-        await planning.insertPlanning(name,comment)
+        await planning.insertPlanning(name,comment,start_date)
         return res.send("Inserted")
 
     }catch (err){
