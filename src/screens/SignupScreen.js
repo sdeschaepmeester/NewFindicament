@@ -94,18 +94,18 @@ const SignupScreen = (props) => {
                             onChangeText={text => setSecond(text)} type='text' />
                     </View>
                     <View>
-                             {validLength ? null : <Text>Il faut qu'il y ait au moins 8 charactere</Text>}
+                             {validLength ? null : <Text>Il faut qu'il y ait au moins 8 charactères</Text>}
                              {hasNumber ? null : <Text>Il faut au moins un chiffre</Text>}
                              {upperCase ? null : <Text>Il faut au moins une majuscule</Text>}
                             {lowerCase ? null: <Text>Il faut au moins une minuscule</Text>}
-                            {match ? null : <Text>Les deux mots de passe ne correspondent pas </Text>}
-                            {specialChar ? null : <Text>Il faut au moins un charactère spéciale  </Text>}
+                            {match ? null : <Text>Les deux mots de passe ne correspondent pas</Text>}
+                            {specialChar ? null : <Text>Il faut au moins un charactère spécial</Text>}
                     </View>
                 </View>
 
                 <Button  mode="contained" style={{marginLeft:18,marginRight:18,marginTop:20,marginBottom:20,width:200}}
                     onPress={() =>sendCred()}>
-                    Creation
+                    Créer
                 </Button>
             </View>
                 <TouchableOpacity>

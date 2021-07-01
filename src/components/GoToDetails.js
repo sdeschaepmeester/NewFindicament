@@ -2,8 +2,12 @@ import React from "react";
 
 
 export let moreDetails = ({navigation},codeCIP,name) => {
+    if(!name || name == ""){
+        name = "no Title"
+    }
     navigation.navigate('Details', {
-        codeCIP: codeCIP
+        codeCIP: codeCIP,
+        name: name,
     })
     insertToHistory(codeCIP,name)
 }

@@ -2,9 +2,10 @@ const express = require('express');
 const history = require('../Model/HistoryModel')// calling file with sql method
 const historyRouter = express.Router();
 
-historyRouter.get('/getHistory', async (req,res)=>{
+historyRouter.get('/getHistory/:offsetId', async (req,res)=>{
+    let {offsetId} = req.params
     try{
-        let historyTable = await history.getHistory()
+        let historyTable = await history.getHistory(parseInt(offsetId))
         res.send(historyTable)
     }catch (err){
         return res.status(421).send({error :"Something wrong with the database : "+err.message})

@@ -14,12 +14,16 @@ class HomeController extends Component {
         drugs: [
 
 
+        ],
+        page:1,
+        previousDrugs:[
+
         ]
     };
 
 
     async getDrugs() {
-        const drugsResponses = await fetch('http://192.168.1.91:3000/getDrugs', {
+        const drugsResponses = await fetch('http://10.0.2.2:3000/getDrugs/'+this.state.page, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -28,15 +32,21 @@ class HomeController extends Component {
         })
             .then(res => res.json())
             .then((responseJson) => {
+                console.log("respon,se are "+responseJson)
                 return responseJson;
             })
             .catch((error) => {
+                console.log("response are "+error)
                 console.error(error);
+                return [];
             });
+        let drugs =  drugsResponses
 
-        const drugs = drugsResponses
+        if(this.state.drugs.length > 0){
+            this.setState({ previousDrugs: this.state.drugs })
+            drugs = this.state.previousDrugs.concat(drugs)
+        }
         this.setState({ drugs: drugs })
-
     }
 
     async componentDidMount() {
@@ -44,6 +54,10 @@ class HomeController extends Component {
         await this.getDrugs()
     }
 
+    handleLoadMore = () =>{
+        this.state.page += 8
+        this.getDrugs()
+    }
 
 
     render() {
@@ -51,14 +65,24 @@ class HomeController extends Component {
         let drugs = this.state.drugs;
         const { navigation } = this.props;
         console.log("the list of drugs :")
+        if(drugs.length != 0){
             return(
 
                 <List
                     navigation={navigation}
                     drugs={drugs}
                     page={"Home"}
+                    handleLoadMore={this.handleLoadMore}
                 />
             )
+        }
+        else{
+            return (
+                <Text>Aucun médicament</Text>
+            )
+        }
+
+
     }
 
 }

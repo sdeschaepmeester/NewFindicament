@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import { View, Image, Text, Button, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
+import AddToFavorite from "../components/AddToFavorite";
 
 class DetailsScreen extends Component {
 
@@ -160,12 +161,17 @@ class DetailsScreen extends Component {
 
     render() {
         const { description } = this.state;
+        console.log("param")
+        console.log(this.props.route.params)
 
         return (
             <View >
                 <SafeAreaView>
                     <View style={styles.container}>
+                        <AddToFavorite cip={this.props.route.params.codeCIP} title={this.props.route.params.name}   />
+
                         <Text>Parcourir la notice : </Text>
+
                         <View style={styles.dropDown} >
                             <Picker style={styles.pickerStyle}
                                 selectedValue={this.state.notice}
@@ -184,7 +190,7 @@ class DetailsScreen extends Component {
                 <ScrollView style={styles.scrollView}>
                     {description ?
                         <View>{this.changeView(description)}</View> :
-                        <Text>Loading...</Text>
+                        <Text>Chargement...</Text>
                     }
 
                 </ScrollView>

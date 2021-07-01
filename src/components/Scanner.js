@@ -4,7 +4,6 @@ import * as Permissions from 'expo-permissions';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { Constants } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
-import { MainStackNavigator } from '../navigation/MainStackNavigator';
 import { moreDetails } from './GoToDetails';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -46,7 +45,7 @@ export default class App extends Component {
     if (CameraPermissionGranted === null) {
       return (
         <View style={styles.container}>
-          <Text>Please grant Camera permission</Text>
+          <Text>Veuillez autoriser l'accès à la caméra.</Text>
         </View>
       );
     }
@@ -54,7 +53,7 @@ export default class App extends Component {
       // Permission denied
       return (
         <View style={styles.container}>
-          <Text>Camera Permission Denied.</Text>
+          <Text>Accès à la caméra refusé.</Text>
         </View>
       );
     }
@@ -70,7 +69,7 @@ export default class App extends Component {
             //onBarCodeScanned = {this.barCodeScanned }
             onBarCodeScanned={this.handleBarCodeScanned}
             style={[StyleSheet.absoluteFill, styles.container]}>
-            <Text style={styles.description}>Scanner votre code</Text>
+            <Text style={styles.description}>Scannez votre code</Text>
             <Image
               style={styles.qr}
               source={require('../assets/qr_render.png')}
@@ -112,8 +111,9 @@ class ResultScan extends Component {
       if(firstNumbers.startsWith("009")){
         //Add 34 at the beginning and delete the last character (")
         codeCIP = "34"+firstNumbers.slice(0, -1)
+        codeCIP = codeCIP.substring(0,5)+(" ")+codeCIP.substring(5,8)+(" ")+codeCIP.substring(8,11)+" "+codeCIP.substring(11,12)+" "+codeCIP.substring(12,14)
         //alert(codeCIP)
-        moreDetails({ navigation }, "34009 369 184 9 8", "Medoc")
+        moreDetails({ navigation }, codeCIP, "Medoc")
       }
       else{
         alert(Value)

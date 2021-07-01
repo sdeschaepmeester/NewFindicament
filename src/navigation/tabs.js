@@ -69,7 +69,7 @@ const Tabs = () => {
                                 tintColor: focused ? '#61D2E4' : '#748c94'
                             }}   />
                         <Text style={{color: focused ? '#61D2E4': '#748c94', fontSize: 12}} >
-                            HOME
+                            ACCUEIL
                         </Text>
                     </View>
                 )
@@ -88,7 +88,7 @@ const Tabs = () => {
                                             tintColor: focused ? '#61D2E4' : '#748c94'
                                         }}   />
                                     <Text style={{color: focused ? '#61D2E4': '#748c94', fontSize: 12}} >
-                                        FAVORITE
+                                        FAVORIS
                                     </Text>
                                 </View>
                             )
@@ -126,7 +126,7 @@ const Tabs = () => {
                                             tintColor: focused ? '#61D2E4' : '#748c94'
                                         }}   />
                                     <Text style={{color: focused ? '#61D2E4': '#748c94', fontSize: 12}} >
-                                        HISTORIC
+                                        HISTORIQUE
                                     </Text>
                                 </View>
                             )
