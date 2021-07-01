@@ -32,7 +32,7 @@ class Planning extends Component {
 
   async getMarkedDates() {
     // Get all start dates
-    const planningsResponses = await fetch('http://10.0.2.2:3000/getPlanningDates', {
+    const planningsResponses = await fetch('http://192.168.1.91:3000/getPlanningDates', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -63,7 +63,7 @@ class Planning extends Component {
 
   async getPlanning() {
     // Get planning
-    const planningsResponses = await fetch('http://10.0.2.2:3000/getPlanning', {
+    const planningsResponses = await fetch('http://192.168.1.91:3000/getPlanning', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -97,7 +97,6 @@ class Planning extends Component {
     });
   } // ComponentDidMount
 
-
   render() {
 
     let plannings = this.state.plannings;
@@ -111,7 +110,7 @@ class Planning extends Component {
           // Callback which gets executed when visible months change in scroll view. Default = undefined
           onVisibleMonthsChange={(months) => { console.log('n'); }}
           // Max amount of months allowed to scroll to the past. Default = 50
-          pastScrollRange={50}
+          pastScrollRange={10}
           // Max amount of months allowed to scroll to the future. Default = 50
           futureScrollRange={50}
           // Enable or disable scrolling of calendar list
@@ -220,7 +219,6 @@ function AddTreatmentScreen({ route, navigation }) {
           onChangeText={onChangeInputComment}
           value={inputComment}
         />
-
 
         <Button onPress={() => AddTreatmentPlanning({ navigation }, inputName, inputComment, futureStartDate, day)} style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20 }}>
           Confirmer

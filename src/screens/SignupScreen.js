@@ -30,7 +30,7 @@ const SignupScreen = (props) => {
         if(validLength&&hasNumber&&upperCase&&lowerCase&&match&&specialChar){
             console.log("bonne longueur")
 
-            fetch("http://10.0.2.2:3000/signup", {
+            fetch("http://192.168.1.91:3000/signup", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

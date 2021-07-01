@@ -12,7 +12,7 @@ const SigninScreen = (props) => {
     const sendCred = async (props) => {
         console.log('test0')
 
-        fetch("http://10.0.2.2:3000/signin", {
+        fetch("http://192.168.1.91:3000/signin", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'

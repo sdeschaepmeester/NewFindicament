@@ -115,14 +115,6 @@ export const List = ({navigation,drugs,page,onDelete,onCreate})=> {
 
             <SafeAreaView style={styles.container}>
                 <Text style={{ fontSize: 30, textAlign: "center" }}>Liste de médicaments</Text>
-                <SearchBar
-                    round
-                    searchIcon={{ size: 24 }}
-                    onChangeText={(text) => searchFilterFunction(text)}
-                    onClear={(text) => searchFilterFunction('')}
-                    placeholder="Type Here..."
-                    value={search}
-                />
 
 
             </SafeAreaView>

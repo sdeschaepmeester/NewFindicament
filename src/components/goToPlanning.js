@@ -7,7 +7,7 @@ import React from "react";
 
 export let insertToPlanning = (name,comment,start_date) => {
     try{
-        fetch('http://10.0.2.2:3000/insertPlanning', {
+        fetch('http://192.168.1.91:3000/insertPlanning', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

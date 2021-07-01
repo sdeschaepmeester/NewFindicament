@@ -12,7 +12,7 @@ export let moreDetails = ({navigation},codeCIP,name) => {
 
 const insertToHistory = (cip,name) => {
     try{
-        fetch('http://10.0.2.2:3000/insertHistory', {
+        fetch('http://192.168.1.91:3000/insertHistory', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

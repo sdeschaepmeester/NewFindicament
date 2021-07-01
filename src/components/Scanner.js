@@ -32,6 +32,7 @@ export default class App extends Component {
   // Called when barcode is scanned
   barCodeScanned = ({ data }) => {
     alert(data);
+    
   }
   handleBarCodeScanned = ({ data }) => {
     new ResultScan().getResult(data);
