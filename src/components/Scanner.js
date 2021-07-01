@@ -7,6 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { MainStackNavigator } from '../navigation/MainStackNavigator';
 import { moreDetails } from './GoToDetails';
 import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import DetailsScreen from '../screens/DetailsScreen';
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -29,11 +31,6 @@ export default class App extends Component {
     this.setState({ CameraPermissionGranted: status === "granted" ? true : false });
   }
 
-  // Called when barcode is scanned
-  barCodeScanned = ({ data }) => {
-    alert(data);
-    
-  }
   handleBarCodeScanned = ({ data }) => {
     new ResultScan().getResult(data);
   };
@@ -92,15 +89,42 @@ export default class App extends Component {
   }
 }
 
+const goToDetails = () => {
+  alert("yootogojkfjkghdfjk")
+  const { navigation } = this.props;
+  moreDetails({ navigation }, "34009 363 672 1 0", "Medoc")
+}
+
 class ResultScan extends Component {
+
   getResult = Value => {
     let string = JSON.stringify(Value)
     let firstNumbers = string.substring(3)
-    alert(firstNumbers)
     // le but : recupérer seulement le cip 
     // If includes 034 => il y a un cip donc on continue sinon on renvoie texte "Medicament non trouvé"
     //il faut tester le string pour savoir ou commence les 034... et couper ce qu'il y a avant
     //A partir de cela, il faut que la chaine ne fasse que 13 caracteres de long
+
+    let codeCIP = "";
+    if(firstNumbers.includes("34009")){
+      //Get the 13 characters starting at the position where 3 starts
+      codeCIP = Value.substring(Value.indexOf("34009"),17)
+      //alert(codeCIP)
+      //moreDetails({ navigation },codeCIP,"")
+    }
+    else{
+      if(firstNumbers.startsWith("009")){
+        //Add 34 at the beginning and delete the last character (")
+        codeCIP = "34"+firstNumbers.slice(0, -1)
+        alert(codeCIP)
+        goToDetails(codeCIP)
+      }
+      else{
+        alert(Value)
+        // Product scanned is not a medicament
+        alert("Le produit scanné n'est pas un médicament ou ne fait pas parti de notre base de données.")
+      }
+    }
   };
 }
 
