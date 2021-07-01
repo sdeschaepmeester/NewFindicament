@@ -1,13 +1,14 @@
 const express = require('express');
 const favorite = require('../Model/FavoriteModel')// calling file with sql method
 const favoriteRouter = express.Router();
+const requireToken = require('../middleware/requireToken');
 
 
 favoriteRouter.get('/getFavorite/:offsetId', async (req,res)=>{
     let {offsetId} = req.params
 
     try{
-        let favoriteTable = await favorite.getFavorite(parseInt(offsetId))
+        let favoriteTable = await favorite.getFavorite(parseInt(offsetId),global.varTest)
         res.send(favoriteTable)
     }catch (err){
         return res.status(421).send({error :"Something wrong with the database : "+err.message})
@@ -31,7 +32,7 @@ favoriteRouter.post('/checkIfExist', async (req,res)=>{
 favoriteRouter.post('/deleteFavorite', async (req,res)=>{
     const {cip} = req.body
     try{
-        await favorite.deleteFavorite(cip)
+        await favorite.deleteFavorite(cip,global.varTest)
         return res.send("Deleted")
 
     }catch (err){
@@ -45,7 +46,7 @@ favoriteRouter.post('/insertFavorite', async (req,res)=>{
     const {cip,name} = req.body
     try{
         // je verifie si les mots de passe sont les mêmes
-        await favorite.insertFavorite(cip,name)
+        await favorite.insertFavorite(cip,name,global.varTest)
         return res.send("Inserted")
 
     }catch (err){

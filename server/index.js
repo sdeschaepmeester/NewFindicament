@@ -8,11 +8,16 @@ const favoriteRoutes = require("./routes/favoriteRoutes");
 const app = express();
 const requireToken = require('./middleware/requireToken');
 const PORT = process.env.PORT || 3000;
+const cors = require('cors')  //use this
 
 
 app.use(bodyParser.json())
-app.use(authRoutes)
+app.use(cors({credentials: true, origin: true}));
+
+
 app.use(historyRoutes)
+app.use(authRoutes)
+
 app.use(drugRoutes)
 app.use(planningRoutes)
 app.use(favoriteRoutes)

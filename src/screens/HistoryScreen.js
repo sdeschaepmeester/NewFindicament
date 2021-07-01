@@ -4,7 +4,7 @@ import History from "../components/History";
 
 const HistoryScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, paddingTop: 30 }}>
+    <View style={{ flex: 1 }}>
       <History />
 
     </View>

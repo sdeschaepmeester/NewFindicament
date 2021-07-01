@@ -3,9 +3,9 @@ const pool = require('../db');
 
 let History = {}
 
-History.getHistory = (offset)=> {
+History.getHistory = (offset,id_user)=> {
     return new Promise((resolve,reject)=>{
-        pool.query('SELECT * FROM history GROUP BY code_cip ORDER BY id ASC limit 8 OFFSET ? ',[offset],(err,result)=>{
+        pool.query('SELECT * FROM history Where id_user = ? GROUP BY code_cip ORDER BY id ASC limit 8 OFFSET ? ',[id_user,offset],(err,result)=>{
             if(err){
                 return reject(err)
             }
@@ -28,10 +28,10 @@ History.countHistory = ()=> {
 
 
 
-History.deleteHistory = (id = -1)=> {
+History.deleteHistory = (id = -1,id_user)=> {
     if(id == -1){ // delete All
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From history ',(err,result)=>{
+            pool.query('Delete From history where id_user = ?',id_user,(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -40,7 +40,7 @@ History.deleteHistory = (id = -1)=> {
         })
     }else{
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From history Where code_cip = ?',id,(err,result)=>{
+            pool.query('Delete From history Where code_cip = ? AND id_user = ?',[id,id_user],(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -53,10 +53,11 @@ History.deleteHistory = (id = -1)=> {
 
 
 
-History.insertHistory = (cip,name)=> {
-
+History.insertHistory = (cip,name,id_user)=> {
+    console.log("user_id 3")
+    console.log(id_user)
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO history (code_cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
+        pool.query('Insert INTO history (code_cip, `name`,id_user) Values(?,?,?) ',[cip,name,id_user],(err,result)=>{
             if(err){
                 return reject(err)
             }

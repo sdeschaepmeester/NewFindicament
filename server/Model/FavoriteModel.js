@@ -3,9 +3,13 @@ const pool = require('../db');
 
 let favorite = {}
 
-favorite.getFavorite = (offset)=> {
+favorite.getFavorite = (offset,id_user)=> {
+
+    console.log("id_user")
+    console.log(id_user)
+
     return new Promise((resolve,reject)=>{
-        pool.query('SELECT * FROM favorite GROUP BY code_cip ORDER BY id ASC limit 8 OFFSET ?  ',[offset],(err,result)=>{
+        pool.query('SELECT * FROM favorite Where id_user = ? GROUP BY code_cip ORDER BY id ASC limit 8 OFFSET ?  ',[id_user,offset],(err,result)=>{
             if(err){
                 return reject(err)
             }
@@ -24,10 +28,10 @@ favorite.CheckIfExist = (cip)=> {
     })
 }
 
-favorite.deleteFavorite = (id = -1)=> {
+favorite.deleteFavorite = (id = -1,id_user)=> {
     if(id == -1){ // delete All
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From favorite ',(err,result)=>{
+            pool.query('Delete From favorite Where id_user = ? ',id_user,(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -36,7 +40,7 @@ favorite.deleteFavorite = (id = -1)=> {
         })
     }else{
         return new Promise((resolve,reject)=>{
-            pool.query('Delete From favorite Where code_cip = ?',id,(err,result)=>{
+            pool.query('Delete From favorite Where code_cip = ? AND id_user = ? ',[id,id_user],(err,result)=>{
                 if(err){
                     return reject(err)
                 }
@@ -47,10 +51,10 @@ favorite.deleteFavorite = (id = -1)=> {
 
 }
 
-favorite.insertFavorite = (cip,name)=> {
+favorite.insertFavorite = (cip,name,id_user)=> {
 
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO favorite (code_cip, `name`) Values(?,?) ',[cip,name],(err,result)=>{
+        pool.query('Insert INTO favorite (code_cip, `name`,id_user) Values(?,?,?) ',[cip,name,id_user],(err,result)=>{
             if(err){
                 return reject(err)
             }

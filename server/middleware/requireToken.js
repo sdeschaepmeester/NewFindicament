@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const db = require('../db.js')// calling file with sql method
+const db = require('../Model/AuthModel.js')// calling file with sql method
 
 const jwtkey = "azeazeaze";
 

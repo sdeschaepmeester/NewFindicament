@@ -14,8 +14,10 @@ const SigninScreen = (props) => {
 
         fetch("http://10.0.2.2:3000/signin", {
             method: "POST",
+            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json'
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 "email": email,
