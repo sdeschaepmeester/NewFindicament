@@ -32,7 +32,8 @@ export default class App extends Component {
   }
 
   handleBarCodeScanned = ({ data }) => {
-    new ResultScan().getResult(data);
+    const { navigation } = this.props;
+    new ResultScan().getResult({navigation},data);
   };
   testhandleBarCodeScanned = ({ data }) => {
     data = "34009 363 672 1 0"
@@ -90,20 +91,15 @@ export default class App extends Component {
 }
 
 const goToDetails = () => {
-  alert("yootogojkfjkghdfjk")
   const { navigation } = this.props;
   moreDetails({ navigation }, "34009 363 672 1 0", "Medoc")
 }
 
 class ResultScan extends Component {
 
-  getResult = Value => {
+  getResult = ({navigation},Value) => {
     let string = JSON.stringify(Value)
     let firstNumbers = string.substring(3)
-    // le but : recupérer seulement le cip 
-    // If includes 034 => il y a un cip donc on continue sinon on renvoie texte "Medicament non trouvé"
-    //il faut tester le string pour savoir ou commence les 034... et couper ce qu'il y a avant
-    //A partir de cela, il faut que la chaine ne fasse que 13 caracteres de long
 
     let codeCIP = "";
     if(firstNumbers.includes("34009")){
@@ -116,8 +112,8 @@ class ResultScan extends Component {
       if(firstNumbers.startsWith("009")){
         //Add 34 at the beginning and delete the last character (")
         codeCIP = "34"+firstNumbers.slice(0, -1)
-        alert(codeCIP)
-        goToDetails(codeCIP)
+        //alert(codeCIP)
+        moreDetails({ navigation }, "34009 369 184 9 8", "Medoc")
       }
       else{
         alert(Value)
