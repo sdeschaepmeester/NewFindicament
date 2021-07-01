@@ -12,7 +12,7 @@ planningRouter.get('/getPlanning', async (req,res)=>{
 })
 
 planningRouter.post('/insertPlanning', async (req, res)=>{
-    const {name,comment} = req.body
+    const {name,comment,start_date} = req.body
     try{
         await planning.insertPlanning(name,comment)
         return res.send("Inserted")

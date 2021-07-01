@@ -5,7 +5,7 @@ import React from "react";
     insertToPlanning(values)
 } */
 
-export let insertToPlanning = (name,comment) => {
+export let insertToPlanning = (name,comment,start_date) => {
     try{
         fetch('http://10.0.2.2:3000/insertPlanning', {
             method: 'POST',
@@ -15,7 +15,8 @@ export let insertToPlanning = (name,comment) => {
             },
             body: JSON.stringify({
                 name: name,
-                comment: comment
+                comment: comment,
+                start_date: start_date
             }),
         });
     }catch (e){

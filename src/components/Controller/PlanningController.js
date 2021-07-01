@@ -134,9 +134,9 @@ function AddTreatmentScreen({ route, navigation }) {
   const [inputName, onChangeInputName] = React.useState();
   const [inputComment, onChangeInputComment] = React.useState();
 
-  let AddTreatmentPlanning = ({navigation},name, comment) => {
+  let AddTreatmentPlanning = ({navigation},name, comment, start_date) => {
     navigation.navigate('Planning')
-    insertToPlanning(name,comment)
+    insertToPlanning(name,comment, start_date)
   }
 
   return (
@@ -167,7 +167,7 @@ function AddTreatmentScreen({ route, navigation }) {
             onChangeText={onChangeInputComment}
             value={inputComment}
           />
-        <Button onPress={() => AddTreatmentPlanning({navigation}, inputName, inputComment)}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
+        <Button onPress={() => AddTreatmentPlanning({navigation}, inputName, inputComment, day.day)}  style={{ backgroundColor: "#0099ff", marginLeft: 18, marginRight: 18, marginTop: 20}}>
           Confirmer
         </Button>
             
@@ -177,7 +177,6 @@ function AddTreatmentScreen({ route, navigation }) {
       </Card>
     </View>
   );
-
 };
 
 

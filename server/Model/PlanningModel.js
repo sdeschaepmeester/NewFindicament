@@ -14,10 +14,10 @@ Planning.getPlanning = ()=> {
     })
 }
 
-Planning.insertPlanning = (name, comment)=> {
+Planning.insertPlanning = (name, comment, start_date)=> {
 
     return new Promise((resolve,reject)=>{
-        pool.query('Insert INTO planning (`name`,`comment`) Values(?,?) ',[name,comment],(err,result)=>{
+        pool.query('Insert INTO planning (`name`,`comment`, `start_date`) Values(?,?,?) ',[name,comment,start_date],(err,result)=>{
             if(err){
                 return reject(err)
             }
