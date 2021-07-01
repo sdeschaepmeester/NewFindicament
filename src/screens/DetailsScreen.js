@@ -190,7 +190,7 @@ class DetailsScreen extends Component {
                 <ScrollView style={styles.scrollView}>
                     {description ?
                         <View>{this.changeView(description)}</View> :
-                        <Text>Loading...</Text>
+                        <Text>Chargement...</Text>
                     }
 
                 </ScrollView>

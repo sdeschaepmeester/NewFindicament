@@ -66,7 +66,7 @@ const SigninScreen = (props) => {
                 </Button>
             </View>
                 <TouchableOpacity>
-                    <Text onPress={()=>props.navigation.navigate("signup")}>Tu n'as pas de compte ?</Text>
+                    <Text onPress={()=>props.navigation.navigate("signup")}>Vous n'avez pas de compte ?</Text>
                 </TouchableOpacity>
         </KeyboardAvoidingView>
 

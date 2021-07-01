@@ -30,14 +30,14 @@ class History extends Component {
         })
             .then(res => res.json())
             .then((responseJson) => {
-                console.log("ok il pasze pas")
+                console.log("ok il passe pas")
 
                 if(responseJson.error){
                     console.log("response")
                     console.log(responseJson.error)
                     return []
                 }
-                console.log("ok il pasze")
+                console.log("ok il passe")
                 return responseJson;
             })
             .catch((error) => {
@@ -137,7 +137,7 @@ class History extends Component {
             )
         }else{
             return(
-                <Text>No History data</Text>
+                <Text>L'historique est vide</Text>
             )
         }
 

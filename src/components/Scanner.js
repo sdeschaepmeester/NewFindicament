@@ -46,7 +46,7 @@ export default class App extends Component {
     if (CameraPermissionGranted === null) {
       return (
         <View style={styles.container}>
-          <Text>Please grant Camera permission</Text>
+          <Text>Veuillez autoriser l'accès à la caméra.</Text>
         </View>
       );
     }
@@ -54,7 +54,7 @@ export default class App extends Component {
       // Permission denied
       return (
         <View style={styles.container}>
-          <Text>Camera Permission Denied.</Text>
+          <Text>Accès à la caméra refusé.</Text>
         </View>
       );
     }
@@ -70,7 +70,7 @@ export default class App extends Component {
             //onBarCodeScanned = {this.barCodeScanned }
             onBarCodeScanned={this.handleBarCodeScanned}
             style={[StyleSheet.absoluteFill, styles.container]}>
-            <Text style={styles.description}>Scanner votre code</Text>
+            <Text style={styles.description}>Scannez votre code</Text>
             <Image
               style={styles.qr}
               source={require('../assets/qr_render.png')}

@@ -78,7 +78,7 @@ class HomeController extends Component {
         }
         else{
             return (
-                <Text>Aucun médicamnet</Text>
+                <Text>Aucun médicament</Text>
             )
         }
 
