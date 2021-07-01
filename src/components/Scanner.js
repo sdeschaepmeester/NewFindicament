@@ -25,7 +25,7 @@ export default class App extends Component {
 
   handleBarCodeScanned = ({ data }) => {
     const { navigation } = this.props;
-    new ResultScan().getResult({navigation},data);
+    new ResultScan().getResult({ navigation }, data);
   };
 
   render() {
@@ -70,30 +70,34 @@ export default class App extends Component {
 }
 
 class ResultScan extends Component {
-
-  getResult = ({navigation},Value) => {
+  state = { count: 0 }
+  getResult = ({ navigation }, Value) => {
     let string = JSON.stringify(Value)
     let firstNumbers = string.substring(3)
 
     let codeCIP = "";
-    if(firstNumbers.includes("34009")){
-      //Get the 13 characters starting at the position where 3 starts
-      codeCIP = Value.substring(Value.indexOf("34009"),17)
-      codeCIP = codeCIP.substring(0,5)+(" ")+codeCIP.substring(5,8)+(" ")+codeCIP.substring(8,11)+" "+codeCIP.substring(11,12)+" "+codeCIP.substring(12,14)
-      moreDetails({ navigation }, codeCIP, "Medoc")
-    }
-    else{
-      if(firstNumbers.startsWith("009")){
-        //Add 34 at the beginning and delete the last character (")
-        codeCIP = "34"+firstNumbers.slice(0, -1)
-        codeCIP = codeCIP.substring(0,5)+(" ")+codeCIP.substring(5,8)+(" ")+codeCIP.substring(8,11)+" "+codeCIP.substring(11,12)+" "+codeCIP.substring(12,14)
+    if (this.state.count < 1) {
+      if (firstNumbers.includes("34009")) {
+        //Get the 13 characters starting at the position where 3 starts
+        codeCIP = Value.substring(Value.indexOf("34009"), 17)
+        codeCIP = codeCIP.substring(0, 5) + (" ") + codeCIP.substring(5, 8) + (" ") + codeCIP.substring(8, 11) + " " + codeCIP.substring(11, 12) + " " + codeCIP.substring(12, 14)
         moreDetails({ navigation }, codeCIP, "Medoc")
+
       }
-      else{
-        alert(Value)
-        // Product scanned is not a medicament
-        alert("Le produit scanné n'est pas un médicament ou ne fait pas parti de notre base de données.")
+      else {
+        if (firstNumbers.startsWith("009")) {
+          //Add 34 at the beginning and delete the last character (")
+          codeCIP = "34" + firstNumbers.slice(0, -1)
+          codeCIP = codeCIP.substring(0, 5) + (" ") + codeCIP.substring(5, 8) + (" ") + codeCIP.substring(8, 11) + " " + codeCIP.substring(11, 12) + " " + codeCIP.substring(12, 14)
+          moreDetails({ navigation }, codeCIP, "Medoc")
+        }
+        else {
+          alert(Value)
+          // Product scanned is not a medicament
+          alert("Le produit scanné n'est pas un médicament ou ne fait pas parti de notre base de données.")
+        }
       }
+      this.state.count = 2;
     }
   };
 }
