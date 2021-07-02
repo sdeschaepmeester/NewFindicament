@@ -8,7 +8,7 @@ favoriteRouter.get('/getFavorite/:offsetId', async (req,res)=>{
     let {offsetId} = req.params
 
     try{
-        let favoriteTable = await favorite.getFavorite(parseInt(offsetId),global.varTest)
+        let favoriteTable = await favorite.getFavorite(parseInt(offsetId),global.id_user)
         res.send(favoriteTable)
     }catch (err){
         return res.status(421).send({error :"Something wrong with the database : "+err.message})
@@ -32,7 +32,7 @@ favoriteRouter.post('/checkIfExist', async (req,res)=>{
 favoriteRouter.post('/deleteFavorite', async (req,res)=>{
     const {cip} = req.body
     try{
-        await favorite.deleteFavorite(cip,global.varTest)
+        await favorite.deleteFavorite(cip,global.id_user)
         return res.send("Deleted")
 
     }catch (err){
@@ -46,7 +46,7 @@ favoriteRouter.post('/insertFavorite', async (req,res)=>{
     const {cip,name} = req.body
     try{
         // je verifie si les mots de passe sont les mêmes
-        await favorite.insertFavorite(cip,name,global.varTest)
+        await favorite.insertFavorite(cip,name,global.id_user)
         return res.send("Inserted")
 
     }catch (err){

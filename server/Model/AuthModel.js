@@ -48,6 +48,17 @@ Auth.insert = (email,password)=> {
     })
 }
 
+Auth.updateUser = (name,id)=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Update user Set  name = ? Where id = ?',[name,id],(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result[0])
+        })
+    })
+}
+
 Auth.comparePassword = async (password, inputPassword) => {
     console.log("the password "+password)
     let compare = await bcrypt.compare(inputPassword,password)

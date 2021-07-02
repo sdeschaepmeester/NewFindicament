@@ -34,6 +34,16 @@ Drug.getDrugsByFilter = (symptom,name)=> {
         })
     })
 }
+Drug.searchDrugByName = (name)=> {
+    return new Promise((resolve,reject)=>{
+        pool.query('Select * From medicament2 Where  name like ? ','%'+name+'%',(err,result)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(result)
+        })
+    })
+}
 
 Drug.getDrugById = (id)=> {
     return new Promise((resolve,reject)=>{
