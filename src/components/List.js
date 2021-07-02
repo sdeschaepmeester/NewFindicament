@@ -69,7 +69,6 @@ const ButtonDelete = ({ page,onDelete}) =>{
 
 
 
-
 export const List = ({navigation,drugs,page,onDelete,onCreate,handleLoadMore})=> {
 
 
@@ -137,7 +136,6 @@ export const List = ({navigation,drugs,page,onDelete,onCreate,handleLoadMore})=>
 
     return (
         <View style={{ flex: 1, paddingTop: 30, backgroundColor: "#dff2ff" }}>
-
 
             {ButtonDelete({page, onDelete})}
             <ScrollView style={{flex: 1}} contentContainerStyle={{flex: 1}}

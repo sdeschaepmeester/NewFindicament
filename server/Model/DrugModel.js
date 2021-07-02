@@ -35,7 +35,7 @@ Drug.getDrugsByFilter = (symptom,name)=> {
 }
 Drug.searchDrugByName = (name)=> {
     return new Promise((resolve,reject)=>{
-        pool.query('Select * From medicament2 Where  name like ? ','%'+name+'%',(err,result)=>{
+        pool.query('Select id,code_cip,name From medicament2 Where  name like ? ','%'+name+'%',(err,result)=>{
             if(err){
                 return reject(err)
             }

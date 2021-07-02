@@ -14,10 +14,10 @@ drugRouter.get('/getDrugs', async (req,res)=>{
 
 })
 
-drugRouter.get('/getDrugsByName', async (req,res)=>{
+drugRouter.get('/getDrugsByName/:name', async (req,res)=>{
     let {name} = req.params
     try{
-        let drugs = await drug.getDrugs(name)
+        let drugs = await drug.searchDrugByName(name)
         res.send(drugs)
     }catch (err){
         res.status(422).send(err.message)
