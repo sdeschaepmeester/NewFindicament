@@ -2,23 +2,23 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {StyleSheet,Text,View,Image,TouchableOpacity} from  'react-native'
 import React from 'react';
 
-import DetailsScreen from "../screens/DetailsScreen";
-import DrugsScreen from "../screens/DrugsScreen";
 import PlanningScreen from "../screens/PlanningScreen";
-import HistoryScreen from "../screens/HistoryScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import SignupScreen from "../screens/SignupScreen"
 import SigninScreen from "../screens/SigninScreen"
 import LoadingScreen from "../screens/LoadingScreen";
 import Scanner from "../components/Scanner";
-import HomeScreen from "../screens/HomeScreen";
+import Profile from "../components/Profile";
+import HomeStack from  "../components/Controller/HomeController"
+import History from "../components/History";
 
 const Tab = createBottomTabNavigator();
 
 const CustomTabBarButton = ({children,onPress})=>(
     <TouchableOpacity
         style={{
-            top: -30,
+            left:-30,
+            top: -50,
             justifyContent: 'center',
             alignItems: 'center',
             ...styles.shadow
@@ -51,15 +51,15 @@ const Tabs = () => {
                     backgroundColor: '#ffffff',
                     borderTopLeftRadius: 25,
                     borderTopRightRadius: 25,
-                    height: 90,
+                    height: 80,
                     ...styles.shadow
                 }
             }}
         >
-            <Tab.Screen name="Drugs" component={HomeScreen}
+            <Tab.Screen name="Drugs" component={HomeStack}
             options={{
                 tabBarIcon: ({focused})=>(
-                    <View style={{alignItems:'center',justifyContent:'center',top: 10}}>
+                    <View style={{alignItems:'center',justifyContent:'center',top: 10,left:15}}>
                         <Image
                             source={require('../assets/icons/home.png')}
                              resizeMode='contain'
@@ -78,7 +78,7 @@ const Tabs = () => {
             <Tab.Screen name="Favorite" component={FavoriteScreen}
                         options={{
                             tabBarIcon: ({focused})=>(
-                                <View style={{alignItems:'center',justifyContent:'center',top: 10}}>
+                                <View style={{alignItems:'center',justifyContent:'center',top: 10,left:25}}>
                                     <Image
                                         source={require('../assets/icons/star.png')}
                                         resizeMode='contain'
@@ -89,6 +89,26 @@ const Tabs = () => {
                                         }}   />
                                     <Text style={{color: focused ? '#61D2E4': '#748c94', fontSize: 12}} >
                                         FAVORIS
+                                    </Text>
+                                </View>
+                            )
+                        }}
+            />
+            <Tab.Screen name="Profile" component={Profile}
+                        options={{
+                            tabBarIcon: ({focused})=>(
+                                <View style={{alignItems:'center',justifyContent:'center',top: 15,left:37}}>
+                                    <Image
+                                        source={require('../assets/icons/user.png')}
+                                        resizeMode='contain'
+                                        style={{
+
+                                            width: 25,
+                                            height: 25,
+                                            tintColor: focused ? '#61D2E4' : '#748c94'
+                                        }}   />
+                                    <Text style={{color: focused ? '#61D2E4': '#748c94', fontSize: 12}} >
+                                        PROFILE
                                     </Text>
                                 </View>
                             )
@@ -113,10 +133,10 @@ const Tabs = () => {
                             )
                         }}
             />
-            <Tab.Screen name="History" component={HistoryScreen}
+            <Tab.Screen name="History" component={History}
                         options={{
                             tabBarIcon: ({focused})=>(
-                                <View style={{alignItems:'center',justifyContent:'center',top: 10}}>
+                                <View style={{alignItems:'center',justifyContent:'center',top: 10,right:25}}>
                                     <Image
                                         source={require('../assets/icons/history.png')}
                                         resizeMode='contain'
@@ -135,7 +155,7 @@ const Tabs = () => {
             <Tab.Screen name="Planning" component={PlanningScreen}
                         options={{
                             tabBarIcon: ({focused})=>(
-                                <View style={{alignItems:'center',justifyContent:'center',top: 10}}>
+                                <View style={{alignItems:'center',justifyContent:'center',top: 10,right:15}}>
                                     <Image
                                         source={require('../assets/icons/planning.png')}
                                         resizeMode='contain'

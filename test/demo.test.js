@@ -1,5 +1,4 @@
 const history = require('../server/Model/HistoryModel')// calling file with sql method
-const length = require('../src/components/test')
 
 describe('Insertion to db',()=>{
 

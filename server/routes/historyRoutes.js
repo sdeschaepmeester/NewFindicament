@@ -5,7 +5,7 @@ const historyRouter = express.Router();
 historyRouter.get('/getHistory/:offsetId', async (req,res)=>{
     let {offsetId} = req.params
     try{
-        let historyTable = await history.getHistory(parseInt(offsetId))
+        let historyTable = await history.getHistory(parseInt(offsetId),global.id_user)
         res.send(historyTable)
     }catch (err){
         return res.status(421).send({error :"Something wrong with the database : "+err.message})
@@ -18,7 +18,7 @@ historyRouter.get('/getHistory/:offsetId', async (req,res)=>{
 historyRouter.post('/deleteHistory', async (req,res)=>{
     const {cip} = req.body
     try{
-        await history.deleteHistory(cip)
+        await history.deleteHistory(cip,global.id_user)
         return res.send("Deleted")
 
     }catch (err){
@@ -30,9 +30,10 @@ historyRouter.post('/deleteHistory', async (req,res)=>{
 
 historyRouter.post('/insertHistory', async (req,res)=>{
     const {cip,name} = req.body
+
     try{
         // je verifie si les mots de passe sont les mêmes
-        await history.insertHistory(cip,name)
+        await history.insertHistory(cip,name,global.id_user)
         return res.send("Inserted")
 
     }catch (err){

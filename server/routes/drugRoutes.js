@@ -14,6 +14,17 @@ drugRouter.get('/getDrugs', async (req,res)=>{
 
 })
 
+drugRouter.get('/getDrugsByName', async (req,res)=>{
+    let {name} = req.params
+    try{
+        let drugs = await drug.getDrugs(name)
+        res.send(drugs)
+    }catch (err){
+        res.status(422).send(err.message)
+    }
+
+})
+
 drugRouter.get('/getDrugs/:offsetId', async (req,res)=>{
     let {offsetId} = req.params
     try{

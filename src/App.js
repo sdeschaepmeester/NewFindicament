@@ -9,7 +9,7 @@ import 'react-native-gesture-handler';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "./screens/LoadingScreen";
 import DrugsScreen from "./screens/DrugsScreen";
-import OffLine from "./screens/OffLine";
+import {StyleSheet, Text, View} from "react-native";
 
 const Stack = createStackNavigator()
 
@@ -66,20 +66,43 @@ const App = ({navigation}) => {
     <Stack.Screen name="signup" component={SignupScreen} />
     <Stack.Screen name="loading" component={LoadingScreen} />*/
 
+
+
     if(drugs.length !== 0){
         return(
             <NavigationContainer  >
                 <Stack.Navigator headerMode={"none"}>
+                    <Stack.Screen name="login" component={SigninScreen} />
+                    <Stack.Screen name="signup" component={SignupScreen} />
+                    <Stack.Screen name="loading" component={LoadingScreen} />
                     <Stack.Screen name={"tab"} children={()=> <Tabs/>}/>
                 </Stack.Navigator>
             </NavigationContainer>
         );
     }else{
         return(
-            <OffLine />
+            <View style={styles.container}>
+                <Text style={styles.text}>
+                    Vous n'arrivez pas à vous connecter à Findicament
+                </Text>
+            </View>
         )
     }
 
 }
 
 export  default  App;
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center', //Centered vertically
+        alignItems: 'center', // Centered horizontally
+        flex:1
+    },
+    text: {
+        textAlign: 'center', // <-- the magic
+        fontWeight: 'bold',
+        fontSize: 24,
+
+    },
+});
