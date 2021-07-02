@@ -2,17 +2,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {StyleSheet,Text,View,Image,TouchableOpacity} from  'react-native'
 import React from 'react';
 
-import DetailsScreen from "../screens/DetailsScreen";
-import DrugsScreen from "../screens/DrugsScreen";
 import PlanningScreen from "../screens/PlanningScreen";
-import HistoryScreen from "../screens/HistoryScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 import SignupScreen from "../screens/SignupScreen"
 import SigninScreen from "../screens/SigninScreen"
 import LoadingScreen from "../screens/LoadingScreen";
 import Scanner from "../components/Scanner";
-import HomeScreen from "../screens/HomeScreen";
 import Profile from "../components/Profile";
+import HomeStack from  "../components/Controller/HomeController"
+import History from "../components/History";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,7 +56,7 @@ const Tabs = () => {
                 }
             }}
         >
-            <Tab.Screen name="Drugs" component={HomeScreen}
+            <Tab.Screen name="Drugs" component={HomeStack}
             options={{
                 tabBarIcon: ({focused})=>(
                     <View style={{alignItems:'center',justifyContent:'center',top: 10,left:15}}>
@@ -135,7 +133,7 @@ const Tabs = () => {
                             )
                         }}
             />
-            <Tab.Screen name="History" component={HistoryScreen}
+            <Tab.Screen name="History" component={History}
                         options={{
                             tabBarIcon: ({focused})=>(
                                 <View style={{alignItems:'center',justifyContent:'center',top: 10,right:25}}>

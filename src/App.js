@@ -9,7 +9,6 @@ import 'react-native-gesture-handler';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingScreen from "./screens/LoadingScreen";
 import DrugsScreen from "./screens/DrugsScreen";
-import OffLine from "./screens/OffLine";
 import {StyleSheet, Text, View} from "react-native";
 
 const Stack = createStackNavigator()
