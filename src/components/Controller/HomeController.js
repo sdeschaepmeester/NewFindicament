@@ -23,7 +23,7 @@ class HomeController extends Component {
 
 
     async getDrugs() {
-        const drugsResponses = await fetch('http://192.168.1.91:3000/getDrugs/'+this.state.page, {
+        const drugsResponses = await fetch('http://192.168.1.83:3000/getDrugs/'+this.state.page, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',

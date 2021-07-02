@@ -12,7 +12,7 @@ class Favorite extends Component {
     state = {
         drugs: [
         ],
-        page:1,
+        page:0,
         previousDrugs:[
 
         ],
@@ -22,7 +22,7 @@ class Favorite extends Component {
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://192.168.1.91:3000/getFavorite/'+this.state.page,{
+        const drugsResponses = await  fetch('http://192.168.1.83:3000/getFavorite/'+this.state.page,{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -61,7 +61,7 @@ class Favorite extends Component {
         console.log("start")
         await  this.getDrugs()
         this.focusListener  = this.props.navigation.addListener("focus",async () => {
-            this.state.page = 1
+            this.state.page = 0
             console.log("start 2")
             await  this.getDrugs()
 
@@ -87,7 +87,7 @@ class Favorite extends Component {
 
 
     deleteFavorite = async (cip) => {
-        await fetch('http://192.168.1.91:3000/deleteFavorite', {
+        await fetch('http://192.168.1.83:3000/deleteFavorite', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -98,7 +98,7 @@ class Favorite extends Component {
             }),
         });
         console.log("delete")
-        this.state.page = 1
+        this.state.page = 0
         await this.getDrugs()
     }
 

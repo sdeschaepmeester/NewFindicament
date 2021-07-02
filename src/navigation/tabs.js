@@ -18,7 +18,7 @@ const CustomTabBarButton = ({children,onPress})=>(
     <TouchableOpacity
         style={{
             left:-30,
-            top: -50,
+            top: -60,
             justifyContent: 'center',
             alignItems: 'center',
             ...styles.shadow
@@ -97,7 +97,7 @@ const Tabs = () => {
             <Tab.Screen name="Profile" component={Profile}
                         options={{
                             tabBarIcon: ({focused})=>(
-                                <View style={{alignItems:'center',justifyContent:'center',top: 15,left:37}}>
+                                <View style={{alignItems:'center',justifyContent:'center',top: 18,left:37,width:80}}>
                                     <Image
                                         source={require('../assets/icons/user.png')}
                                         resizeMode='contain'
@@ -136,7 +136,7 @@ const Tabs = () => {
             <Tab.Screen name="History" component={History}
                         options={{
                             tabBarIcon: ({focused})=>(
-                                <View style={{alignItems:'center',justifyContent:'center',top: 10,right:25}}>
+                                <View style={{alignItems:'center',justifyContent:'center',top: 10,right:25,width:80}}>
                                     <Image
                                         source={require('../assets/icons/history.png')}
                                         resizeMode='contain'

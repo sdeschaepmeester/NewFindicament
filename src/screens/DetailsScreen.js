@@ -21,7 +21,7 @@ class DetailsScreen extends Component {
      * @returns {Promise<void>}
      */
     async getDrugById(code_cip) {
-        const descriptionResponses = await fetch('http://192.168.1.91:3000/getDrugById', {
+        const descriptionResponses = await fetch('http://192.168.1.83:3000/getDrugById', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

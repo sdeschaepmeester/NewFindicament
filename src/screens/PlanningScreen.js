@@ -4,7 +4,7 @@ import PlanningController from "../components/Controller/PlanningController";
 
 const PlanningScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, paddingTop: 30 }}>
+    <View style={{ flex: 1 }}>
       <PlanningController/>
     </View>
   );

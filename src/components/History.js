@@ -12,7 +12,7 @@ class History extends Component {
     state = {
         drugs: [
         ],
-        page:1,
+        page:0,
         previousDrugs:[
 
         ],
@@ -21,7 +21,7 @@ class History extends Component {
 
 
     async getDrugs(){
-        const drugsResponses = await  fetch('http://192.168.1.91:3000/getHistory/'+this.state.page,{
+        const drugsResponses = await  fetch('http://192.168.1.83:3000/getHistory/'+this.state.page,{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -66,7 +66,7 @@ class History extends Component {
         await  this.getDrugs()
         this.focusListener  = this.props.navigation.addListener("focus",async () => {
             console.log("start 2")
-            this.state.page = 1
+            this.state.page = 0
             await  this.getDrugs()
 
         });
@@ -90,7 +90,7 @@ class History extends Component {
 
 
       deleteHistory = async (cip) => {
-        await fetch('http://192.168.1.91:3000/deleteHistory', {
+        await fetch('http://192.168.1.83:3000/deleteHistory', {
              method: 'POST',
              headers: {
                  Accept: 'application/json',
@@ -101,7 +101,7 @@ class History extends Component {
              }),
          });
         console.log("delete")
-        this.state.page = 1
+        this.state.page = 0
          await this.getDrugs()
     }
 

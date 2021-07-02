@@ -11,7 +11,7 @@ const FavoriteScreen = (props) => {
     const [email,setEmail] = useState("loading")
     const Boiler = async ()=>{
         const token = await AsyncStorage.getItem("token")
-        fetch('http://192.168.1.91:3000/',{
+        fetch('http://192.168.1.83:3000/',{
             headers:new Headers({
                 Authorization:"Bearer "+token
             })

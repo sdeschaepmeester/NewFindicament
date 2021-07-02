@@ -16,7 +16,7 @@ class Profile extends Component {
     };
 
     async getProfileInfo(){
-        const ProfileResponses = await  fetch('http://10.0.2.2:3000/getDataProfile',{
+        const ProfileResponses = await  fetch('http://192.168.1.83:3000/getDataProfile',{
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -41,7 +41,7 @@ class Profile extends Component {
 
     UpdateUser = async () => {
          try {
-             await fetch('http://10.0.2.2:3000/UpdateUser', {
+             await fetch('http://192.168.1.83:3000/UpdateUser', {
                  method: 'POST',
                  headers: {
                      Accept: 'application/json',
@@ -62,7 +62,7 @@ class Profile extends Component {
      }
 
     async deletePersonalData(){
-        await fetch('http://10.0.2.2:3000/deleteHistory', {
+        await fetch('http://192.168.1.83:3000/deleteHistory', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -72,7 +72,7 @@ class Profile extends Component {
                 cip: -1
             }),
         });
-        await fetch('http://10.0.2.2:3000/deleteFavorite', {
+        await fetch('http://192.168.1.83:3000/deleteFavorite', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

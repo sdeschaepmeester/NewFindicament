@@ -16,9 +16,13 @@ const onClose = () => {
 export default class App extends Component {
   state = {
     CameraPermissionGranted: null,
+    user :[
+
+    ]
   }
   async componentDidMount() {
     // Ask for camera permission
+    await this.getProfileInfo()
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ CameraPermissionGranted: status === "granted" ? true : false });
   }
@@ -28,44 +32,79 @@ export default class App extends Component {
     new ResultScan().getResult({ navigation }, data);
   };
 
+  async getProfileInfo(){
+    const ProfileResponses = await  fetch('http://192.168.1.83:3000/getDataProfile',{
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+        .then(res => res.json())
+        .then((responseJson) => {
+
+          return responseJson;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+    let profile =  ProfileResponses
+
+    this.setState({ user: profile })
+    console.log("this.state.profile")
+    console.log(this.state.profile)
+  }
+
   render() {
     const { CameraPermissionGranted } = this.state;
     const { navigation } = this.props;
-    if (CameraPermissionGranted === null) {
+    if(this.state.user.length ==0){
       return (
-        <View style={styles.container}>
-          <Text>Veuillez autoriser l'accès à la caméra.</Text>
-        </View>
-      );
+          <View style={styles.container}>
+            <Text>
+                Impossible de se connecter à Findicament
+            </Text>
+          </View>
+      )
+    }else{
+      if (CameraPermissionGranted === null) {
+        return (
+            <View style={styles.container}>
+              <Text>Veuillez autoriser l'accès à la caméra.</Text>
+            </View>
+        );
+      }
+      if (CameraPermissionGranted === false) {
+        // Permission denied
+        return (
+            <View style={styles.container}>
+              <Text>Accès à la caméra refusé.</Text>
+            </View>
+        );
+      }
+      if (CameraPermissionGranted === true) {
+        // Permission granted
+        return (
+            <View style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <BarCodeScanner
+                  onBarCodeScanned={this.handleBarCodeScanned}
+                  style={[StyleSheet.absoluteFill, styles.container]}>
+                <Text style={styles.description}>Scannez votre code</Text>
+                <Image
+                    style={styles.qr}
+                    source={require('../assets/qr_render.png')}
+                />
+              </BarCodeScanner>
+            </View>
+        );
+      }
     }
-    if (CameraPermissionGranted === false) {
-      // Permission denied
-      return (
-        <View style={styles.container}>
-          <Text>Accès à la caméra refusé.</Text>
-        </View>
-      );
-    }
-    if (CameraPermissionGranted === true) {
-      // Permission granted
-      return (
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-          <BarCodeScanner
-            onBarCodeScanned={this.handleBarCodeScanned}
-            style={[StyleSheet.absoluteFill, styles.container]}>
-            <Text style={styles.description}>Scannez votre code</Text>
-            <Image
-              style={styles.qr}
-              source={require('../assets/qr_render.png')}
-            />
-          </BarCodeScanner>
-        </View>
-      );
-    }
+
   }
 }
 

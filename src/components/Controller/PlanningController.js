@@ -32,7 +32,7 @@ class Planning extends Component {
 
   async getMarkedDates() {
     // Get all start dates
-    const planningsResponses = await fetch('http://192.168.1.91:3000/getPlanningDates', {
+    const planningsResponses = await fetch('http://192.168.1.83:3000/getPlanningDates', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -63,7 +63,7 @@ class Planning extends Component {
 
   async getPlanning() {
     // Get planning
-    const planningsResponses = await fetch('http://192.168.1.91:3000/getPlanning', {
+    const planningsResponses = await fetch('http://192.168.1.83:3000/getPlanning', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -104,76 +104,87 @@ class Planning extends Component {
     const { navigation } = this.props;
     let markedDates = { '2021-07-22': { color: '#00adf5' }, '2021-07-20': { color: '#00adf5' } };
 
-    return (
-      <View>
-        <CalendarList
-          // Callback which gets executed when visible months change in scroll view. Default = undefined
-          onVisibleMonthsChange={(months) => { console.log('n'); }}
-          // Max amount of months allowed to scroll to the past. Default = 50
-          pastScrollRange={10}
-          // Max amount of months allowed to scroll to the future. Default = 50
-          futureScrollRange={50}
-          // Enable or disable scrolling of calendar list
-          scrollEnabled={true}
-          // Enable or disable vertical scroll indicator. Default = false
-          showScrollIndicator={true}
-          //...calendarParams
-          /* onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
-          onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}*/
-          onDayPress={(day) => AddTreatment({ navigation, day })}
-          //markedDates = {dayWithTreatment}
+    if(this.state.plannings.length != 0){
+      return (
+          <View>
+            <CalendarList
+                // Callback which gets executed when visible months change in scroll view. Default = undefined
+                onVisibleMonthsChange={(months) => { console.log('n'); }}
+                // Max amount of months allowed to scroll to the past. Default = 50
+                pastScrollRange={10}
+                // Max amount of months allowed to scroll to the future. Default = 50
+                futureScrollRange={50}
+                // Enable or disable scrolling of calendar list
+                scrollEnabled={true}
+                // Enable or disable vertical scroll indicator. Default = false
+                showScrollIndicator={true}
+                //...calendarParams
+                /* onDayPress={(day)=>{selectedDayBackgroundColor='#60d2e4'}}
+                onDayPress={(day)=>{day.selectedDotColor='#60d2e4'}}*/
+                onDayPress={(day) => AddTreatment({ navigation, day })}
+                //markedDates = {dayWithTreatment}
 
-          markedDates={planningDates}
+                markedDates={planningDates}
 
-          // markedDates={{
-          //   dayWithTreatment
-          //   ////[plannings.start_date]:{selected: true, marked: true}
+                // markedDates={{
+                //   dayWithTreatment
+                //   ////[plannings.start_date]:{selected: true, marked: true}
 
-          //   // '2021-05-22': { startingDay: true, color: '#00adf5' },
-          //   // '2021-05-23': { startingDay: false, color: '#00adf5' },
-          //   // '2021-05-24': { startingDay: false, color: '#00adf5' },
-          //   // '2021-05-25': { startingDay: false, color: '#00adf5' },
-          //   // '2021-05-26': { endingDay: true, color: '#00adf5' },
-          // }}
+                //   // '2021-05-22': { startingDay: true, color: '#00adf5' },
+                //   // '2021-05-23': { startingDay: false, color: '#00adf5' },
+                //   // '2021-05-24': { startingDay: false, color: '#00adf5' },
+                //   // '2021-05-25': { startingDay: false, color: '#00adf5' },
+                //   // '2021-05-26': { endingDay: true, color: '#00adf5' },
+                // }}
 
 
 
-          // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
-          markingType={'period'}
-          //onDayPress={()=>navigation.navigate('Details')}
-          // Callback that gets called when day changes while scrolling agenda list
-          style={{
-            borderWidth: 1,
-            borderColor: 'gray',
+                // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+                markingType={'period'}
+                //onDayPress={()=>navigation.navigate('Details')}
+                // Callback that gets called when day changes while scrolling agenda list
+                style={{
+                  borderWidth: 1,
+                  borderColor: 'gray',
 
-          }}
-          // Specify theme properties to override specific styles for calendar parts. Default = {}
-          theme={{
-            backgroundColor: '#ffffff',
-            calendarBackground: '#ffffff',
-            textSectionTitleColor: '#b6c1cd',
-            textSectionTitleDisabledColor: '#d9e1e8',
-            selectedDayBackgroundColor: '#60d2e4',
-            selectedDayTextColor: '#ffffff',
-            todayTextColor: '#00adf5',
-            dayTextColor: '#2d4150',
-            textDisabledColor: '#d9e1e8',
-            dotColor: '#00adf5',
-            selectedDotColor: '#ffffff',
-            arrowColor: 'orange',
-            disabledArrowColor: '#d9e1e8',
-            monthTextColor: '#60d2e4',
-            indicatorColor: 'blue',
-            textDayFontWeight: '300',
-            textMonthFontWeight: 'bold',
-            textDayHeaderFontWeight: '300',
-            textDayFontSize: 16,
-            textMonthFontSize: 16,
-            textDayHeaderFontSize: 16
-          }}
-        />
-      </View >
-    )
+                }}
+                // Specify theme properties to override specific styles for calendar parts. Default = {}
+                theme={{
+                  backgroundColor: '#ffffff',
+                  calendarBackground: '#ffffff',
+                  textSectionTitleColor: '#b6c1cd',
+                  textSectionTitleDisabledColor: '#d9e1e8',
+                  selectedDayBackgroundColor: '#60d2e4',
+                  selectedDayTextColor: '#ffffff',
+                  todayTextColor: '#00adf5',
+                  dayTextColor: '#2d4150',
+                  textDisabledColor: '#d9e1e8',
+                  dotColor: '#00adf5',
+                  selectedDotColor: '#ffffff',
+                  arrowColor: 'orange',
+                  disabledArrowColor: '#d9e1e8',
+                  monthTextColor: '#60d2e4',
+                  indicatorColor: 'blue',
+                  textDayFontWeight: '300',
+                  textMonthFontWeight: 'bold',
+                  textDayHeaderFontWeight: '300',
+                  textDayFontSize: 16,
+                  textMonthFontSize: 16,
+                  textDayHeaderFontSize: 16
+                }}
+            />
+          </View >
+      )
+    }else{
+      return (
+          <View>
+            <Text>
+              Erreur impossible de se connecter à Findicament
+            </Text>
+          </View>
+      )
+    }
+
   } // render 
 }; //planning
 
