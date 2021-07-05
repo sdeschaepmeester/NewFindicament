@@ -1,10 +1,13 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React,{useEffect,useState} from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import ListController from "../components/List";
 
-const DrugsScreen = ({navigation}) => {
+
+const DrugsScreen = (props) => {
+
     return (
         <View style={styles.container}>
-            <Text>Drugs Screen</Text>
+            <ListController/>
         </View>
     );
 };

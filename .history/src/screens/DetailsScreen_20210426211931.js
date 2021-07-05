@@ -1,16 +1,17 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-const HistoryScreen = ({navigation}) => {
+const DetailsScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <Text> History Screen</Text>
-
+            <Text>Details Screen</Text>
+            <Button title="click here"
+            onPress={() => alert('yas')} />
         </View>
     );
 };
 
-export default HistoryScreen;
+export default DetailsScreen;
 
 const styles = StyleSheet.create({
     container: {
